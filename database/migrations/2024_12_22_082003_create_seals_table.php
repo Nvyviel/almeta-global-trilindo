@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('seals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->integer('id_seal');
+            $table->string('id_seal');
             $table->enum('pickup_point', ['surabaya', 'pontianak', 'semarang', 'banjarmasin', 'bandung', 'jakarta']);
             $table->integer('quantity');
             $table->string('total_price');

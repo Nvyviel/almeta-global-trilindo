@@ -9,21 +9,33 @@ class OrderSeal extends Component
 {
     public $pickup_point = 'surabaya';
     public $quantity = 1;
-    public $price;
-    public $newStock;
-    public $selectedSealId;
+    public $price = 100000;
+    public $totalPrice = 100000; // Initialize with default price
+    public $newStock = [];
     public $seals;
 
     protected $rules = [
         'pickup_point' => 'required|in:surabaya,pontianak,semarang,banjarmasin,bandung,jakarta',
         'quantity' => 'required|integer|min:1',
-        'price' => 'required|numeric',
         'newStock' => 'nullable|integer|min:0'
     ];
 
     public function mount()
     {
         $this->loadSeals();
+        // Initialize newStock array for each seal
+        foreach ($this->seals as $seal) {
+            $this->newStock[$seal->id] = 0;
+        }
+    }
+
+    // Remove debounce from quantity input and use wire:model directly
+    public function updatedQuantity($value)
+    {
+        if ($value > 0) {
+            $this->quantity = $value;
+            $this->totalPrice = $this->quantity * $this->price;
+        }
     }
 
     public function loadSeals()
@@ -41,29 +53,31 @@ class OrderSeal extends Component
             'pickup_point' => $this->pickup_point,
             'quantity' => $this->quantity,
             'price' => $this->price,
-            'total_price' => $this->price * $this->quantity,
+            'total_price' => $this->totalPrice,
             'status' => 'requested',
             'stock' => 0
         ]);
 
-        $this->reset(['pickup_point', 'quantity', 'price']);
+        $this->reset(['pickup_point', 'quantity']);
+        $this->quantity = 1; // Reset to 1 instead of 0
+        $this->totalPrice = $this->price; // Reset total price to default price
         $this->loadSeals();
+        
         session()->flash('success', 'Seal order created successfully!');
     }
 
     public function updateStock($sealId)
     {
         $this->validate([
-            'newStock' => 'required|integer|min:0'
+            'newStock.' . $sealId => 'required|integer|min:0'  // Validate specific array index
         ]);
 
         $seal = Seal::findOrFail($sealId);
-        // Add the new stock to the current stock
         $seal->update([
-            'stock' => $seal->stock + $this->newStock
+            'stock' => $this->newStock[$sealId]  // Use the array value
         ]);
 
-        $this->reset('newStock');
+        $this->newStock[$sealId] = 0;  // Reset only this specific input
         $this->loadSeals();
         session()->flash('success', 'Stock updated successfully!');
     }

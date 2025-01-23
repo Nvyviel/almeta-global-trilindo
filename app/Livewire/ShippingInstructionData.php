@@ -5,11 +5,11 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Container;
 use App\Models\ShippingInstruction;
-use WireUi\Traits\Actions;
+// use WireUi\Traits\Actions;
 
 class ShippingInstructionData extends Component
 {
-    use Actions;
+    // use Actions;
     public $container_id;
     public $no_container;
     public $no_seal;
