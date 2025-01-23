@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seals', function (Blueprint $table) {
+        Schema::create('stock_seals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('id_seal');
-            $table->enum('pickup_point', ['surabaya', 'pontianak', 'semarang', 'banjarmasin', 'bandung', 'jakarta']);
-            $table->integer('quantity');
-            $table->string('total_price');
-            $table->bigInteger('price');
-            $table->enum('status', ['Payment Proccess', 'Success', 'Canceled']);
+            $table->unsignedInteger('stock')->default(0);
+            $table->integer('update_stock');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seals');
+        Schema::dropIfExists('stock_seals');
     }
 };

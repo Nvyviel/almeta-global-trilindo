@@ -1,5 +1,5 @@
 @extends('layouts.main')
 
 @section('component')
-    <livewire:order-seal/>
+    <livewire:stock-management/>
 @endsection
