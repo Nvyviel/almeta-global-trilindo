@@ -9,14 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
     public function up(): void
     {
         Schema::create('shipping_instructions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('container_id')->constrained()->onDelete('cascade');
+            $table->foreignId('shipment_id')->constrained()->onDelete('cascade');
             $table->string('no_container');
             $table->string('no_seal');
             $table->string('note')->nullable();
+            $table->enum('status', ['Requested','Approved','Rejected']);
             $table->timestamps();
         });
     }

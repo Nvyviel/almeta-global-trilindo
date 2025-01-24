@@ -23,11 +23,16 @@ class AuthenticatedSessionController extends Controller
     }
 
 
-    public function isadmin(Request $request, User $user)
+    public function isadmin(User $user)
     {
-        $user->is_admin = $request->has('is_admin');
-        $user->save();
-        return back();
+        // Hanya izinkan perubahan jika pengguna saat ini adalah super admin (ID 1)
+        // dan bukan mengubah akun super admin
+        if (auth()->user()->id === 1 && $user->id !== 1) {
+            $user->is_admin = !$user->is_admin;
+            $user->save();
+        }
+
+        return back()->with('status', 'Status admin berhasil diubah');
     }
 
     /**
@@ -77,9 +82,28 @@ class AuthenticatedSessionController extends Controller
         return redirect('/login');
     }
 
-    public function roomAdmin()
+    public function roomAdmin(Request $request)
     {
-        $users = User::all();
+        $query = User::query();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                ->orWhere('email', 'like', "%{$searchTerm}%")
+                ->orWhere('company_name', 'like', "%{$searchTerm}%")
+                ->orWhere('company_location', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        $users = $query->paginate(10);
+
         return view('admin.dashboard-admin', compact('users'));
+    }
+
+    public function detail($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.detail-user', compact('user'));
     }
 }

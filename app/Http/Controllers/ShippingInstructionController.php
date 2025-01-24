@@ -12,4 +12,9 @@ class ShippingInstructionController extends Controller
     {
         return view('user.shipping-instruction');
     }
+
+    public function requestSi()
+    {
+        return view('user.request-si');
+    }
 }

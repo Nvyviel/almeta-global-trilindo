@@ -1,124 +1,130 @@
 @extends('layouts.main')
 @section('component')
-<div class="min-h-screen bg-gray-50">
-    <div class="container mx-auto px-4 py-12">
-        <!-- Header Section with improved styling -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-extrabold text-blue-900 flex items-center justify-center gap-3">
-                <i class="fa-solid fa-ship text-blue-600"></i>
-                Release Order (RO)
-            </h1>
-            <p class="mt-2 text-gray-600">Manage your container release orders efficiently</p>
-        </div>
-
-        <!-- Main Content -->
+<div class="min-h-screen">
+    <div class="container mx-auto px-4 md:py-12">
+        <!-- Header Section -->
         <div class="max-w-7xl mx-auto">
-            @forelse (auth()->user()->container as $container)
-                <div class="mb-6 bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden 
-                            transition-all duration-300 hover:shadow-lg hover:border-blue-200">
-                    <div class="p-6">
-                        <!-- Header with Status -->
-                        <div class="flex justify-between items-center mb-6">
-                            <div class="flex items-center gap-4">
-                                <h2 class="text-2xl font-bold text-gray-900">
-                                    <i class="fa-solid fa-box text-blue-500 mr-2"></i>
-                                    {{ $container->id_order }}
-                                </h2>
-                                <span class="px-4 py-1.5 rounded-full text-sm font-semibold
-                                    @if($container->status === 'Approved')
-                                        bg-green-100 text-green-700 border border-green-200
-                                    @elseif($container->status === 'Canceled')
-                                        bg-red-100 text-red-700 border border-red-200
-                                    @else 
-                                        bg-yellow-100 text-yellow-700 border border-yellow-200
-                                    @endif">
-                                    {{ $container->status }}
-                                </span>
-                            </div>
-                            <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'release-order']) }}" 
-                               class="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-                                View Details
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12">
+                <div class="text-center md:text-left mb-4 md:mb-0">
+                    <h1 class="text-3xl md:text-4xl font-bold text-blue-900 flex items-center justify-center md:justify-start gap-3">
+                        <i class="fa-solid fa-ship text-blue-600 mr-2"></i>
+                        Release Orders
+                    </h1>
+                    <p class="mt-2 text-gray-600 text-sm md:text-base">
+                        Manage and track your container shipments
+                    </p>
+                </div>
+                <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 
+                    bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all 
+                    transform hover:-translate-y-1 shadow-md hover:shadow-lg">
+                    <i class="fa-solid fa-plus"></i>
+                    New Release Order
+                </a>
+            </div>
 
-                        <!-- Container Information Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            <!-- Stuffing & Ownership Section -->
-                            <div class="space-y-4">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Stuffing</h3>
-                                    <p class="text-gray-900">{{ $container->stuffing }}</p>
-                                </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Ownership</h3>
-                                    <p class="text-gray-900">{{ $container->ownership_container }}</p>
-                                </div>
-                            </div>
-
-                            <!-- Load & Container Type Section -->
-                            <div class="space-y-4">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Load Type</h3>
-                                    <p class="text-gray-900">{{ $container->load_type }}</p>
-                                </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Container Type</h3>
-                                    <p class="text-gray-900">{{ $container->container_type }}</p>
+            <!-- Container List -->
+            <div class="space-y-6">
+                @forelse (auth()->user()->container as $container)
+                    <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden 
+                                transition-all duration-300 hover:shadow-xl hover:scale-[1.01]">
+                        <div class="p-6">
+                            <!-- Order Header -->
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                                <div class="flex flex-col md:flex-row items-start md:items-center gap-3 w-full">
+                                    <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'release-order']) }}" 
+                                       class="text-lg md:text-xl font-bold text-blue-700 underline hover:text-blue-900 transition-colors">
+                                        {{ $container->id_order }}
+                                    </a>
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold
+                                        @if($container->status === 'Approved')
+                                            bg-green-100 text-green-700
+                                        @elseif($container->status === 'Canceled')
+                                            bg-red-100 text-red-700
+                                        @else 
+                                            bg-yellow-100 text-yellow-700
+                                        @endif">
+                                        {{ $container->status }}
+                                    </span>
                                 </div>
                             </div>
 
-                            <!-- Commodity & Danger Section -->
-                            <div class="space-y-4">
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Commodity</h3>
-                                    <p class="text-gray-900">{{ $container->commodity }}</p>
+                            <!-- Container Details -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div class="text-center md:text-left">
+                                    <p class="text-xs text-gray-500 mb-1">Total Containers</p>
+                                    <p class="font-semibold text-gray-800 text-base md:text-lg flex items-center justify-center md:justify-start gap-2">
+                                        <i class="fa-solid fa-box text-blue-500"></i>
+                                        {{ $container->quantity }}
+                                    </p>
                                 </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
-                                    <h3 class="text-sm font-medium text-gray-500 mb-1">Danger Status</h3>
-                                    <p class="@if($container->is_danger === 'Yes') text-red-600 @else text-green-600 @endif font-medium">
-                                        {{ $container->is_danger ? 'Non-Dangerous Goods' : 'Dangerous Goods' }}
+                                <div class="text-center md:text-left">
+                                    <p class="text-xs text-gray-500 mb-1">Total Weight</p>
+                                    <p class="font-semibold text-gray-800 text-base md:text-lg flex items-center justify-center md:justify-start gap-2">
+                                        <i class="fa-solid fa-weight-hanging text-green-500"></i>
+                                        {{ $container->weight }} kg
                                     </p>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Additional Details -->
-                        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <h3 class="text-sm font-medium text-gray-500 mb-1">Quantity & Weight</h3>
-                                <p class="text-gray-900">
-                                    {{ $container->quantity }} units | {{ $container->weight }} kg
-                                </p>
+                            <!-- Shipment Details -->
+                            <div class="border-t pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="flex items-center justify-center md:justify-start gap-4">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa-solid fa-location-dot text-blue-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-gray-500">Departure</p>
+                                            <p class="font-semibold text-gray-800 capitalize">
+                                                {{ $container->shipment_container->from_city ?? 'N/A' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="hidden md:block h-px w-10 bg-gray-300 mx-2"></div>
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fa-solid fa-flag-checkered text-green-600"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-gray-500">Arrival</p>
+                                            <p class="font-semibold text-gray-800 capitalize">
+                                                {{ $container->shipment_container->to_city ?? 'N/A' }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-center md:justify-end">
+                                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fa-solid fa-calendar-days text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500">Closing Cargo</p>
+                                        <p class="font-semibold text-gray-800">
+                                            {{ $container->shipment_container ? \Carbon\Carbon::parse($container->shipment_container->closing_cargo)->translatedFormat('d F Y') : 'N/A' }}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <h3 class="text-sm font-medium text-gray-500 mb-1">Notes</h3>
-                                <p class="text-gray-700">{{ $container->notes ?? 'No additional notes' }}</p>
-                            </div>
-                        </div>
-
-                        <!-- Footer with Creation Date -->
-                        <div class="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center text-sm text-gray-500">
-                            <span>
-                                <i class="fa-regular fa-calendar mr-1"></i>
-                                Created: {{ $container->created_at->format('Y-m-d') }}
-                            </span>
                         </div>
                     </div>
-                </div>
-            @empty
-                <div class="text-center py-16 bg-white rounded-xl shadow-sm">
-                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-                        <i class="fa-solid fa-box-open text-3xl text-gray-400"></i>
+                @empty
+                    <div class="text-center bg-white rounded-xl shadow-md py-16">
+                        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 mb-6 mx-auto">
+                            <i class="fa-solid fa-box-open text-4xl text-blue-500"></i>
+                        </div>
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-3">
+                            No Release Orders
+                        </h2>
+                        <p class="text-gray-600 max-w-md mx-auto mb-6 px-4">
+                            You haven't created any release orders yet. Start by creating your first order.
+                        </p>
+                        <a href="{{ route('dashboard') }}" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Create First Order
+                        </a>
                     </div>
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-2">
-                        No Release Orders Found
-                    </h2>
-                    <p class="text-gray-600 max-w-md mx-auto">
-                        There are currently no release orders in your account. New orders will appear here once created.
-                    </p>
-                </div>
-            @endforelse
+                @endforelse
+            </div>
         </div>
     </div>
 </div>

@@ -43,7 +43,7 @@ class ContainerController extends Controller
 
     public function releaseOrder() 
     {
-        $container = auth()->user()->container()->get();
+        $container = auth()->user()->container()->with('shipment_container')->get();
         return view('user.release-order', compact('container'));
     }
 

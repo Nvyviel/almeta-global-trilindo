@@ -21,7 +21,7 @@ class ShippingInstructionData extends Component
     public function mount()
     {
         // Load containers for dropdown
-        $this->containers = Container::select('id', 'container_number')->get();
+        $this->containers = Container::select('id', 'shipment_id')->get();
     }
 
     // Validation rules
@@ -68,6 +68,6 @@ class ShippingInstructionData extends Component
 
     public function render()
     {
-        return view('livewire.shipping-instruction.create');
+        return view('livewire.shipping-instruction-data');
     }
 }
