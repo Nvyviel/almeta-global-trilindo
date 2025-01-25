@@ -1,77 +1,87 @@
 <x-guest-layout>
-        <a href="{{ route('register') }}" class="block mb-6 text-sm text-gray-600 hover:text-gray-800">
-            Didn't have an account? Register
-        </a>
-        <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Login</h2>
+    <div class="min-h-screen flex">
+        <!-- Fullscreen Background Image -->
+        <div class="w-1/2 bg-cover bg-center fixed top-0 bottom-0 left-0" 
+             style="background-image: url('../assets/img/bg-register.jpg'); background-size: contain; background-repeat: no-repeat;">
+        </div>
         
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+        <!-- Login Form Section -->
+        <div class="w-1/2 overflow-y-auto ml-auto p-6 sm:p-12 flex items-center justify-center">
+            <div class="w-full max-w-md">
+                <form method="POST" action="{{ route('login') }}" class="bg-white bg-opacity-80 rounded-lg p-8">
+                    @csrf
+                    <h1 class="text-center text-3xl font-bold text-slate-900 mb-6">Login</h1>
 
-            <!-- Email Address -->
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input id="email" 
-                       type="email" 
-                       name="email" 
-                       class="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 @error('email') border-red-500 @enderror" 
-                       :value="old('email')" 
-                       required 
-                       autofocus 
-                       autocomplete="username" />
-            </div>
+                    {{-- General Error Handling --}}
+                    @if($errors->any())
+                        <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                            <strong class="font-bold">Oops! Ada beberapa masalah dengan login Anda.</strong>
+                            <ul class="mt-2 list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
-            <!-- Password -->
-            <div class="mb-4">
-                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input id="password" 
-                       type="password" 
-                       name="password" 
-                       class="block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 @error('password') border-red-500 @enderror" 
-                       required 
-                       autocomplete="current-password" />
-            </div>
+                    <div class="space-y-4">
+                        {{-- Email --}}
+                        <div>
+                            <label for="email" class="block font-medium text-gray-700">Email</label>
+                            <input id="email" 
+                                type="email" 
+                                name="email" 
+                                value="{{ old('email') }}"
+                                class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('email') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none" 
+                                required 
+                                placeholder="Enter your email">
+                            @error('email')
+                                <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-            <!-- Error Messages -->
-            @error('auth')
-                <div class="text-red-500 text-sm text-center mt-2">{{ $message }}</div>
-            @enderror
-
-            <!-- Remember Me -->
-            <div class="flex items-center mb-4">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-red-600 focus:ring-red-500" name="remember">
-                <label for="remember_me" class="ml-2 text-sm text-gray-600">Remember me</label>
-            </div>
-
-            <!-- Forgot Password and Submit -->
-            <div class="flex items-center justify-between">
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="text-sm text-gray-600 hover:text-gray-900 underline">
-                        Forgot your password?
-                    </a>
-                @endif
-
-                <button type="submit" class="bg-red-700 text-white p-2 rounded-md shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 transition">
-                    Log in
-                </button>
-            </div>
-        </form>
-        {{-- Letakkan kode ini di layout utama (misalnya app.blade.php) --}}
-        @if ($errors->any())
-            <div class="fixed bottom-4 right-4">
-                @foreach ($errors->all() as $error)
-                    <div class="bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg mb-2">
-                        {{ $error }}
+                        {{-- Password --}}
+                        <div>
+                            <label for="password" class="block font-medium text-gray-700">Password</label>
+                            <input id="password" 
+                                type="password" 
+                                name="password" 
+                                class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('password') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none"  
+                                required 
+                                placeholder="Enter your password">
+                            @error('password')
+                                <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
-                @endforeach
-            </div>
-        @endif
 
-        {{-- Untuk success message tetap ada --}}
-        @if (session()->has('message'))
-            <div class="fixed bottom-4 right-4">
-                <div class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg">
-                    {{ session('message') }}
-                </div>
+                    {{-- Remember Me --}}
+                    <div class="flex items-center mt-4">
+                        <input type="checkbox" 
+                               name="remember" 
+                               id="remember" 
+                               class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        <label for="remember" class="ml-2 text-sm text-gray-600">Remember me</label>
+                    </div>
+
+                    {{-- Submit --}}
+                    <div class="flex items-center justify-between mt-6">
+                        <a href="{{ route('register') }}" class="text-sm text-gray-600 hover:text-gray-800">Don't have an account? Register</a>
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">
+                            Login
+                        </button>
+                    </div>
+
+                    {{-- Forgot Password --}}
+                    @if (Route::has('password.request'))
+                        <div class="text-center mt-4">
+                            <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:text-blue-800">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    @endif
+                </form>
             </div>
-        @endif
+        </div>
+    </div>
 </x-guest-layout>

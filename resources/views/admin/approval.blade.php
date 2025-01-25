@@ -34,7 +34,7 @@
                     </div>
                     <p class="text-gray-600 text-lg mb-6">Review and approve seal requests with our secure verification process.</p>
                     <div class="mt-auto">
-                        <a href="{{ route('add-stock') }}" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors duration-300 w-full sm:w-auto">
+                        <a href="{{ route('activity-seal') }}" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 transition-colors duration-300 w-full sm:w-auto">
                             Manage Seals
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

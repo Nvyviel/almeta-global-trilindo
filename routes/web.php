@@ -65,6 +65,7 @@ Route::put('/shipments/{shipment}', [ShipmentController::class, 'update'])->name
 Route::get('/approval/seal/add-stock', [SealController::class, 'addStock'])->name('add-stock');
 Route::get('/seal', [SealController::class, 'showListSeal'])->name('showListSeal');
 Route::get('/seal/list', [SealController::class, 'seal'])->name('seal');
+Route::get('/seal/activity', [SealController::class, 'activitySeal'])->name('activity-seal');
 
 // CONSIGNEE
 Route::get('/consignee/management', [ConsigneeController::class, 'index'])->name('consignee');

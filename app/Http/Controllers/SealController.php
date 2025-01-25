@@ -29,6 +29,16 @@ class SealController extends Controller
         return view('user.seal', compact('seals'));
     }
 
+    public function activitySeal()
+    {
+        $seals = Seal::with('user') // Eager load user relationship
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('admin.activity-seal', compact('seals'));
+    }
+
     public function addStock() 
     {
         return view('admin.stock-seal');

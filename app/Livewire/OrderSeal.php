@@ -47,7 +47,7 @@ class OrderSeal extends Component
         // Check if requested quantity exceeds available stock
         if ($this->quantity > $this->availableStock) {
             session()->flash('error', 'Requested quantity exceeds available stock!');
-            return;
+            return redirect()->route('showListSeal');
         }
 
         // Create seal order

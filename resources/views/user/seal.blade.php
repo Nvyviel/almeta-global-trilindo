@@ -16,23 +16,19 @@
             <nav class="space-x-4">
                 <a href="{{ route('seal', ['filter' => 'all']) }}" 
                    class="px-3 py-2 text-sm font-medium {{ request('filter') === 'all' || !request('filter') ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
-                   Semua
+                   All
                 </a>
-                <a href="{{ route('seal', ['filter' => 'requested']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'requested' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
-                   Requested
+                <a href="{{ route('seal', ['filter' => 'payment proccess']) }}" 
+                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'payment proccess' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
+                   Payment Proccess
                 </a>
-                <a href="{{ route('seal', ['filter' => 'under_verification']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'under_verification' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
-                   Under Verification
+                <a href="{{ route('seal', ['filter' => 'success']) }}" 
+                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'success' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
+                   Success
                 </a>
-                <a href="{{ route('seal', ['filter' => 'ready']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'ready' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
-                   Ready
-                </a>
-                <a href="{{ route('seal', ['filter' => 'canceled']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'canceled' ? 'text-red-600 underline' : 'text-gray-600 hover:text-red-800' }}">
-                   Canceled
+                <a href="{{ route('seal', ['filter' => 'failed']) }}" 
+                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'failed' ? 'text-red-600 underline' : 'text-gray-600 hover:text-red-800' }}">
+                   Failed
                 </a>
             </nav>
         </div>
@@ -87,7 +83,7 @@
                             Rp {{ number_format($seal->total_price, 0, ',', '.') }}
                         </p>
                         <p class="text-xs text-gray-500 mt-1">
-                            @ Rp {{ number_format($seal->price, 0, ',', '.') }} / unit
+                            @ Rp {{ number_format($seal->price, 0, ',', '.') }} / seal
                         </p>
                     </div>
                 </div>
@@ -97,7 +93,7 @@
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                <p class="mt-4 text-sm text-gray-600">No seals found for this filter.</p>
+                <p class="mt-4 text-sm text-gray-600">No seals found.</p>
             </div>
         @endforelse
         </div>
