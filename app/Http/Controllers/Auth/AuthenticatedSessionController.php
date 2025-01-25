@@ -96,7 +96,7 @@ class AuthenticatedSessionController extends Controller
             });
         }
 
-        $users = $query->paginate(10);
+        $users = $query->paginate(5);
 
         return view('admin.dashboard-admin', compact('users'));
     }

@@ -57,9 +57,6 @@
                             <a href="{{ route('consignee') }}" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                 <i class="fas fa-users mr-3"></i> Consignee
                             </a>
-                            <a href="#" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
-                                <i class="fas fa-cog mr-3"></i> Settings
-                            </a>
                         </div>
                         <div class="border-t border-gray-200 py-1">
                             <form method="POST" action="{{ route('logout') }}" id="logout-form">
@@ -114,9 +111,6 @@
                         <a href="{{ route('create-shipment') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('create-shipment') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-plus-circle mr-2"></i> Create Shipment
                         </a>
-                        <a href="#" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
-                            <i class="fas fa-cogs mr-2"></i> Settings
-                        </a>
                         <a href="{{ route('approval-list') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('approval') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-check-circle mr-2"></i> Approval
                         </a>
@@ -169,9 +163,6 @@
                             </a>
                             <a href="{{ route('create-shipment') }}" class="{{ $linkClass }} {{ request()->routeIs('create-shipment') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-plus-circle mr-3"></i> Create Schedule
-                            </a>
-                            <a href="#" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
-                                <i class="fas fa-cogs mr-3"></i> Settings
                             </a>
                             <a href="{{ route('approval-list') }}" class="{{ $linkClass }} {{ request()->routeIs('approval-list') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-check-circle mr-3"></i> Approval

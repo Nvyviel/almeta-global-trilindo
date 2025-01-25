@@ -2,7 +2,7 @@
     <div class="min-h-screen flex">
         <!-- Fullscreen Background Image -->
         <div class="w-1/2 bg-cover bg-center fixed top-0 bottom-0 left-0" 
-             style="background-image: url('../assets/img/bg-register.jpg'); background-size: contain; background-repeat: no-repeat;">
+             style="background-image: url('../assets/img/bg-login.jpg'); background-size: contain; background-repeat: no-repeat;">
         </div>
         
         <!-- Login Form Section -->
