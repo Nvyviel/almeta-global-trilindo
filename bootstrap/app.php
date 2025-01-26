@@ -16,3 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
+
+$app->middleware([
+    // Middleware global lainnya
+    \App\Http\Middleware\UserMiddleware::class, // Tambahkan ini untuk middleware auth
+]);
