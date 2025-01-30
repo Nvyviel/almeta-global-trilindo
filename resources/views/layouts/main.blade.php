@@ -79,7 +79,7 @@
             <div class="px-4 py-3">
                 <nav class="flex flex-wrap gap-2">
                     @php
-                        $mobileLinkClass = "flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ease-in-out";
+                        $mobileLinkClass = "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out";
                         $mobileActiveLinkClass = "bg-blue-700 text-white";
                         $mobileInactiveLinkClass = "text-blue-200 hover:bg-blue-700 hover:text-white";
                     @endphp
@@ -126,10 +126,10 @@
                     <div class="text-2xl font-bold text-white tracking-wider">Customer</div>
                     <div class="text-xs text-blue-300">Relationship Management</div>
                 </div>
-                
+                <div class="border-t border-blue-700 my-4"></div>
                 <nav>
                     @php
-                        $linkClass = "flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-colors duration-200 ease-in-out";
+                        $linkClass = "flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors duration-200 ease-in-out";
                         $activeLinkClass = "bg-blue-700 text-white";
                         $inactiveLinkClass = "hover:bg-blue-700 text-blue-200 hover:text-white";
                     @endphp

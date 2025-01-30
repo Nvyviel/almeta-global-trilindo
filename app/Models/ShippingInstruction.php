@@ -10,4 +10,9 @@ class ShippingInstruction extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function container()
+    {
+        return $this->belongsTo(Container::class);
+    }
 }

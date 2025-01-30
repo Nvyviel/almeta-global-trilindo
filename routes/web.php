@@ -74,5 +74,6 @@ Route::put('/consignees/{consignee}', [ConsigneeController::class, 'update'])->n
 Route::delete('/consignees/{consignee}', [ConsigneeController::class, 'destroy'])->name('consignee-destroy');
 
 // SHIPPING INSTRUCTION
-Route::get('/dashboard/shipping-instruction', [ShippingInstructionController::class, 'showList'])->name('shipping-instruction');
+Route::get('/shipping-instruction', [ShippingInstructionController::class, 'showList'])->name('shipping-instruction');
+Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
 Route::get('/dashboard/shipping-instruction/request', [ShippingInstructionController::class, 'requestSi'])->name('request-si');

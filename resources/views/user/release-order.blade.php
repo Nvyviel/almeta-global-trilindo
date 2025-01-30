@@ -15,7 +15,7 @@
                     </p>
                 </div>
                 <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 
-                    bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all 
+                    bg-red-200 rounded-full hover:bg-red-300 text-red-700 transition-all 
                     transform hover:-translate-y-1 shadow-md hover:shadow-lg">
                     <i class="fa-solid fa-plus"></i>
                     New Release Order

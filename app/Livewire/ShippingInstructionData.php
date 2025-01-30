@@ -11,26 +11,39 @@ class ShippingInstructionData extends Component
 {
     public $shipment_id;
     public $container_id;
-
-    // Arrays to hold multiple container details
     public $container_numbers = [];
     public $seal_numbers = [];
     public $container_notes = [];
-
-    // Arrays for dropdowns
     public $shipments = [];
     public $containers = [];
 
     public function mount()
     {
-        // Load shipments for dropdown
-        $this->shipments = Shipment::select('id', 'vessel_name')->get();
+        // Load only shipments that have unused containers
+        $this->loadAvailableShipments();
     }
 
-    // When shipment is selected, load its containers
+    protected function loadAvailableShipments()
+    {
+        // Get shipments that have at least one unused container
+        $shipmentsWithUnusedContainers = Shipment::whereHas('containers', function ($query) {
+            $query->whereNotIn('id', function ($subQuery) {
+                $subQuery->select('container_id')
+                    ->from('shipping_instructions')
+                    ->groupBy('container_id');
+            });
+        })->select('id', 'vessel_name')->get();
+
+        $this->shipments = $shipmentsWithUnusedContainers;
+
+        // If current shipment has no more unused containers, reset it
+        if ($this->shipment_id && !$shipmentsWithUnusedContainers->contains('id', $this->shipment_id)) {
+            $this->reset(['shipment_id', 'container_id', 'container_numbers', 'seal_numbers', 'container_notes']);
+        }
+    }
+
     public function updatedShipmentId($shipmentId)
     {
-        // Reset all dependent fields when shipment changes
         $this->reset([
             'container_id',
             'container_numbers',
@@ -39,23 +52,34 @@ class ShippingInstructionData extends Component
             'containers'
         ]);
 
-        // Load containers associated with the selected shipment
-        $this->containers = Container::where('shipment_id', $shipmentId)->get();
+        if ($shipmentId) {
+            // Load only unused containers for the selected shipment
+            $this->containers = Container::where('shipment_id', $shipmentId)
+                ->whereNotIn('id', function ($query) {
+                    $query->select('container_id')
+                        ->from('shipping_instructions')
+                        ->groupBy('container_id');
+                })->get();
+
+            // If no containers available, reset shipment selection
+            if ($this->containers->isEmpty()) {
+                $this->shipment_id = null;
+                $this->containers = [];
+                session()->flash('info', 'No available containers for this shipment.');
+            }
+        }
     }
 
-    // When container is selected, automatically generate input fields based on its quantity
     public function updatedContainerId($containerId)
     {
-        // Find the selected container
-        $container = Container::findOrFail($containerId);
-
-        // Automatically create input fields based on container quantity
-        $this->container_numbers = array_fill(0, $container->quantity, '');
-        $this->seal_numbers = array_fill(0, $container->quantity, '');
-        $this->container_notes = array_fill(0, $container->quantity, '');
+        if ($containerId) {
+            $container = Container::findOrFail($containerId);
+            $this->container_numbers = array_fill(0, $container->quantity, '');
+            $this->seal_numbers = array_fill(0, $container->quantity, '');
+            $this->container_notes = array_fill(0, $container->quantity, '');
+        }
     }
 
-    // Validation rules
     protected function rules()
     {
         $rules = [
@@ -63,7 +87,6 @@ class ShippingInstructionData extends Component
             'container_id' => 'required|exists:containers,id',
         ];
 
-        // Dynamically add validation for container numbers, seal numbers, and notes
         foreach (range(0, count($this->container_numbers) - 1) as $index) {
             $rules["container_numbers.$index"] = 'required|string|max:255';
             $rules["seal_numbers.$index"] = 'required|string|max:255';
@@ -73,20 +96,16 @@ class ShippingInstructionData extends Component
         return $rules;
     }
 
-    // Create shipping instructions
     public function store()
     {
-        // Validate first
         $validatedData = $this->validate();
 
-        // Ensure arrays are not empty
         if (empty($this->container_numbers)) {
             $this->addError('container_id', 'Please select a container first.');
             return;
         }
 
         try {
-            // Create multiple shipping instructions based on quantity
             foreach (range(0, count($this->container_numbers) - 1) as $index) {
                 ShippingInstruction::create([
                     'shipment_id' => $this->shipment_id,
@@ -97,6 +116,9 @@ class ShippingInstructionData extends Component
                 ]);
             }
 
+            // Reload available shipments after storing new instructions
+            $this->loadAvailableShipments();
+
             // Reset form
             $this->reset([
                 'shipment_id',
@@ -106,10 +128,8 @@ class ShippingInstructionData extends Component
                 'container_notes'
             ]);
 
-            // Show success notification
             session()->flash('success', 'Shipping instructions created successfully');
         } catch (\Exception $e) {
-            // Show error notification
             session()->flash('error', 'Failed to create shipping instructions: ' . $e->getMessage());
         }
     }

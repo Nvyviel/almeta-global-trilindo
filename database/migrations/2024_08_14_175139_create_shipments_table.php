@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('etb');
             $table->dateTime('etd');
             $table->dateTime('eta');
+            $table->unsignedBigInteger('rate');
             $table->timestamps();
         });
     }

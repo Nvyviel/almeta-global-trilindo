@@ -3,9 +3,9 @@
 @section('component')
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Activity Seal Orders</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Activity</h2>
         @if (auth()->user()->is_admin == true)
-        <a href="{{ route('add-stock') }}" class="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+        <a href="{{ route('add-stock') }}" class="flex items-center bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
             </svg>
@@ -39,7 +39,7 @@
                             <span class="px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider
                                 @switch($seal->status)
                                     @case('Payment Proccess')
-                                        bg-yellow-100 text-yellow-800
+                                        bg-blue-100 text-blue-800
                                     @case('Success')
                                         bg-green-100 text-green-800
                                     @case('Canceled')
@@ -97,7 +97,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
             </svg>
             <p class="text-gray-600 mb-4">
-                You haven't made any seal orders yet.<br>
+                Haven't made any seal orders yet.<br>
             </p>
         </div>
         @endforelse

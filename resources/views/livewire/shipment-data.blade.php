@@ -1,4 +1,4 @@
-<div class="mx-auto px-4 py-8 bg-gradient-to-br from-blue-50 to-white min-h-screen">
+<div class="mx-auto px-4 min-h-screen">
     <!-- Create Shipment Form Section -->
     <div class="bg-white p-8 md:p-12 rounded-lg shadow-xl border border-gray-200 mb-12">
         <h1 class="text-3xl md:text-4xl font-extrabold mb-8 text-gray-900 text-center">Create Shipment Schedule</h1>
