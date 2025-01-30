@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ config('app.name', 'Laravel') }}</title>
         <!-- Fonts -->
+        @livewireStyles
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -22,8 +23,7 @@
             @yield('layout')
         </div>
         {{-- SWEETALERT CDN --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    @stack('scripts')
+    @livewireScripts
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 </html>

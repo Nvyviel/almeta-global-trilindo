@@ -47,6 +47,7 @@ class ShipmentController extends Controller
             'etb' => 'required|date',
             'etd' => 'required|date',
             'eta' => 'required|date',
+            'rate' => 'required|numeric|min:0' // Add validation for rate
         ]);
 
         $shipment = Shipment::findOrFail($id);

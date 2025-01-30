@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class ShipmentData extends Component
 {
-
     public $isOpen = false;
     public $editingShipmentId;
 
@@ -19,6 +18,7 @@ class ShipmentData extends Component
     public $etb = '';
     public $etd = '';
     public $eta = '';
+    public $rate = ''; // Added rate property
 
     public $cities = [
         'surabaya',
@@ -45,6 +45,7 @@ class ShipmentData extends Component
         'etb' => 'required|date',
         'etd' => 'required|date|after:etb',
         'eta' => 'required|date|after:etd',
+        'rate' => 'required|numeric|min:0', // Added rate validation
     ];
 
     protected $messages = [
@@ -57,6 +58,9 @@ class ShipmentData extends Component
         'eta.required' => 'ETA is required',
         'etd.after' => 'ETD must be after ETB',
         'eta.after' => 'ETA must be after ETD',
+        'rate.required' => 'Rate per container is required',
+        'rate.numeric' => 'Rate must be a number',
+        'rate.min' => 'Rate cannot be negative',
     ];
 
     public function addSchedule()
@@ -71,7 +75,7 @@ class ShipmentData extends Component
             Shipment::create($validatedData);
 
             // Reset form
-            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta']);
+            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta', 'rate']);
 
             // Show success message
             session()->flash('success', 'Shipment schedule created successfully!');
@@ -81,7 +85,6 @@ class ShipmentData extends Component
         }
     }
 
-    // Method untuk menghapus shipment
     public function deleteShipment($shipmentId)
     {
         try {
@@ -109,49 +112,9 @@ class ShipmentData extends Component
         $this->etb = $shipment->etb;
         $this->etd = $shipment->etd;
         $this->eta = $shipment->eta;
+        $this->rate = $shipment->rate;
     }
 
-    public function openEditModal($shipmentId)
-    {
-        $this->editingShipmentId = $shipmentId;
-        $shipment = Shipment::findOrFail($shipmentId);
-
-        $this->vessel_name = $shipment->vessel_name;
-        $this->from_city = $shipment->from_city;
-        $this->to_city = $shipment->to_city;
-        $this->closing_cargo = $shipment->closing_cargo;
-        $this->etb = $shipment->etb;
-        $this->etd = $shipment->etd;
-        $this->eta = $shipment->eta;
-
-        $this->isOpen = true;
-    }
-
-    public function updateShipment()
-    {
-        $this->validate();
-
-        try {
-            $shipment = Shipment::findOrFail($this->editingShipmentId);
-
-            $shipment->update([
-                'vessel_name' => strtoupper($this->vessel_name),
-                'from_city' => $this->from_city,
-                'to_city' => $this->to_city,
-                'closing_cargo' => $this->closing_cargo,
-                'etb' => $this->etb,
-                'etd' => $this->etd,
-                'eta' => $this->eta,
-            ]);
-
-            $this->isOpen = false;
-            $this->reset(['editingShipmentId']);
-            session()->flash('success', 'Shipment updated successfully!');
-        } catch (\Exception $e) {
-            Log::error('Error updating shipment: ' . $e->getMessage());
-            session()->flash('error', 'Failed to update shipment. Please try again.');
-        }
-    }
 
     public function update()
     {
