@@ -41,11 +41,20 @@ class ContainerController extends Controller
     }
 
 
-    public function releaseOrder() 
+    public function releaseOrder(Request $request)
     {
-        $container = auth()->user()->container()->with('shipment_container')->get();
+        $query = auth()->user()->container()->with('shipment_container');
+
+        // Cek apakah ada filter dan tidak memilih "all"
+        if ($request->has('filter') && $request->filter !== 'all') {
+            $query->where('status', $request->filter);
+        }
+
+        $container = $query->get();
         return view('user.release-order', compact('container'));
     }
+
+
 
     public function historyRo()
     {

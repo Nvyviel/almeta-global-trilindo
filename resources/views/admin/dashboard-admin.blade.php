@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('component')
 <div class="container mx-auto px-4 py-6">
-    <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+    <div class="bg-white overflow-hidden">
         {{-- Search Section --}}
         <div class="bg-gray-50 p-4 border-b border-gray-200">
             <form action="{{ route('dashboard-admin') }}" method="GET" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-3">
@@ -42,7 +42,7 @@
             <div class="bg-white border-b border-gray-200 p-4 hover:bg-gray-50 transition duration-300">
                 <div class="flex justify-between items-center mb-3">
                     <span class="text-gray-500 font-semibold">#{{ $loop->iteration }}</span>
-                    <a href="{{ route('detail-user', $user->id) }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                    <a href="{{ route('detail-user', $user->id) }}" class="text-blue-600 underline hover:text-blue-800 font-medium">
                         {{ $user->email }}
                     </a>
                 </div>

@@ -19,25 +19,24 @@ class ShippingInstructionData extends Component
 
     public function mount()
     {
-        // Load only shipments that have unused containers
         $this->loadAvailableShipments();
     }
 
     protected function loadAvailableShipments()
     {
-        // Get shipments that have at least one unused container
-        $shipmentsWithUnusedContainers = Shipment::whereHas('containers', function ($query) {
-            $query->whereNotIn('id', function ($subQuery) {
-                $subQuery->select('container_id')
-                    ->from('shipping_instructions')
-                    ->groupBy('container_id');
-            });
+        // Get shipments that have at least one unused AND approved container
+        $shipmentsWithAvailableContainers = Shipment::whereHas('containers', function ($query) {
+            $query->where('status', 'Approved')  // Add status check
+                ->whereNotIn('id', function ($subQuery) {
+                    $subQuery->select('container_id')
+                        ->from('shipping_instructions')
+                        ->groupBy('container_id');
+                });
         })->select('id', 'vessel_name')->get();
 
-        $this->shipments = $shipmentsWithUnusedContainers;
+        $this->shipments = $shipmentsWithAvailableContainers;
 
-        // If current shipment has no more unused containers, reset it
-        if ($this->shipment_id && !$shipmentsWithUnusedContainers->contains('id', $this->shipment_id)) {
+        if ($this->shipment_id && !$shipmentsWithAvailableContainers->contains('id', $this->shipment_id)) {
             $this->reset(['shipment_id', 'container_id', 'container_numbers', 'seal_numbers', 'container_notes']);
         }
     }
@@ -53,19 +52,19 @@ class ShippingInstructionData extends Component
         ]);
 
         if ($shipmentId) {
-            // Load only unused containers for the selected shipment
+            // Load only unused AND approved containers for the selected shipment
             $this->containers = Container::where('shipment_id', $shipmentId)
+                ->where('status', 'Approved')  // Add status check
                 ->whereNotIn('id', function ($query) {
                     $query->select('container_id')
                         ->from('shipping_instructions')
                         ->groupBy('container_id');
                 })->get();
 
-            // If no containers available, reset shipment selection
             if ($this->containers->isEmpty()) {
                 $this->shipment_id = null;
                 $this->containers = [];
-                session()->flash('info', 'No available containers for this shipment.');
+                session()->flash('info', 'No available approved containers for this shipment.');
             }
         }
     }
@@ -73,7 +72,10 @@ class ShippingInstructionData extends Component
     public function updatedContainerId($containerId)
     {
         if ($containerId) {
-            $container = Container::findOrFail($containerId);
+            $container = Container::where('id', $containerId)
+                ->where('status', 'Approved')  // Add status check
+                ->firstOrFail();
+
             $this->container_numbers = array_fill(0, $container->quantity, '');
             $this->seal_numbers = array_fill(0, $container->quantity, '');
             $this->container_notes = array_fill(0, $container->quantity, '');
@@ -84,7 +86,16 @@ class ShippingInstructionData extends Component
     {
         $rules = [
             'shipment_id' => 'required|exists:shipments,id',
-            'container_id' => 'required|exists:containers,id',
+            'container_id' => [
+                'required',
+                'exists:containers,id',
+                function ($attribute, $value, $fail) {
+                    $container = Container::find($value);
+                    if ($container && $container->status !== 'Approved') {
+                        $fail('The selected container must be approved.');
+                    }
+                },
+            ],
         ];
 
         foreach (range(0, count($this->container_numbers) - 1) as $index) {
@@ -105,6 +116,13 @@ class ShippingInstructionData extends Component
             return;
         }
 
+        // Additional check for container approval status
+        $container = Container::find($this->container_id);
+        if ($container->status !== 'Approved') {
+            $this->addError('container_id', 'Only approved containers can be processed.');
+            return;
+        }
+
         try {
             foreach (range(0, count($this->container_numbers) - 1) as $index) {
                 ShippingInstruction::create([
@@ -116,10 +134,8 @@ class ShippingInstructionData extends Component
                 ]);
             }
 
-            // Reload available shipments after storing new instructions
             $this->loadAvailableShipments();
 
-            // Reset form
             $this->reset([
                 'shipment_id',
                 'container_id',

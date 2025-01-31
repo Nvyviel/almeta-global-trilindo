@@ -132,11 +132,17 @@
                                         <p class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($shipment->eta)->format('H:i') }}</p>
                                     </div>
                                 </div>
+                                <div class="flex justify-between items-center mt-6">
+                                    <div class="text-right flex-1">
+                                        <p class="text-3xl font-bold text-gray-900">Rp {{ number_format($shipment->rate, 0, ',', '.') }}</p>
+                                        <p class="text-sm text-gray-500">/ Container</p>
+                                    </div>
+                                </div>
 
                                 <!-- Action Button -->
-                                <div class="mt-6 text-right">
+                                <div class="mt-4 text-right">
                                     <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}" 
-                                       class="inline-flex items-center px-6 py-2.5 bg-gray-300 text-gray-800 font-medium text-sm rounded-full hover:bg-gray-400 focus:ring-4 focus:ring-gray-200 transition-colors duration-200">
+                                    class="inline-flex items-center px-6 py-2.5 bg-gray-300 text-gray-800 font-medium text-sm rounded-full hover:bg-gray-400 focus:ring-4 focus:ring-gray-200 transition-colors duration-200">
                                         Book Now 
                                         <i class="fas fa-arrow-right ml-2"></i>
                                     </a>

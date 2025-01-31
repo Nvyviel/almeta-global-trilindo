@@ -24,10 +24,10 @@ class ShippingInstructionController extends Controller
         return view('user.shipping-instruction', compact('containers'));
     }
 
-    public function showDetail($containerId)
+    public function showDetail($container)
     {
         $container = Container::with(['shipment_container', 'shippingInstructions'])
-        ->findOrFail($containerId);
+        ->findOrFail($container);
 
         return view('user.shipping-instruction-detail', compact('container'));
     }

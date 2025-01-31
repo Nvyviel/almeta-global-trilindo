@@ -1,18 +1,14 @@
 @extends('layouts.main')
 @section('component')
 <div class="min-h-screen">
-    <div class="container mx-auto px-4 md:py-12">
+    <div class="container mx-auto px-4">
         <!-- Header Section -->
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12">
                 <div class="text-center md:text-left mb-4 md:mb-0">
                     <h1 class="text-3xl md:text-4xl font-bold text-blue-900 flex items-center justify-center md:justify-start gap-3">
-                        <i class="fa-solid fa-ship text-blue-600 mr-2"></i>
                         Release Orders
                     </h1>
-                    <p class="mt-2 text-gray-600 text-sm md:text-base">
-                        Manage and track your container shipments
-                    </p>
                 </div>
                 <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 
                     bg-red-200 rounded-full hover:bg-red-300 text-red-700 transition-all 
@@ -22,9 +18,35 @@
                 </a>
             </div>
 
+            <!-- Filter Section -->
+            <div class="mb-6">
+                <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                    <a href="{{ route('release-order', ['filter' => 'all']) }}" 
+                       class="px-4 py-2 rounded-full text-sm font-medium transition-all
+                       {{ request('filter', 'all') === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                        All
+                    </a>
+                    <a href="{{ route('release-order', ['filter' => 'Requested']) }}" 
+                       class="px-4 py-2 rounded-full text-sm font-medium transition-all
+                       {{ request('filter') === 'Requested' ? 'bg-yellow-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                        Requested
+                    </a>
+                    <a href="{{ route('release-order', ['filter' => 'Approved']) }}" 
+                       class="px-4 py-2 rounded-full text-sm font-medium transition-all
+                       {{ request('filter') === 'Approved' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                        Approved
+                    </a>
+                    <a href="{{ route('release-order', ['filter' => 'Canceled']) }}" 
+                       class="px-4 py-2 rounded-full text-sm font-medium transition-all
+                       {{ request('filter') === 'Canceled' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                        Canceled
+                    </a>
+                </div>
+            </div>
+
             <!-- Container List -->
             <div class="space-y-6">
-                @forelse (auth()->user()->container as $container)
+                @forelse ($container as $container)
                     <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden 
                                 transition-all duration-300 hover:shadow-xl hover:scale-[1.01]">
                         <div class="p-6">
@@ -114,10 +136,12 @@
                             <i class="fa-solid fa-box-open text-4xl text-blue-500"></i>
                         </div>
                         <h2 class="text-2xl font-semibold text-gray-900 mb-3">
-                            No Release Orders
+                            No Release Orders Found
                         </h2>
                         <p class="text-gray-600 max-w-md mx-auto mb-6 px-4">
-                            You haven't created any release orders yet. Start by creating your first order.
+                            {{ request('filter', 'all') === 'all' 
+                                ? "You haven't created any release orders yet. Start by creating your first order."
+                                : "No " . request('filter', '') . " orders found." }}
                         </p>
                         <a href="{{ route('dashboard') }}" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                             Create First Order
