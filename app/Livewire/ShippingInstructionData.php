@@ -6,27 +6,46 @@ use Livewire\Component;
 use App\Models\Container;
 use App\Models\Shipment;
 use App\Models\ShippingInstruction;
+use App\Models\Consignee;
+use Illuminate\Support\Facades\Auth;
 
 class ShippingInstructionData extends Component
 {
     public $shipment_id;
     public $container_id;
+    public $consignee_id;
     public $container_numbers = [];
     public $seal_numbers = [];
     public $container_notes = [];
     public $shipments = [];
     public $containers = [];
+    public $consignees = [];
+    public $user;
 
     public function mount()
     {
+        $this->user = Auth::user();
         $this->loadAvailableShipments();
+        $this->loadConsignees();
+    }
+
+    protected function loadConsignees()
+    {
+        $this->consignees = Consignee::select(
+            'id',
+            'name_consignee',
+            'industry',
+            'city',
+            'email',
+            'phone_number',
+            'consignee_address'
+        )->get();
     }
 
     protected function loadAvailableShipments()
     {
-        // Get shipments that have at least one unused AND approved container
         $shipmentsWithAvailableContainers = Shipment::whereHas('containers', function ($query) {
-            $query->where('status', 'Approved')  // Add status check
+            $query->where('status', 'Approved')
                 ->whereNotIn('id', function ($subQuery) {
                     $subQuery->select('container_id')
                         ->from('shipping_instructions')
@@ -37,7 +56,14 @@ class ShippingInstructionData extends Component
         $this->shipments = $shipmentsWithAvailableContainers;
 
         if ($this->shipment_id && !$shipmentsWithAvailableContainers->contains('id', $this->shipment_id)) {
-            $this->reset(['shipment_id', 'container_id', 'container_numbers', 'seal_numbers', 'container_notes']);
+            $this->reset([
+                'shipment_id',
+                'container_id',
+                'consignee_id',
+                'container_numbers',
+                'seal_numbers',
+                'container_notes'
+            ]);
         }
     }
 
@@ -52,9 +78,8 @@ class ShippingInstructionData extends Component
         ]);
 
         if ($shipmentId) {
-            // Load only unused AND approved containers for the selected shipment
             $this->containers = Container::where('shipment_id', $shipmentId)
-                ->where('status', 'Approved')  // Add status check
+                ->where('status', 'Approved')
                 ->whereNotIn('id', function ($query) {
                     $query->select('container_id')
                         ->from('shipping_instructions')
@@ -73,7 +98,7 @@ class ShippingInstructionData extends Component
     {
         if ($containerId) {
             $container = Container::where('id', $containerId)
-                ->where('status', 'Approved')  // Add status check
+                ->where('status', 'Approved')
                 ->firstOrFail();
 
             $this->container_numbers = array_fill(0, $container->quantity, '');
@@ -96,6 +121,7 @@ class ShippingInstructionData extends Component
                     }
                 },
             ],
+            'consignee_id' => 'required|exists:consignees,id',
         ];
 
         foreach (range(0, count($this->container_numbers) - 1) as $index) {
@@ -116,7 +142,6 @@ class ShippingInstructionData extends Component
             return;
         }
 
-        // Additional check for container approval status
         $container = Container::find($this->container_id);
         if ($container->status !== 'Approved') {
             $this->addError('container_id', 'Only approved containers can be processed.');
@@ -126,11 +151,14 @@ class ShippingInstructionData extends Component
         try {
             foreach (range(0, count($this->container_numbers) - 1) as $index) {
                 ShippingInstruction::create([
+                    'user_id' => $this->user->id,
                     'shipment_id' => $this->shipment_id,
                     'container_id' => $this->container_id,
+                    'consignee_id' => $this->consignee_id,
                     'no_container' => $this->container_numbers[$index],
                     'no_seal' => $this->seal_numbers[$index],
-                    'note' => $this->container_notes[$index] ?? null
+                    'note' => $this->container_notes[$index] ?? null,
+                    'status' => 'Requested'
                 ]);
             }
 
@@ -139,6 +167,7 @@ class ShippingInstructionData extends Component
             $this->reset([
                 'shipment_id',
                 'container_id',
+                'consignee_id',
                 'container_numbers',
                 'seal_numbers',
                 'container_notes'

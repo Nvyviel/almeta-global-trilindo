@@ -2,6 +2,7 @@
 
 use App\Models\Shipment;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\SealController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShipmentController;
@@ -77,3 +78,6 @@ Route::delete('/consignees/{consignee}', [ConsigneeController::class, 'destroy']
 Route::get('/shipping-instruction', [ShippingInstructionController::class, 'showList'])->name('shipping-instruction');
 Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
 Route::get('/dashboard/shipping-instruction/request', [ShippingInstructionController::class, 'requestSi'])->name('request-si');
+
+// BILL OF LADING
+Route::get('/bill-of-lading', [BillController::class, 'listBill'])->name('list-bill');

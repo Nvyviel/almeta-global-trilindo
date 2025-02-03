@@ -26,8 +26,8 @@ class ConsigneeManagement extends Component
         'city' => 'required|string',
         'phone_number' => 'required|numeric',
         'consignee_address' => 'required|string',
-        'ktp_consignee' => 'required|string',
-        'npwp_consignee' => 'required|string'
+        // 'ktp_consignee' => 'required|string',
+        // 'npwp_consignee' => 'required|string'
     ];
 
     public function store()
@@ -42,8 +42,8 @@ class ConsigneeManagement extends Component
             'city' => $this->city,
             'phone_number' => $this->phone_number,
             'consignee_address' => $this->consignee_address,
-            'ktp_consignee' => $this->ktp_consignee,
-            'npwp_consignee' => $this->npwp_consignee,
+            // 'ktp_consignee' => $this->ktp_consignee,
+            // 'npwp_consignee' => $this->npwp_consignee,
         ]);
 
         session()->flash('message', 'Data Consignee berhasil ditambahkan.');

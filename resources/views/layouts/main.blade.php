@@ -95,11 +95,8 @@
                     <a href="{{ route('shipping-instruction') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('shipping-instruction') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                         <i class="fas fa-file-alt mr-2"></i> Shipping Instruction
                     </a>
-                    <a href="#" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                    <a href="{{ route('list-bill') }}" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
                         <i class="fas fa-scroll mr-2"></i> Bill of Lading
-                    </a>
-                    <a href="#" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
-                        <i class="fas fa-truck mr-2"></i> Transaction Order
                     </a>
                     <a href="{{ route('seal') }}" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
                         <i class="fas fa-lock mr-2"></i> Seal
@@ -146,11 +143,8 @@
                         <a href="{{ route('shipping-instruction') }}" class="{{ $linkClass }} {{ request()->routeIs('shipping-instruction') ? $activeLinkClass : $inactiveLinkClass }}">
                             <i class="fas fa-file-alt mr-3"></i> Shipping Instruction
                         </a>
-                        <a href="#" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                        <a href="{{ route('list-bill') }}" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
                             <i class="fas fa-scroll mr-3"></i> Bill of Lading
-                        </a>
-                        <a href="#" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
-                            <i class="fas fa-truck mr-3"></i> Transaction Order
                         </a>
                         <a href="{{ route('seal') }}" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
                             <i class="fas fa-lock mr-3"></i> Seal

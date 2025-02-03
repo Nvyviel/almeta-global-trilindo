@@ -14,6 +14,9 @@
                 
                 <!-- Profile Dropdown -->
                 <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
                     <div class="relative">
                         <button 
                             id="dropdownToggle"
@@ -23,7 +26,7 @@
                                 <img 
                                     src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->company_name) }}&background=0D8AFD&color=fff" 
                                     alt="{{ Auth::user()->company_name }}" 
-                                    class="w-10 h-10 rounded-full border-2 border-blue-500"
+                                    class="w-10 h-10 rounded-full border-2 border-red   -500"
                                 >
                                 @if(!Auth::user()->is_admin)
                                     <span class="absolute bottom-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white bg-yellow-500"></span>
@@ -53,8 +56,8 @@
                                 <a href="{{ route('profile-edit') }}" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                     <i class="fas fa-user mr-3"></i> Profile
                                 </a>
-                                <a href="#" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
-                                    <i class="fas fa-cog mr-3"></i> Settings
+                                <a href="{{ route('consignee') }}" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                    <i class="fas fa-users mr-3"></i> Consignee
                                 </a>
                             </div>
                             <div class="border-t border-gray-200 py-1">
@@ -63,8 +66,7 @@
                                     <button 
                                         type="button" 
                                         onclick="confirmLogout()"
-                                        class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center"
-                                    >
+                                        class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center">
                                         <i class="fas fa-sign-out-alt mr-3"></i> Logout
                                     </button>
                                 </form>

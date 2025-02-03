@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('consignees', function (Blueprint $table) {
@@ -16,10 +13,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('industry');
             $table->string('name_consignee');
-            $table->string('pic');
+            $table->string('city');
             $table->string('email')->unique();
             $table->bigInteger('phone_number');
             $table->text('consignee_address');
+            // $table->unsignedBigInteger('ktp_number');
             $table->timestamps();
         });
     }

@@ -26,4 +26,9 @@ class Shipment extends Model
     {
         return $this->hasMany(Container::class);
     }
+
+    public function shippingInstructions()
+    {
+        return $this->hasMany(ShippingInstruction::class);
+    }
 }

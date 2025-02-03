@@ -22,13 +22,13 @@ class Container extends Model
         return $this->belongsTo(Shipment::class, 'shipment_id');
     }
 
-    public function shippingInstructions()
-    {
-        return $this->hasMany(ShippingInstruction::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function shippingInstructions()
+    {
+        return $this->hasMany(ShippingInstruction::class);
     }
 }

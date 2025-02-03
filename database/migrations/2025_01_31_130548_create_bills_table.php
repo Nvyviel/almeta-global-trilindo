@@ -9,19 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-
     public function up(): void
     {
-        Schema::create('shipping_instructions', function (Blueprint $table) {
+        Schema::create('bills', function (Blueprint $table) {
             $table->id();
+            $table->string('bill_id')->unique();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('container_id')->constrained()->onDelete('cascade');
             $table->foreignId('shipment_id')->constrained()->onDelete('cascade');
-            $table->foreignId('consignee_id')->constrained()->onDelete('cascade');
-            $table->string('no_container');
-            $table->string('no_seal');
-            $table->string('note')->nullable();
-            $table->enum('status', ['Requested','Approved','Rejected']);
+            $table->foreignId('container_id')->constrained()->onDelete('cascade');
+            $table->foreignId('shipping_instruction_id')->constrained()->onDelete('cascade');
+            $table->enum('status', ['Paid','Unpaid']);
+            $table->enum('payment_term', ['Port To Port']);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('shipping_instructions');
+        Schema::dropIfExists('bills');
     }
 };

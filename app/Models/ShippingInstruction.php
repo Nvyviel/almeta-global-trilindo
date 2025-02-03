@@ -15,4 +15,9 @@ class ShippingInstruction extends Model
     {
         return $this->belongsTo(Container::class);
     }
+
+    public function shipment()
+    {
+        return $this->belongsTo(Shipment::class);
+    }
 }

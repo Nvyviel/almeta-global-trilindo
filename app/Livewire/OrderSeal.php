@@ -6,8 +6,6 @@ use App\Models\Seal;
 use Livewire\Component;
 use App\Models\StockSeal;
 use Livewire\Attributes\On;
-use Midtrans\Config;
-use Midtrans\Snap;
 
 class OrderSeal extends Component
 {
@@ -16,7 +14,6 @@ class OrderSeal extends Component
     public $price = 100000;
     public $totalPrice = [];
     public $availableStock = 0;
-    public $snapToken;
     public $seal;
 
     protected $rules = [
@@ -43,15 +40,6 @@ class OrderSeal extends Component
     {
         $this->calculateAvailableStock();
         $this->totalPrice = $this->quantity * $this->price;
-        $this->setupMidtransConfig();
-    }
-
-    private function setupMidtransConfig()
-    {
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
-        Config::$isSanitized = true;
-        Config::$is3ds = true;
     }
 
     #[On('success')]
@@ -82,58 +70,21 @@ class OrderSeal extends Component
                 'quantity' => $this->quantity,
                 'price' => $this->price,
                 'total_price' => $this->totalPrice,
-                'status' => 'Payment Proccess'
+                'status' => 'Success'
             ]);
 
             $this->reduceStock($this->quantity);
-            $this->initiateMidtransPayment();
+            $this->dispatch('order-success');
+            session()->flash('success', 'Order created successfully!');
+            
+            $this->reset(['pickup_point', 'quantity']);
+            $this->quantity = 1;
+            $this->totalPrice = $this->price;
+            $this->calculateAvailableStock();
+
         } catch (\Exception $e) {
             $this->dispatch('purchaseError', $e->getMessage());
             session()->flash('error', 'Failed to create order: ' . $e->getMessage());
-        }
-    }
-
-    private function initiateMidtransPayment()
-    {
-        try {
-            $transactionDetails = [
-                'order_id' => 'SEAL-' . $this->seal->id . '-' . time(),
-                'gross_amount' => (int) $this->totalPrice
-            ];
-
-            $customerDetails = [
-                'first_name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-            ];
-
-            $itemDetails = [
-                [
-                    'id' => $this->seal->id_seal,
-                    'price' => $this->price,
-                    'quantity' => $this->quantity,
-                    'name' => 'Seal from ' . $this->pickup_point,
-                ]
-            ];
-
-            $midtransParams = [
-                'transaction_details' => $transactionDetails,
-                'customer_details' => $customerDetails,
-                'item_details' => $itemDetails,
-            ];
-
-            $this->snapToken = Snap::getSnapToken($midtransParams);
-
-            $this->dispatch('order-success');
-            $this->dispatch('showPaymentModal', $this->snapToken);
-        } catch (\Exception $e) {
-            // Rollback the order if payment initiation fails
-            if ($this->seal) {
-                $this->seal->delete();
-                $this->restoreStock($this->quantity);
-            }
-
-            $this->dispatch('purchaseError', $e->getMessage());
-            session()->flash('error', 'Payment initiation failed: ' . $e->getMessage());
         }
     }
 
@@ -152,33 +103,9 @@ class OrderSeal extends Component
 
     private function restoreStock($quantity)
     {
-        // Restore stock if payment fails
         $firstStock = StockSeal::orderBy('created_at', 'asc')->first();
         if ($firstStock) {
             $firstStock->increment('stock', $quantity);
-        }
-    }
-
-    #[On('paymentSuccess')]
-    public function handlePaymentSuccess()
-    {
-        if ($this->seal) {
-            $this->seal->update(['status' => 'Success']);
-            $this->reset(['pickup_point', 'quantity']);
-            $this->quantity = 1;
-            $this->totalPrice = $this->price;
-            $this->calculateAvailableStock();
-            session()->flash('success', 'Payment completed successfully!');
-        }
-    }
-
-    #[On('paymentFailed')]
-    public function handlePaymentFailure()
-    {
-        if ($this->seal) {
-            $this->seal->update(['status' => 'Canceled']);
-            $this->restoreStock($this->seal->quantity);
-            session()->flash('error', 'Payment failed or canceled.');
         }
     }
 

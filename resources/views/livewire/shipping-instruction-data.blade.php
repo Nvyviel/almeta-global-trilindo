@@ -7,8 +7,63 @@
             </h2>
         </div>
 
+        {{-- Selected Consignee Details (Moved to top) --}}
+        @if($consignee_id)
+            @php
+                $selectedConsignee = $consignees->find($consignee_id);
+            @endphp
+            <div class="p-8 border-b border-gray-200">
+                <h4 class="text-xl font-semibold text-gray-800 mb-6">Consignee Details</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gray-50 p-4 rounded-xl">
+                        <p class="text-sm text-gray-600">Industry</p>
+                        <p class="font-medium text-gray-900">{{ $selectedConsignee->industry }}</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl">
+                        <p class="text-sm text-gray-600">City</p>
+                        <p class="font-medium text-gray-900">{{ $selectedConsignee->city }}</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl">
+                        <p class="text-sm text-gray-600">Email</p>
+                        <p class="font-medium text-gray-900">{{ $selectedConsignee->email }}</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl">
+                        <p class="text-sm text-gray-600">Phone Number</p>
+                        <p class="font-medium text-gray-900">{{ $selectedConsignee->phone_number }}</p>
+                    </div>
+                    <div class="bg-gray-50 p-4 rounded-xl md:col-span-2">
+                        <p class="text-sm text-gray-600">Address</p>
+                        <p class="font-medium text-gray-900">{{ $selectedConsignee->consignee_address }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <form wire:submit.prevent="store" class="p-10 space-y-10">
-            <div class="grid lg:grid-cols-2 gap-10">
+            <div class="grid lg:grid-cols-3 gap-10">
+                {{-- Consignee Dropdown --}}
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-100 shadow-sm">
+                    <label for="consignee_id" class="block text-lg font-semibold text-blue-800 mb-4">
+                        <i class="fas fa-building text-blue-600 mr-2"></i>Select Consignee
+                    </label>
+                    <select 
+                        wire:model="consignee_id" 
+                        id="consignee_id" 
+                        class="block w-full px-5 py-3 bg-white border border-blue-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                    >
+                        <option value="">Choose a Consignee</option>
+                        @foreach($consignees as $consignee)
+                            <option value="{{ $consignee->id }}">{{ $consignee->name_consignee }}</option>
+                        @endforeach
+                    </select>
+                    @error('consignee_id')
+                        <p class="mt-3 text-sm text-red-600 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-2"></i>
+                            {{ $message }}
+                        </p>
+                    @enderror
+                </div>
+
                 {{-- Shipment Dropdown --}}
                 <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-8 rounded-2xl border border-indigo-100 shadow-sm">
                     <label for="shipment_id" class="block text-lg font-semibold text-indigo-800 mb-4">
@@ -21,11 +76,7 @@
                     >
                         <option value="">Choose a Shipment</option>
                         @foreach($shipments as $shipment)
-                            @if($shipment->containers->where('status', 'Approved')->count() > 0)
-                                <option value="{{ $shipment->id }}">
-                                    {{ $shipment->vessel_name }}
-                                </option>
-                            @endif
+                            <option value="{{ $shipment->id }}">{{ $shipment->vessel_name }}</option>
                         @endforeach
                     </select>
                     @error('shipment_id')
@@ -49,11 +100,9 @@
                     >
                         <option value="">Choose a Container</option>
                         @foreach($containers as $container)
-                            @if($container->status === 'Approved')
-                                <option value="{{ $container->id }}">
-                                    {{ $container->id_order }} - {{ $container->container_type }} (Qty: {{ $container->quantity }})
-                                </option>
-                            @endif
+                            <option value="{{ $container->id }}">
+                                {{ $container->id_order }} - {{ $container->container_type }} (Qty: {{ $container->quantity }})
+                            </option>
                         @endforeach
                     </select>
                     @error('container_id')
@@ -64,6 +113,7 @@
                     @enderror
                 </div>
                 @endif
+            </div>
 
             {{-- Container Details Inputs --}}
             @if($container_id && count($container_numbers) > 0)
@@ -79,12 +129,15 @@
                             
                             <div class="grid lg:grid-cols-2 gap-8">
                                 <div>
-                                    <label for="container_numbers.{{ $index }}" class="block text-sm font-semibold text-gray-700 mb-2">Container Number</label>
+                                    <label for="container_numbers.{{ $index }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Container Number
+                                    </label>
                                     <input 
                                         type="text" 
                                         wire:model="container_numbers.{{ $index }}" 
                                         id="container_numbers.{{ $index }}"
                                         class="block w-full px-5 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+                                        placeholder="Enter container number"
                                     >
                                     @error("container_numbers.{$index}")
                                         <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -95,12 +148,15 @@
                                 </div>
 
                                 <div>
-                                    <label for="seal_numbers.{{ $index }}" class="block text-sm font-semibold text-gray-700 mb-2">Seal Number</label>
+                                    <label for="seal_numbers.{{ $index }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Seal Number
+                                    </label>
                                     <input 
                                         type="text" 
                                         wire:model="seal_numbers.{{ $index }}" 
                                         id="seal_numbers.{{ $index }}"
                                         class="block w-full px-5 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+                                        placeholder="Enter seal number"
                                     >
                                     @error("seal_numbers.{$index}")
                                         <p class="mt-2 text-sm text-red-600 flex items-center">
@@ -109,28 +165,32 @@
                                         </p>
                                     @enderror
                                 </div>
-                            </div>
 
-                            <div class="mt-8">
-                                <label for="container_notes.{{ $index }}" class="block text-sm font-semibold text-gray-700 mb-2">Notes</label>
-                                <textarea 
-                                    wire:model="container_notes.{{ $index }}" 
-                                    id="container_notes.{{ $index }}"
-                                    rows="4"
-                                    class="block w-full px-5 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
-                                ></textarea>
-                                @error("container_notes.{$index}")
-                                    <p class="mt-2 text-sm text-red-600 flex items-center">
-                                        <i class="fas fa-exclamation-circle mr-2"></i>
-                                        {{ $message }}
-                                    </p>
-                                @enderror
+                                <div class="lg:col-span-2">
+                                    <label for="container_notes.{{ $index }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                        Notes
+                                    </label>
+                                    <textarea 
+                                        wire:model="container_notes.{{ $index }}" 
+                                        id="container_notes.{{ $index }}"
+                                        rows="4"
+                                        class="block w-full px-5 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+                                        placeholder="Add any additional notes here"
+                                    ></textarea>
+                                    @error("container_notes.{$index}")
+                                        <p class="mt-2 text-sm text-red-600 flex items-center">
+                                            <i class="fas fa-exclamation-circle mr-2"></i>
+                                            {{ $message }}
+                                        </p>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
             @endif
 
+            {{-- Submit Button --}}
             <div class="pt-10">
                 <button 
                     type="submit" 
