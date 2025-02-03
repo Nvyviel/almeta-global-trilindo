@@ -70,7 +70,7 @@ class OrderSeal extends Component
                 'quantity' => $this->quantity,
                 'price' => $this->price,
                 'total_price' => $this->totalPrice,
-                'status' => 'Success'
+                'status' => 'Payment Proccess'
             ]);
 
             $this->reduceStock($this->quantity);
