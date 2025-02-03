@@ -24,22 +24,7 @@
                     <p><span class="font-medium">Quantity:</span> {{ $container->quantity }}</p>
                 </div>
             </div>
-            <div class="user-details">
-                <div class="mb-3">
-                    <label class="font-bold">Name:</label>
-                    <span>{{ $shippingInstruction->user->name }}</span>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="font-bold">Company Name:</label>
-                    <span>{{ $shippingInstruction->user->company_name }}</span>
-                </div>
-                
-                <div class="mb-3">
-                    <label class="font-bold">Company Address:</label>
-                    <span>{{ $shippingInstruction->user->company_address }}</span>
-                </div>
-            </div>
+        
 
             <!-- Shipping Instructions Table -->
             <div class="overflow-x-auto">
