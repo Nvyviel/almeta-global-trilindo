@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\support\facades\Log;
+use Midtrans\Snap;
 use App\Models\Seal;
+use Midtrans\Config;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Midtrans\Snap;
-use Midtrans\Config;
 
 class SealController extends Controller
 {
@@ -79,60 +80,56 @@ class SealController extends Controller
     }
 
 
-
     public function handleCallback(Request $request)
     {
-        $notif = $request->input('notification');
+        try {
+            Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+            Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
 
-        error_log($notif);
+            // Get notification body from Midtrans
+            $notificationBody = json_decode($request->getContent(), true);
 
-        $transaction = $notif->transaction_status;
-        $type = $notif->payment_type;
-        $orderId = $notif->order_id;
-        $fraud = $notif->fraud_status;
+            // Handle the notification
+            $orderId = $notificationBody['order_id'];
+            $transactionStatus = $notificationBody['transaction_status'];
+            $fraudStatus = $notificationBody['fraud_status'] ?? null;
+            $paymentType = $notificationBody['payment_type'];
 
-        if ($transaction == 'capture') {
+            // Find the seal
+            $seal = Seal::where('id_seal', $orderId)->first();
 
-            if ($type == 'credit_card') {
-                if ($fraud == 'challenge') {
-                    $seals = Seal::where('id', $orderId)->first();
-                    $seals->status = 'payment_process';
-                    $seals->save();
-                } else {
-                    $seals = Seal::where('id', $orderId)->first();
-                    $seals->status = 'success';
-                    $seals->save();
-                }
+            if (!$seal) {
+                Log::error('Seal not found for order: ' . $orderId);
+                return response()->json(['error' => 'Order not found'], 404);
             }
-        } else if ($transaction == 'settlement') {
-            $seals = Seal::where('id', $orderId)->first();
-            $seals->status = 'success';
-            $seals->save();
-        } else if ($transaction == 'pending') {
-            $seals = Seal::where('id', $orderId)->first();
-            $seals->status = 'payment_process';
-            $seals->save();
-        } else if ($transaction == 'deny') {
-            $seals = Seal::where('id', $orderId)->first();
-            $seals->status = 'payment_process';
-            $seals->save();
-        } else if ($transaction == 'expire') {
-            $seals = Seal::where('id', $orderId)->first();
-            $seals->status = 'payment_process';
-            $seals->save();
-        } else if ($transaction == 'cancel') {
 
-            if ($fraud == 'challenge') {
-                $seals = Seal::where('id', $orderId)->first();
-                $seals->status = 'payment_process';
-                $seals->save();
-            } else {
-                $seals = Seal::where('id', $orderId)->first();
-                $seals->status = 'payment_process';
-                $seals->save();
+            // Update seal status based on transaction status
+            switch ($transactionStatus) {
+                case 'capture':
+                    if ($paymentType == 'credit_card') {
+                        $seal->status = ($fraudStatus == 'challenge') ? 'payment_process' : 'success';
+                    }
+                    break;
+                case 'settlement':
+                    $seal->status = 'success';
+                    break;
+                case 'pending':
+                    $seal->status = 'payment_process';
+                    break;
+                case 'deny':
+                case 'expire':
+                case 'cancel':
+                    $seal->status = 'failed';
+                    break;
             }
+
+            $seal->save();
+
+            // Return success response
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            Log::error('Midtrans callback error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
-
-        return redirect()->route('seal');
     }
 }

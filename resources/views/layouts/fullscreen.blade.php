@@ -53,15 +53,15 @@
                                 <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
                             </div>
                             <div class="py-1">
-                                <a href="{{ route('profile-edit') }}" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <a href="{{ route('profile-edit') }}" wire:navigate class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                     <i class="fas fa-user mr-3"></i> Profile
                                 </a>
-                                <a href="{{ route('consignee') }}" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                                <a href="{{ route('consignee') }}" wire:navigate class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                     <i class="fas fa-users mr-3"></i> Consignee
                                 </a>
                             </div>
                             <div class="border-t border-gray-200 py-1">
-                                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                                <form method="POST" action="{{ route('logout') }}" wire:navigate id="logout-form">
                                     @csrf
                                     <button 
                                         type="button" 

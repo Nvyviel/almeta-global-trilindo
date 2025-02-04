@@ -53,15 +53,15 @@
                             <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
                         </div>
                         <div class="py-1">
-                            <a href="{{ route('profile-edit') }}" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                            <a href="{{ route('profile-edit') }}" wire:navigate class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                 <i class="fas fa-user mr-3"></i> Profile
                             </a>
-                            <a href="{{ route('consignee') }}" class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
+                            <a href="{{ route('consignee') }}" wire:navigate class="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center">
                                 <i class="fas fa-users mr-3"></i> Consignee
                             </a>
                         </div>
                         <div class="border-t border-gray-200 py-1">
-                            <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                            <form method="POST" action="{{ route('logout') }}" wire:navigate id="logout-form">
                                 @csrf
                                 <button 
                                     type="button" 
@@ -86,31 +86,31 @@
                         $mobileInactiveLinkClass = "text-blue-200 hover:bg-blue-700 hover:text-white";
                     @endphp
 
-                    <a href="{{ route('dashboard') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                    <a href="{{ route('dashboard') }}" wire:navigate class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                         <i class="fas fa-home mr-2"></i> Dashboard
                     </a>
-                    <a href="{{ route('release-order') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('release-order') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                    <a href="{{ route('release-order') }}" wire:navigate class="{{ $mobileLinkClass }} {{ request()->routeIs('release-order') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                         <i class="fas fa-shipping-fast mr-2"></i> Release Order
                     </a>
-                    <a href="{{ route('shipping-instruction') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('shipping-instruction') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                    <a href="{{ route('shipping-instruction') }}" wire:navigate class="{{ $mobileLinkClass }} {{ request()->routeIs('shipping-instruction') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                         <i class="fas fa-file-alt mr-2"></i> Shipping Instruction
                     </a>
-                    <a href="{{ route('list-bill') }}" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                    <a href="{{ route('list-bill') }}" wire:navigate class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
                         <i class="fas fa-scroll mr-2"></i> Bill of Lading
                     </a>
-                    <a href="{{ route('seal') }}" class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                    <a href="{{ route('seal') }}" wire:navigate class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
                         <i class="fas fa-lock mr-2"></i> Seal
                     </a>
 
                     @if(Auth::user() && Auth::user()->is_admin)
                         <div class="w-full border-t border-blue-700 my-2"></div>
-                        <a href="{{ route('dashboard-admin') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard-admin') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                        <a href="{{ route('dashboard-admin') }}" wire:navigate class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard-admin') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-tachometer-alt mr-2"></i> Admin Dashboard
                         </a>
-                        <a href="{{ route('create-shipment') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('create-shipment') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                        <a href="{{ route('create-shipment') }}" wire:navigate class="{{ $mobileLinkClass }} {{ request()->routeIs('create-shipment') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-plus-circle mr-2"></i> Create Shipment
                         </a>
-                        <a href="{{ route('approval-list') }}" class="{{ $mobileLinkClass }} {{ request()->routeIs('approval') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                        <a href="{{ route('approval-list') }}" wire:navigate class="{{ $mobileLinkClass }} {{ request()->routeIs('approval') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-check-circle mr-2"></i> Approval
                         </a>
                     @endif
@@ -134,19 +134,19 @@
                     @endphp
                     
                     <div class="space-y-1">
-                        <a href="{{ route('dashboard') }}" class="{{ $linkClass }} {{ request()->routeIs('dashboard') ? $activeLinkClass : $inactiveLinkClass }}">
+                        <a href="{{ route('dashboard') }}" wire:navigate class="{{ $linkClass }} {{ request()->routeIs('dashboard') ? $activeLinkClass : $inactiveLinkClass }}">
                             <i class="fas fa-home mr-3"></i> Dashboard
                         </a>
-                        <a href="{{ route('release-order') }}" class="{{ $linkClass }} {{ request()->routeIs('release-order') ? $activeLinkClass : $inactiveLinkClass }}">
+                        <a href="{{ route('release-order') }}" wire:navigate class="{{ $linkClass }} {{ request()->routeIs('release-order') ? $activeLinkClass : $inactiveLinkClass }}">
                             <i class="fas fa-shipping-fast mr-3"></i> Release Order
                         </a>
-                        <a href="{{ route('shipping-instruction') }}" class="{{ $linkClass }} {{ request()->routeIs('shipping-instruction') ? $activeLinkClass : $inactiveLinkClass }}">
+                        <a href="{{ route('shipping-instruction') }}" wire:navigate class="{{ $linkClass }} {{ request()->routeIs('shipping-instruction') ? $activeLinkClass : $inactiveLinkClass }}">
                             <i class="fas fa-file-alt mr-3"></i> Shipping Instruction
                         </a>
-                        <a href="{{ route('list-bill') }}" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                        <a href="{{ route('list-bill') }}" wire:navigate class="{{ $linkClass }} {{ $inactiveLinkClass }}">
                             <i class="fas fa-scroll mr-3"></i> Bill of Lading
                         </a>
-                        <a href="{{ route('seal') }}" class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                        <a href="{{ route('seal') }}" wire:navigate class="{{ $linkClass }} {{ $inactiveLinkClass }}">
                             <i class="fas fa-lock mr-3"></i> Seal
                         </a>
                         
@@ -154,13 +154,13 @@
                             <div class="border-t border-blue-700 my-4"></div>
                             <div class="text-xs text-blue-300 px-4 mb-2">ADMIN SECTION</div>
                             
-                            <a href="{{ route('dashboard-admin') }}" class="{{ $linkClass }} {{ request()->routeIs('dashboard-admin') ? $activeLinkClass : $inactiveLinkClass }}">
+                            <a href="{{ route('dashboard-admin') }}" wire:navigate class="{{ $linkClass }} {{ request()->routeIs('dashboard-admin') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-tachometer-alt mr-3"></i> Admin Dashboard
                             </a>
-                            <a href="{{ route('create-shipment') }}" class="{{ $linkClass }} {{ request()->routeIs('create-shipment') ? $activeLinkClass : $inactiveLinkClass }}">
+                            <a href="{{ route('create-shipment') }}" wire:navigate class="{{ $linkClass }} {{ request()->routeIs('create-shipment') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-plus-circle mr-3"></i> Create Schedule
                             </a>
-                            <a href="{{ route('approval-list') }}" class="{{ $linkClass }} {{ request()->routeIs('approval-list') ? $activeLinkClass : $inactiveLinkClass }}">
+                            <a href="{{ route('approval-list') }}" wire:navigate class="{{ $linkClass }} {{ request()->routeIs('approval-list') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-check-circle mr-3"></i> Approval
                             </a>
                         @endif

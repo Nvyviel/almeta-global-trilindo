@@ -142,14 +142,14 @@
                         window.snap.pay(data.snapToken, {
                             onSuccess: function(result) {
                                 /* You will get notification from callback */
-                                window.location.href = '/seal';
+                                window.location.href = '/seal/list';
                             },
                             onPending: function(result) {
                                 /* You will get notification from callback */
-                                window.location.href = '/seal';
+                                window.location.href = '/seal/list';
                             },
                             onError: function(result) {
-                                alert('Pembayaran gagal');
+                                alert('Payment Failed');
                                 if (button) button.disabled = false;
                             },
                             onClose: function() {
