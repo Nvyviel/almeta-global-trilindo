@@ -45,14 +45,13 @@ class SealController extends Controller
         return view('admin.stock-seal');
     }
 
-    public function transaction(Request $request, $id)
+
+    public function getSnapToken(Request $request, $id)
     {
-        // Pastikan user sudah login
         if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Silakan login untuk melakukan transaksi.');
+            return response()->json(['error' => 'Silakan login untuk melakukan transaksi.'], 401);
         }
 
-        // Set konfigurasi Midtrans
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
         Config::$isSanitized = true;
@@ -60,8 +59,6 @@ class SealController extends Controller
 
         $seal = Seal::find($id);
 
-
-        // Persiapkan parameter transaksi
         $params = [
             'transaction_details' => [
                 'order_id' => $seal->id_seal,
@@ -74,13 +71,11 @@ class SealController extends Controller
         ];
 
         try {
-            // Dapatkan Snap Token dari Midtrans
             $snapToken = Snap::getSnapToken($params);
+            return response()->json(['snapToken' => $snapToken]);
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal membuat transaksi: ' . $e->getMessage());
+            return response()->json(['error' => 'Gagal membuat transaksi: ' . $e->getMessage()], 500);
         }
-
-        return view('user.seal', compact('snapToken'))->with('seal', collect([$seal]));
     }
 
 

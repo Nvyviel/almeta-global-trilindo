@@ -36,7 +36,7 @@
 
         <!-- Cards -->
         <div class="space-y-4">
-            @forelse ($seal as $seal)
+            @forelse ($seals as $seal)
                 <div
                     class="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="p-5 grid grid-cols-12 gap-4 items-center">
@@ -91,44 +91,12 @@
                             @if ($seal->status === 'Payment Proccess')
                                 <form id="payment-form">
                                     @csrf
-                                    <button type="button" id="pay-button"
+                                    <button type="button" data-seal-id="{{ $seal->id }}"
+                                        onclick="getSnapToken({{ $seal->id }})"
                                         class="mt-4 inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md shadow-sm transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         <span>Pay Now</span>
                                     </button>
                                 </form>
-
-                                <script>
-                                    document.getElementById('pay-button').addEventListener('click', function(event) {
-                                        event.preventDefault(); // Mencegah form dikirim langsung
-
-                                        // Pastikan snapToken tersedia
-                                        var snapToken = "{{ $snapToken ?? '' }}";
-                                        if (!snapToken) {
-                                            alert("Snap Token tidak tersedia. Silakan coba lagi.");
-                                            return;
-                                        }
-
-                                        // Panggil modal pembayaran Midtrans
-                                        snap.pay(snapToken, {
-                                            onSuccess: function(result) {
-                                                console.log("Pembayaran sukses:", result);
-                                                alert("Pembayaran berhasil!");
-                                                window.location.href = "{{ route('seal') }}"; // Kembali ke halaman seal
-                                            },
-                                            onPending: function(result) {
-                                                console.log("Menunggu pembayaran:", result);
-                                                alert("Menunggu pembayaran. Silakan selesaikan transaksi Anda.");
-                                            },
-                                            onError: function(result) {
-                                                console.log("Pembayaran gagal:", result);
-                                                alert("Pembayaran gagal! Silakan coba lagi.");
-                                            },
-                                            onClose: function() {
-                                                alert("Anda menutup pembayaran sebelum selesai.");
-                                            }
-                                        });
-                                    });
-                                </script>
                             @endif
                         </div>
                     </div>
@@ -144,4 +112,56 @@
             @endforelse
         </div>
     </div>
+    @push('script')
+        <script>
+            function getSnapToken(sealId) {
+                // Get the button that was clicked using the data-seal-id attribute
+                const button = document.querySelector(`button[data-seal-id="${sealId}"]`);
+
+                // Disable the button
+                if (button) {
+                    button.disabled = true;
+                }
+
+                fetch(`/get-snap-token/${sealId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            if (button) button.disabled = false;
+                            return;
+                        }
+
+                        window.snap.pay(data.snapToken, {
+                            onSuccess: function(result) {
+                                /* You will get notification from callback */
+                                window.location.href = '/seal';
+                            },
+                            onPending: function(result) {
+                                /* You will get notification from callback */
+                                window.location.href = '/seal';
+                            },
+                            onError: function(result) {
+                                alert('Pembayaran gagal');
+                                if (button) button.disabled = false;
+                            },
+                            onClose: function() {
+                                if (button) button.disabled = false;
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        alert('Terjadi kesalahan saat memproses pembayaran');
+                        if (button) button.disabled = false;
+                    });
+            }
+        </script>
+    @endpush
 @endsection

@@ -67,7 +67,8 @@ Route::get('/approval/seal/add-stock', [SealController::class, 'addStock'])->nam
 Route::get('/seal', [SealController::class, 'showListSeal'])->name('showListSeal');
 Route::get('/seal/list', [SealController::class, 'seal'])->name('seal');
 Route::get('/seal/activity', [SealController::class, 'activitySeal'])->name('activity-seal');
-Route::post('/seal/transaction/{id}', [SealController::class, 'transaction'])->name('transaksi');
+Route::post('/seal/transaction/{id}', [SealController::class, 'transaction'])->name('transaksi'); 
+Route::post('/get-snap-token/{id}', [SealController::class, 'getSnapToken'])->name('get.snap.token');
 
 // CONSIGNEE
 Route::get('/consignee/management', [ConsigneeController::class, 'index'])->name('consignee');
