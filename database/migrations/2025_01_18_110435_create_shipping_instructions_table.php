@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('no_seal');
             $table->string('note')->nullable();
             $table->enum('status', ['Requested','Approved','Rejected']);
+            $table->string('upload-file')->nullable();
             $table->timestamps();
         });
     }

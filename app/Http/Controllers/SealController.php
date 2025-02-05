@@ -33,11 +33,7 @@ class SealController extends Controller
 
     public function activitySeal()
     {
-        $seals = Seal::with('user') // Eager load user relationship
-            ->where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
+        $seals = Seal::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.activity-seal', compact('seals'));
     }
 
@@ -111,15 +107,15 @@ class SealController extends Controller
                     }
                     break;
                 case 'settlement':
-                    $seal->status = 'success';
+                    $seal->status = 'Success';
                     break;
                 case 'pending':
-                    $seal->status = 'payment_process';
+                    $seal->status = 'Payment Process';
                     break;
                 case 'deny':
                 case 'expire':
                 case 'cancel':
-                    $seal->status = 'failed';
+                    $seal->status = 'Canceled';
                     break;
             }
 

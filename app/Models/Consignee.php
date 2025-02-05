@@ -15,4 +15,9 @@ class Consignee extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function shippingInstruction()
+    {
+        return $this->hasMany(shippingInstruction::class);
+    }
 }

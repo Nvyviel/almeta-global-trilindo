@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Consignee::class);
     }
+
+    public function shippingInstruction()
+    {
+        return $this->hasMany(ShippingInstruction::class);
+    }
 }

@@ -36,4 +36,34 @@ class ShippingInstructionController extends Controller
     {
         return view('user.request-si');
     }
+
+    public function approvalSi()
+    {
+        $shippingInstructions = ShippingInstruction::with(['user', 'container', 'shipment', 'consignee'])
+            ->where('status', 'Requested')
+            ->get();
+        return view('admin.approval-si', compact('shippingInstructions'));
+    }
+
+    public function approvedSi($id)
+    {
+        $shippingInstructions = ShippingInstruction::findOrFail($id);
+
+        $shippingInstructions->update([
+            'status' => 'Approved'
+        ]);
+
+        return redirect()->back()->with('success', 'Shipping Instruction has been Approved successfully');
+    }
+
+    public function rejectedSi($id)
+    {
+        $shippingInstructions = ShippingInstruction::findOrFail($id);
+
+        $shippingInstructions->update([
+            'status' => 'Rejected'
+        ]);
+
+        return redirect()->back()->with('success', 'Shipping Instruction has been Rejected successfully');
+    }
 }
