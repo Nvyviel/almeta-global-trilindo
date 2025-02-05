@@ -11,7 +11,7 @@ class ShippingInstructionController extends Controller
 {
     public function showList(Request $request)
     {
-        $query = Container::with('shipment_container')  // Menggunakan shipment_container
+        $query = Container::with('shipment_container')
         ->whereHas('shippingInstructions');
 
         if ($request->has('status') && $request->status != '') {
@@ -37,12 +37,23 @@ class ShippingInstructionController extends Controller
         return view('user.request-si');
     }
 
-    public function approvalSi()
+    public function approvalSi(Request $request)
     {
-        $shippingInstructions = ShippingInstruction::with(['user', 'container', 'shipment', 'consignee'])
-            ->where('status', 'Requested')
-            ->get();
+        $query = ShippingInstruction::with(['user', 'container', 'shipment', 'consignee']);
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        } else {
+            $query->where('status', 'Requested');
+        }
+
+        $shippingInstructions = $query->paginate(10);
         return view('admin.approval-si', compact('shippingInstructions'));
+    }
+
+    public function detailSi()
+    {
+        return view('admin.approval-si-detail');
     }
 
     public function approvedSi($id)
