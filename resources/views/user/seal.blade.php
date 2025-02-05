@@ -13,25 +13,25 @@
         </div>
 
         <!-- Navigation Menu -->
-        <div class="flex justify-between items-center mb-6">
-            <nav class="space-x-4">
-                <a href="{{ route('seal', ['filter' => 'all']) }}"
-                    class="px-3 py-2 text-sm font-medium {{ request('filter') === 'all' || !request('filter') ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
+        <div class="mb-6">
+            <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                <a href="{{ route('seal', ['filter' => 'all']) }}" wire:navigate
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter') === 'all' || !request('filter') ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                     All
                 </a>
-                <a href="{{ route('seal', ['filter' => 'payment proccess']) }}"
-                    class="px-3 py-2 text-sm font-medium {{ request('filter') === 'payment proccess' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
+                <a href="{{ route('seal', ['filter' => 'payment proccess']) }}" wire:navigate
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter') === 'payment proccess' ? 'bg-blue-400 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                     Payment Proccess
                 </a>
-                <a href="{{ route('seal', ['filter' => 'success']) }}"
-                    class="px-3 py-2 text-sm font-medium {{ request('filter') === 'success' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
+                <a href="{{ route('seal', ['filter' => 'success']) }}" wire:navigate
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter') === 'success' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                     Success
                 </a>
-                <a href="{{ route('seal', ['filter' => 'failed']) }}"
-                    class="px-3 py-2 text-sm font-medium {{ request('filter') === 'failed' ? 'text-red-600 underline' : 'text-gray-600 hover:text-red-800' }}">
+                <a href="{{ route('seal', ['filter' => 'failed']) }}" wire:navigate
+                    class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter') === 'failed' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                     Failed
                 </a>
-            </nav>
+            </div>
         </div>
 
         <!-- Cards -->

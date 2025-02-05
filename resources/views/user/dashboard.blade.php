@@ -37,7 +37,7 @@
 
             <!-- Direction Icon -->
             <div class="hidden lg:flex lg:col-span-2 justify-center items-center pb-3">
-                <i class="fas fa-arrow-right text-2xl text-blue-500"></i>
+                <i class="fa-solid fa-arrow-right-long text-lg text-blue-500"></i>
             </div>
 
             <!-- POD Selection -->

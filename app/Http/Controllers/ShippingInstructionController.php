@@ -10,19 +10,24 @@ use App\Http\Controllers\Controller;
 class ShippingInstructionController extends Controller
 {
     public function showList(Request $request)
-    {
-        $query = Container::with('shipment_container')
-        ->whereHas('shippingInstructions');
+{
+    $query = Container::with('shipment_container')
+            ->whereHas('shippingInstructions');
 
-        if ($request->has('status') && $request->status != '') {
+    // Jika parameter yang dikirim adalah 'filter', gunakan itu
+    if ($request->has('filter') && $request->filter != '') {
+        // Jika filter bukan 'all', tambahkan kondisi filter status
+        if ($request->filter !== 'all') {
             $query->whereHas('shippingInstructions', function ($q) use ($request) {
-                $q->where('status', $request->status);
+                // Pastikan format sesuai, misalnya dengan strtolower()
+                $q->where('status', $request->filter);
             });
         }
-
-        $containers = $query->paginate(10);
-        return view('user.shipping-instruction', compact('containers'));
     }
+
+    $containers = $query->paginate(10);
+    return view('user.shipping-instruction', compact('containers'));
+}
 
     public function showDetail($container)
     {
@@ -51,18 +56,29 @@ class ShippingInstructionController extends Controller
         return view('admin.approval-si', compact('shippingInstructions'));
     }
 
-    public function detailSi()
+    public function detailSi($id)
     {
-        return view('admin.approval-si-detail');
+        $dataSi = ShippingInstruction::with('user', 'container.shipment_container', 'shipment', 'consignee')
+                    ->findOrFail($id);
+        return view('admin.approval-si-detail', compact('dataSi'));
     }
+
 
     public function approvedSi($id)
     {
         $shippingInstructions = ShippingInstruction::findOrFail($id);
 
-        $shippingInstructions->update([
-            'status' => 'Approved'
-        ]);
+        // Find all shipping instructions with the same order ID
+        $sameOrderInstructions = ShippingInstruction::whereHas('container', function($query) use ($shippingInstructions) {
+            $query->where('id_order', $shippingInstructions->container->id_order);
+        })->get();
+
+        // Update all related shipping instructions
+        foreach ($sameOrderInstructions as $instruction) {
+            $instruction->update([
+                'status' => 'Approved'
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Shipping Instruction has been Approved successfully');
     }
@@ -71,9 +87,17 @@ class ShippingInstructionController extends Controller
     {
         $shippingInstructions = ShippingInstruction::findOrFail($id);
 
-        $shippingInstructions->update([
-            'status' => 'Rejected'
-        ]);
+        // Find all shipping instructions with the same order ID
+        $sameIdSi = ShippingInstruction::whereHas('container', function($query) use ($shippingInstructions) {
+            $query->where('id_order', $shippingInstructions->container->id_order);
+        })->get();
+
+        // Update all related shipping instructions
+        foreach ($sameIdSi as $instruction) {
+            $instruction->update([
+                'status' => 'Rejected'
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Shipping Instruction has been Rejected successfully');
     }

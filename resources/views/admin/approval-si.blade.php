@@ -5,10 +5,6 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Shipping Instructions</h1>
-            <a href="{{ route('request-si') }}"
-                class="px-4 py-2 bg-red-200 text-red-700 rounded-full shadow hover:bg-red-300">
-                + Shipping Instruction
-            </a>
         </div>
 
         <!-- Navigation Menu -->
@@ -35,69 +31,64 @@
 
         <!-- Cards -->
         <div class="space-y-4">
-            @forelse ($shippingInstructions as $si)
+            @php
+                $consolidatedInstructions = $shippingInstructions->groupBy('container.id_order');
+            @endphp
+
+            @forelse($consolidatedInstructions as $orderId => $instructions)
                 <div
-                    class="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <div class="p-5 grid grid-cols-12 gap-4 items-center">
-                        <!-- Left Section: Container Details -->
-                        <div class="col-span-6 space-y-2">
-                            <div class="flex items-center space-x-3">
-                                <span class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold">
-                                    {{ $si->container->id_order ?? 'No Order ID' }}
-                                </span>
-                                <span class="text-sm text-gray-500">
-                                    {{ \Carbon\Carbon::parse($si->created_at)->format('d M Y') }}
-                                </span>
-                            </div>
-
-                            <div class="grid grid-cols-3 gap-4">
-                                <div>
-                                    <p class="font-medium text-gray-700">
-                                        {{ $si->container->shipment_container->vessel_name ?? 'No Vessel Name' }}</p>
-                                    <p class="font-medium text-xs text-gray-500">
-                                        {{ $si->container->container_type ?? 'Unknown' }}</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500">Total:</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full text-xs font-medium">
-                                    - {{ $si->container->quantity ?? '0' }} container
-                                </span>
-                            </div>
+                    class="bg-white rounded-xl border border-gray-200 p-5 flex justify-between items-center hover:shadow-lg transition duration-300">
+                    <!-- Left: Informasi Container -->
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-800">
+                            {{ $orderId }}
+                        </h3>
+                        <p class="text-sm text-gray-500">
+                            {{ \Carbon\Carbon::parse($instructions->first()->created_at)->format('d M Y') }}
+                        </p>
+                        <div class="mt-2">
+                            <p class="text-gray-700">
+                                {{ $instructions->first()->container->shipment_container->vessel_name ?? 'No Vessel Name' }}
+                            </p>
+                            <p class="text-gray-700">
+                                {{ $instructions->first()->container->container_type ?? 'Unknown' }}
+                            </p>
+                            @if ($instructions->count() > 1)
+                                <p class="text-sm text-gray-500 mt-2">
+                                    {{ $instructions->count() }} shipping instructions
+                                </p>
+                            @endif
                         </div>
+                    </div>
 
-                        <!-- Right Section: Action Buttons -->
-                        <div class="col-span-6 flex items-center justify-end space-x-3">
-                            <!-- Approve Button -->
-                            <form action="{{ route('approved-si', $si->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit"
-                                    class="px-4 py-2 bg-green-100 text-green-700 rounded-full hover:bg-green-200 transition-colors">
-                                    Approve
-                                </button>
-                            </form>
+                    <!-- Right: Tombol Aksi -->
+                    <div class="flex space-x-3">
+                        <!-- Approve Button for first instruction (will trigger all for the order) -->
+                        <form action="{{ route('approved-si', $instructions->first()->id) }}" method="POST"
+                            class="inline">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit"
+                                class="px-4 py-2 bg-green-100 text-green-700 rounded-full hover:bg-green-200">
+                                Approve
+                            </button>
+                        </form>
 
-                            <!-- Reject Button -->
-                            <form action="{{ route('rejected-si', $si->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('PUT')
-                                <button type="submit"
-                                    class="px-4 py-2 bg-red-100 text-red-700 rounded-full hover:bg-red-200 transition-colors">
-                                    Reject
-                                </button>
-                            </form>
+                        <!-- Reject Button for first instruction (will trigger all for the order) -->
+                        <form action="{{ route('rejected-si', $instructions->first()->id) }}" method="POST"
+                            class="inline">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="px-4 py-2 bg-red-100 text-red-700 rounded-full hover:bg-red-200">
+                                Reject
+                            </button>
+                        </form>
 
-                            <!-- View Detail Button -->
-                            <a href="{{ route('shipping-instruction-detail', $si->id) }}"
-                                class="inline-flex items-center px-4 py-4 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">
-                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
-                        </div>
+                        <!-- View Detail Button -->
+                        <a href="{{ route('detail-si', $instructions->first()->id) }}"
+                            class="inline-flex items-center px-4 py-2 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">
+                            Detail
+                        </a>
                     </div>
                 </div>
             @empty

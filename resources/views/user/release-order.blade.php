@@ -10,39 +10,36 @@
                         Release Orders
                     </h1>
                 </div>
-                <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 
+                <a href="{{ route('dashboard') }}" wire:navigate class="inline-flex items-center justify-center gap-2 px-5 py-2.5 
                     bg-red-200 rounded-full hover:bg-red-300 text-red-700 transition-all 
                     transform hover:-translate-y-1 shadow-md hover:shadow-lg">
-                    <i class="fa-solid fa-plus"></i>
-                    New Release Order
+                    + Release Order
                 </a>
             </div>
 
             <!-- Filter Section -->
             <div class="mb-6">
                 <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-                    <a href="{{ route('release-order', ['filter' => 'all']) }}" 
+                    <a href="{{ route('release-order', ['filter' => 'all']) }}" wire:navigate 
                        class="px-4 py-2 rounded-full text-sm font-medium transition-all
                        {{ request('filter', 'all') === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                         All
-                    </a>
-                    <a href="{{ route('release-order', ['filter' => 'Requested']) }}" 
+                    <a href="{{ route('release-order', ['filter' => 'Requested']) }}" wire:navigate
                        class="px-4 py-2 rounded-full text-sm font-medium transition-all
                        {{ request('filter') === 'Requested' ? 'bg-yellow-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                         Requested
-                    </a>
-                    <a href="{{ route('release-order', ['filter' => 'Approved']) }}" 
+                    <a href="{{ route('release-order', ['filter' => 'Approved']) }}" wire:navigate
                        class="px-4 py-2 rounded-full text-sm font-medium transition-all
                        {{ request('filter') === 'Approved' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                         Approved
                     </a>
-                    <a href="{{ route('release-order', ['filter' => 'Canceled']) }}" 
+                    <a href="{{ route('release-order', ['filter' => 'Canceled']) }}" wire:navigate
                        class="px-4 py-2 rounded-full text-sm font-medium transition-all
                        {{ request('filter') === 'Canceled' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                         Canceled
                     </a>
-                </div>
             </div>
+        </div>
 
             <!-- Container List -->
             <div class="space-y-6">
@@ -143,9 +140,6 @@
                                 ? "You haven't created any release orders yet. Start by creating your first order."
                                 : "No " . request('filter', '') . " orders found." }}
                         </p>
-                        <a href="{{ route('dashboard') }}" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                            Create First Order
-                        </a>
                     </div>
                 @endforelse
             </div>

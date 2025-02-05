@@ -81,7 +81,7 @@ Route::get('/shipping-instruction', [ShippingInstructionController::class, 'show
 Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
 Route::get('/dashboard/shipping-instruction/request', [ShippingInstructionController::class, 'requestSi'])->name('request-si');
 Route::get('/approval/shipping-instruction', [ShippingInstructionController::class, 'approvalSi'])->name('approval-si');
-Route::get('/shipping-instruction/detail', [ShippingInstruction::class, detailSi])->name('detail-si');
+Route::get('/shipping-instruction/detail/{id}', [ShippingInstructionController::class, 'detailSi'])->name('detail-si');
 Route::put('/shipping-instruction/{id}/approved', [ShippingInstructionController::class, 'approvedSi'])->name('approved-si');
 Route::put('/shipping-instruction/{id}/rejected', [ShippingInstructionController::class, 'rejectedSi'])->name('rejected-si');
 

@@ -1,81 +1,117 @@
-<div class="container mx-auto px-4 py-8 max-w-2xl">
-    {{-- Success Notification --}}
-    @if(session()->has('success'))
-        <div class="mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-r-lg shadow-md animate-fade-in">
-            <div class="flex items-center">
-                <svg class="w-6 h-6 mr-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
-                <span class="font-medium">{{ session('success') }}</span>
+<div class="container mx-auto px-4 py-12 max-w-3xl">
+    {{-- Notifications Container with Refined Styling --}}
+    <div class="space-y-4 mb-6">
+        {{-- Success Notification --}}
+        @if (session()->has('success'))
+            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow-md flex items-center">
+                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <p class="text-gray-800 font-medium">{{ session('success') }}</p>
+            </div>
+        @endif
+
+        {{-- Error Notification --}}
+        @if (session()->has('error'))
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg shadow-md flex items-center">
+                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                </div>
+                <p class="text-gray-800 font-medium">{{ session('error') }}</p>
+            </div>
+        @endif
+    </div>
+
+    {{-- Purchase Seal Card --}}
+    <div class="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+        {{-- Header Section --}}
+        <div class="bg-blue-50 px-6 py-5 border-b border-gray-200 flex justify-between items-center">
+            <a href="{{ route('seal') }}" wire:navigate class="text-gray-600 hover:text-gray-800 transition-colors flex items-center">
+                <i class="fa-solid fa-arrow-left-long mr-2"></i>
+                Back
+            </a>
+            <h2 class="text-2xl font-bold text-blue-900 text-center flex-grow">Purchase Seal</h2>
+            <div>
+                @if (auth()->user()->is_admin == true)
+                    <a href="{{ route('add-stock') }}"
+                        class="px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-700 
+                              hover:bg-blue-200 transition-colors">
+                        Add Stock
+                    </a>
+                @endif
             </div>
         </div>
-    @endif
 
-    {{-- Error Notification --}}
-    @if(session()->has('error'))
-        <div class="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-r-lg shadow-md animate-fade-in">
-            <div class="flex items-center">
-                <svg class="w-6 h-6 mr-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
-                </svg>
-                <span class="font-medium">{{ session('error') }}</span>
-            </div>
-        </div>
-    @endif
-
-    {{-- Purchase Seal Form --}}
-    <div class="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-        <div class="bg-indigo-600 px-6 py-5">
-            <h2 class="text-2xl font-bold text-white flex items-center">
-                <svg class="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
-                </svg>
-                Purchase Seal
-            </h2>
-            <a href="{{ route('seal') }}">Cancel</a>
-        </div>
-
-        <form wire:submit.prevent="createSeal" class="p-6 space-y-6">
+        <form wire:submit.prevent="createSeal" class="p-8 space-y-8">
             <div class="grid gap-6 md:grid-cols-2">
                 {{-- Pickup Point --}}
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">Pickup Point</label>
-                    <select wire:model="pickup_point" 
-                        class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 
-                        {{ $availableStock == 0 ? 'cursor-not-allowed opacity-50' : '' }}"
-                        {{ $availableStock == 0 ? 'disabled' : '' }}>
-                        @php
-                            $fromCities = ['surabaya', 'pontianak', 'semarang', 'banjarmasin', 'sampit', 'jakarta', 'kumai', 'samarinda', 'balikpapan', 'berau', 'palu', 'bitung', 'gorontalo', 'ambon'];
-                        @endphp
-                        <option value="" disabled selected>Select Pickup Point</option>
-                        @foreach ($fromCities as $city)
-                            <option value="{{ $city }}" {{ request('pickup_point') == $city ? 'selected' : '' }}>
-                                {{ strtoupper($city) }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('pickup_point') 
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">Pickup Point</label>
+                    <div class="relative">
+                        <select wire:model="pickup_point"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500
+                            {{ $availableStock == 0 ? 'cursor-not-allowed opacity-50' : '' }}"
+                            {{ $availableStock == 0 ? 'disabled' : '' }}>
+                            @php
+                                $fromCities = [
+                                    'surabaya',
+                                    'pontianak',
+                                    'semarang',
+                                    'banjarmasin',
+                                    'sampit',
+                                    'jakarta',
+                                    'kumai',
+                                    'samarinda',
+                                    'balikpapan',
+                                    'berau',
+                                    'palu',
+                                    'bitung',
+                                    'gorontalo',
+                                    'ambon',
+                                ];
+                            @endphp
+                            <option value="" disabled selected>Select Pickup Point</option>
+                            @foreach ($fromCities as $city)
+                                <option value="{{ $city }}"
+                                    {{ request('pickup_point') == $city ? 'selected' : '' }}>
+                                    {{ strtoupper($city) }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M8 9l4-4 4 4m0 6l-4 4-4-4"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    @error('pickup_point')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Quantity --}}
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">
-                        Quantity 
+                    <label class="block text-sm font-semibold text-gray-700 mb-3">
+                        Quantity
                         <span class="text-gray-500 ml-1">(Available: {{ $availableStock }})</span>
                     </label>
-                    <input type="number" 
-                    wire:model.live="quantity" 
-                    class="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500
+                    <input type="number" wire:model.live="quantity"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500
                     {{ $availableStock == 0 ? 'cursor-not-allowed opacity-50' : '' }}"
-                    min="1"
-                    max="{{ $availableStock }}"
-                    {{ $availableStock == 0 ? 'disabled' : '' }}>
-                    @error('quantity') 
+                        min="1" max="{{ $availableStock }}" {{ $availableStock == 0 ? 'disabled' : '' }}>
+                    @error('quantity')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
-                    @if($quantity > $availableStock)
+                    @if ($quantity > $availableStock)
                         <p class="mt-2 text-sm text-red-600">
                             Quantity cannot exceed available stock ({{ $availableStock }})
                         </p>
@@ -84,35 +120,43 @@
             </div>
 
             {{-- Price Details --}}
-            <div class="bg-indigo-50 rounded-xl p-6 space-y-4 border border-indigo-100">
+            <div class="bg-gray-50 rounded-xl p-6 space-y-4 border border-gray-200">
                 <div class="flex justify-between items-center">
                     <span class="text-gray-600 font-medium">Price per Unit:</span>
-                    <span class="text-lg font-semibold text-gray-800">Rp. {{ number_format($price, 0, ',', '.') }}</span>
+                    <span class="text-lg font-semibold text-blue-800">Rp.
+                        {{ number_format($price, 0, ',', '.') }}</span>
                 </div>
 
-                <div class="flex justify-between items-center" wire:poll.1000ms="calculateTotalPrice">
-                    <span class="text-gray-600 font-medium">Total Price:</span>
-                    <span class="text-2xl font-bold text-indigo-600">Rp. {{ number_format($totalPrice, 0, ',', '.') }}</span>
+                <div class="border-t border-gray-200 pt-4 flex justify-between items-center"
+                    wire:poll.1000ms="calculateTotalPrice">
+                    <span class="text-gray-600 font-medium text-base">Total Price:</span>
+                    <span class="text-2xl font-bold text-blue-900">Rp.
+                        {{ number_format($totalPrice, 0, ',', '.') }}</span>
                 </div>
             </div>
 
             {{-- Submit Button or Stock Unavailable Message --}}
-            @if($availableStock == 0)
-                <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-4 rounded-lg flex items-center">
-                    <svg class="w-6 h-6 mr-3 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                    </svg>
+            @if ($availableStock == 0)
+                <div
+                    class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-5 rounded-lg flex items-center">
+                    <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg>
+                    </div>
                     <span class="font-medium">Stock is currently unavailable</span>
                 </div>
             @else
-                <button type="button" 
-                    {{ $quantity > $availableStock ? 'disabled' : '' }}
-                    onclick="confirmPurchase()"
+                <button type="button" {{ $quantity > $availableStock ? 'disabled' : '' }} onclick="confirmPurchase()"
                     class="w-full px-8 py-3.5 
-                    {{ $quantity > $availableStock ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700' }} 
-                    text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center">
+                    {{ $quantity > $availableStock ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700' }} 
+                    text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 
+                    flex items-center justify-center">
                     <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+                        <path
+                            d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
                     </svg>
                     Purchase Seal
                 </button>
@@ -120,6 +164,8 @@
         </form>
     </div>
 </div>
+
+{{-- Existing JavaScript remains the same --}}
 <script>
     function confirmPurchase() {
         Swal.fire({
@@ -127,25 +173,23 @@
             text: 'Are you sure you want to order these seals?',
             icon: 'question',
             showCancelButton: true,
-            confirmButtonColor: '#4F46E5',
-            cancelButtonColor: '#EF4444',
+            confirmButtonColor: '#2563eb',
+            cancelButtonColor: '#ef4444',
             confirmButtonText: 'Yes, order!',
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Submit the form
                 @this.createSeal();
             }
         });
     }
 
-    // Listen for success/error events from Livewire
     Livewire.on('purchaseSuccess', () => {
         Swal.fire({
             title: 'Success!',
             text: 'Your seal purchase has been processed successfully.',
             icon: 'success',
-            confirmButtonColor: '#4F46E5'
+            confirmButtonColor: '#2563eb'
         });
     });
 
@@ -154,7 +198,7 @@
             title: 'Error!',
             text: message,
             icon: 'error',
-            confirmButtonColor: '#EF4444'
+            confirmButtonColor: '#ef4444'
         });
     });
 </script>

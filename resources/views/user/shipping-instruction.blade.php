@@ -5,32 +5,32 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Shipping Instructions</h1>
-            <a href="{{ route('request-si') }}" 
+            <a href="{{ route('request-si') }}" wire:navigate
                class="px-4 py-2 bg-red-200 text-red-700 rounded-full shadow hover:bg-red-300">
                + Shipping Instruction
             </a>
         </div>
 
         <!-- Navigation Menu -->
-        <div class="flex justify-between items-center mb-6">
-            <nav class="space-x-4">
-                <a href="{{ route('shipping-instruction', ['filter' => 'all']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'all' || !request('filter') ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
-                   All
+        <div class="mb-6">
+            <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                <a href="{{ route('shipping-instruction', ['filter' => 'all']) }}" wire:navigate
+                class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter', 'all') === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                    All
                 </a>
-                <a href="{{ route('shipping-instruction', ['filter' => 'requested']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'requested' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
-                   Requested
+                <a href="{{ route('shipping-instruction', ['filter' => 'requested']) }}" wire:navigate
+                class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter') === 'requested' ? 'bg-yellow-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                    Requested
                 </a>
-                <a href="{{ route('shipping-instruction', ['filter' => 'approved']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'approved' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
-                   Approved
+                <a href="{{ route('shipping-instruction', ['filter' => 'approved']) }}" wire:navigate
+                class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter') === 'approved' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                    Approved
                 </a>
-                <a href="{{ route('shipping-instruction', ['filter' => 'rejected']) }}" 
-                   class="px-3 py-2 text-sm font-medium {{ request('filter') === 'rejected' ? 'text-red-600 underline' : 'text-gray-600 hover:text-red-800' }}">
-                   Rejected
+                <a href="{{ route('shipping-instruction', ['filter' => 'rejected']) }}" wire:navigate
+                class="px-4 py-2 rounded-full text-sm font-medium transition-all {{ request('filter') === 'rejected' ? 'bg-red-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                    Rejected
                 </a>
-            </nav>
+            </div>
         </div>
 
         <!-- Cards -->
@@ -47,13 +47,30 @@
                                 <span class="text-sm text-gray-500">
                                     {{ \Carbon\Carbon::parse($container->created_at)->format('d M Y') }}
                                 </span>
+                                <div class="flex items-center space-x-2">
+                                {{-- <span class="text-xs text-gray-500">Status:</span> --}}
+                                @php
+                                    $statusClasses = [
+                                        'Approved' => 'bg-green-100 text-green-800 border-green-200',
+                                        'Rejected' => 'bg-red-100 text-red-800 border-red-200',
+                                        'Requested' => 'bg-blue-100 text-blue-800 border-blue-200',
+                                    ];
+                                    $statusClass =
+                                        $statusClasses[$container->status] ?? 'bg-blue-100 text-blue-800 border-blue-200';
+                                @endphp
+                                <span
+                                    class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium {{ $statusClass }} border">
+                                    <span class="mr-1.5 h-2 w-2 rounded-full" style="background-color: currentColor"></span>
+                                    {{ $container->status }}
+                                </span>
+                            </div>
                             </div>
                             
                             <div class="grid grid-cols-3 gap-4">
                                 <div>
                                     <p class="font-medium text-gray-700">{{ $container->shipment_container->vessel_name ?? 'No Vessel Name' }}</p>
                                     <p class="font-medium text-xs text-gray-500">{{ $container->container_type }}</p>
-                                </div>  
+                                </div>
                             </div>
                             
                             <div class="flex items-center space-x-2">

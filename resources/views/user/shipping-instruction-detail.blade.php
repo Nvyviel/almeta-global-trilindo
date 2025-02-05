@@ -6,7 +6,7 @@
         <div class="border-b border-gray-200 px-6 py-4">
             <div class="flex justify-between items-center">
                 <h4 class="text-xl font-semibold text-gray-800">
-                    Shipping Instructions Detail - Order #{{ $container->id_order }}
+                    Shipping Instructions Detail - {{ $container->id_order }}
                 </h4>
                 <a href="{{ route('shipping-instruction') }}" 
                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
@@ -20,8 +20,9 @@
                 <h5 class="font-semibold mb-2">Container Information</h5>
                 <div class="grid grid-cols-2 gap-4">
                     <p><span class="font-medium">Vessel Name:</span> {{ $container->shipment_container->vessel_name }}</p>
+                    <p><span class="font-medium"></span> {{ strtoupper($container->shipment_container->from_city) }} - {{ strtoupper($container->shipment_container->to_city) }}</p>
                     <p><span class="font-medium">Container Type:</span> {{ $container->container_type }}</p>
-                    <p><span class="font-medium">Quantity:</span> {{ $container->quantity }}</p>
+                    <p><span class="font-medium">Total:</span> {{ $container->quantity }} Container</p>
                 </div>
             </div>
         
