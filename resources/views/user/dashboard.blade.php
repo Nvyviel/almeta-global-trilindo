@@ -100,9 +100,9 @@
                                     <div>
                                         <h3 class="text-xl font-bold text-gray-900 mb-2">{{ $shipment->vessel_name }}</h3>
                                         <div class="flex items-center text-gray-600">
-                                            <span class="font-medium">{{ strtoupper($shipment->from_city) }}</span>
+                                            <span class="font-medium">{{ strtoupper($shipment->from_city) }} </span>
                                             {{-- <i class="fas fa-arrow-right mx-3 text-blue-500"></i> --}}
-                                            <p class="text-gray-600"> -----> </p>
+                                            <p class="text-gray-600 mx-2 text-md"> ----> </p>
                                             <span class="font-medium">{{ strtoupper($shipment->to_city) }}</span>
                                         </div>
                                     </div>
@@ -134,14 +134,14 @@
                                 </div>
                                 <div class="flex justify-between items-center mt-6">
                                     <div class="text-right flex-1">
-                                        <p class="text-3xl font-bold text-gray-900">Rp {{ number_format($shipment->rate, 0, ',', '.') }}</p>
+                                        <p class="text-3xl font-bold text-gray-900">Rp {{ number_format($shipment->rate_per_container, 0, ',', '.') }}</p>
                                         <p class="text-sm text-gray-500">/ Container</p>
                                     </div>
                                 </div>
 
                                 <!-- Action Button -->
                                 <div class="mt-4 text-right">
-                                    <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}" 
+                                    <a href="{{ route('booking', ['shipment_id' => $shipment->id]) }}" wire:navigate
                                     class="inline-flex items-center px-6 py-2.5 bg-gray-300 text-gray-800 font-medium text-sm rounded-full hover:bg-gray-400 focus:ring-4 focus:ring-gray-200 transition-colors duration-200">
                                         Book Now 
                                         <i class="fas fa-arrow-right ml-2"></i>

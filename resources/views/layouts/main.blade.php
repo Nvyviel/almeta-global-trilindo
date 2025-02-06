@@ -13,16 +13,16 @@
                 </div>
 
                 <!-- Profile Dropdown -->
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-4" x-data="{ open: false }">
                     <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-gray-700">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <div class="relative">
-                        <button id="dropdownToggle" class="flex items-center space-x-2 focus:outline-none">
+                        <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                             <div class="relative">
                                 <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->company_name) }}&background=0D8AFD&color=fff"
                                     alt="{{ Auth::user()->company_name }}"
-                                    class="w-10 h-10 rounded-full border-2 border-red   -500">
+                                    class="w-10 h-10 rounded-full border-2 border-red-500">
                                 @if (!Auth::user()->is_admin)
                                     <span
                                         class="absolute bottom-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white bg-yellow-500"></span>
@@ -40,8 +40,8 @@
                         </button>
 
                         <!-- Dropdown Menu -->
-                        <div id="dropdownMenu"
-                            class="hidden absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
+                        <div x-show="open" @click.away="open = false"
+                            class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
                             <div class="px-4 py-3 bg-gray-50 border-b">
                                 <p class="text-sm font-medium text-gray-900">{{ Auth::user()->company_name }}</p>
                                 <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
@@ -191,65 +191,6 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', initializeNavigation);
-            document.addEventListener('livewire:navigated', initializeNavigation);
-
-            function initializeNavigation() {
-                const dropdownToggle = document.getElementById('dropdownToggle');
-                const dropdownMenu = document.getElementById('dropdownMenu');
-                const mobileMenuButton = document.getElementById('mobile-menu-button');
-                const mobileMenu = document.getElementById('mobile-menu');
-                let mobileMenuOpen = false;
-
-                // Only add event listeners if elements exist
-                if (dropdownToggle && dropdownMenu) {
-                    // Remove existing event listeners before adding new ones
-                    dropdownToggle.removeEventListener('click', handleDropdownToggle);
-                    dropdownToggle.addEventListener('click', handleDropdownToggle);
-                }
-
-                if (mobileMenuButton && mobileMenu) {
-                    // Remove existing event listeners before adding new ones
-                    mobileMenuButton.removeEventListener('click', handleMobileMenuToggle);
-                    mobileMenuButton.addEventListener('click', handleMobileMenuToggle);
-                }
-
-                // Handle dropdown toggle
-                function handleDropdownToggle(event) {
-                    event.stopPropagation();
-                    dropdownMenu.classList.toggle('hidden');
-                }
-
-                // Handle mobile menu toggle
-                function handleMobileMenuToggle() {
-                    mobileMenuOpen = !mobileMenuOpen;
-                    mobileMenu.style.transform = mobileMenuOpen ? 'translateY(56px)' : 'translateY(-100%)';
-                }
-
-                // Close dropdown when clicking outside
-                document.removeEventListener('click', handleClickOutside);
-                document.addEventListener('click', handleClickOutside);
-
-                function handleClickOutside(event) {
-                    if (dropdownMenu && dropdownToggle &&
-                        !dropdownToggle.contains(event.target) &&
-                        !dropdownMenu.contains(event.target)) {
-                        dropdownMenu.classList.add('hidden');
-                    }
-                }
-
-                // Close mobile menu on window resize if screen becomes larger
-                window.removeEventListener('resize', handleResize);
-                window.addEventListener('resize', handleResize);
-
-                function handleResize() {
-                    if (window.innerWidth >= 768 && mobileMenuOpen && mobileMenu) {
-                        mobileMenuOpen = false;
-                        mobileMenu.style.transform = 'translateY(-100%)';
-                    }
-                }
-            }
-
             function confirmLogout() {
                 Swal.fire({
                     title: 'Log Out',

@@ -18,7 +18,8 @@ class ShipmentData extends Component
     public $etb = '';
     public $etd = '';
     public $eta = '';
-    public $rate = ''; // Added rate property
+    public $rate = '';
+    public $rate_per_container = '';
 
     public $cities = [
         'surabaya',
@@ -45,7 +46,8 @@ class ShipmentData extends Component
         'etb' => 'required|date',
         'etd' => 'required|date|after:etb',
         'eta' => 'required|date|after:etd',
-        'rate' => 'required|numeric|min:0', // Added rate validation
+        'rate' => 'required|numeric|min:0',
+        'rate_per_container' => 'required|numeric|min:0',
     ];
 
     protected $messages = [
@@ -61,6 +63,9 @@ class ShipmentData extends Component
         'rate.required' => 'Rate per container is required',
         'rate.numeric' => 'Rate must be a number',
         'rate.min' => 'Rate cannot be negative',
+        'rate_per_container.required' => 'Rate per container is required',
+        'rate_per_container.numeric' => 'Rate per container must be a number',
+        'rate_per_container.min' => 'Rate per container cannot be negative',
     ];
 
     public function addSchedule()
@@ -113,6 +118,7 @@ class ShipmentData extends Component
         $this->etd = $shipment->etd;
         $this->eta = $shipment->eta;
         $this->rate = $shipment->rate;
+        $this->rate_per_container = $shipment->rate_per_container;
     }
 
 

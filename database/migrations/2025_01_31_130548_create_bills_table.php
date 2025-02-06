@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('shipment_id')->constrained()->onDelete('cascade');
             $table->foreignId('container_id')->constrained()->onDelete('cascade');
             $table->foreignId('shipping_instruction_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['Paid','Unpaid']);
+            $table->enum('status', ['Paid','Unpaid'])->default('Unpaid');
             $table->enum('payment_term', ['Port To Port']);
             $table->timestamps();
         });
