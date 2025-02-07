@@ -10,19 +10,19 @@
         <!-- Navigation Menu -->
         <div class="flex justify-between items-center mb-6">
             <nav class="space-x-4">
-                <a href="{{ route('shipping-instruction', ['filter' => 'all']) }}"
+                <a href="{{ route('shipping-instruction', ['filter' => 'all']) }}" wire:navigate
                     class="px-3 py-2 text-sm font-medium {{ request('filter') === 'all' || !request('filter') ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
                     All
                 </a>
-                <a href="{{ route('shipping-instruction', ['filter' => 'requested']) }}"
+                <a href="{{ route('shipping-instruction', ['filter' => 'requested']) }}" wire:navigate
                     class="px-3 py-2 text-sm font-medium {{ request('filter') === 'requested' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
                     Requested
                 </a>
-                <a href="{{ route('shipping-instruction', ['filter' => 'approved']) }}"
+                <a href="{{ route('shipping-instruction', ['filter' => 'approved']) }}" wire:navigate
                     class="px-3 py-2 text-sm font-medium {{ request('filter') === 'approved' ? 'text-blue-600 underline' : 'text-gray-600 hover:text-gray-800' }}">
                     Approved
                 </a>
-                <a href="{{ route('shipping-instruction', ['filter' => 'rejected']) }}"
+                <a href="{{ route('shipping-instruction', ['filter' => 'rejected']) }}" wire:navigate
                     class="px-3 py-2 text-sm font-medium {{ request('filter') === 'rejected' ? 'text-red-600 underline' : 'text-gray-600 hover:text-red-800' }}">
                     Rejected
                 </a>
@@ -85,7 +85,7 @@
                         </form>
 
                         <!-- View Detail Button -->
-                        <a href="{{ route('detail-si', $instructions->first()->id) }}"
+                        <a href="{{ route('detail-si', $instructions->first()->id) }}" wire:navigate
                             class="inline-flex items-center px-4 py-2 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">
                             Detail
                         </a>

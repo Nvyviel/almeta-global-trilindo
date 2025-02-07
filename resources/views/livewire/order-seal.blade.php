@@ -40,7 +40,7 @@
             <h2 class="text-2xl font-bold text-blue-900 text-center flex-grow">Purchase Seal</h2>
             <div>
                 @if (auth()->user()->is_admin == true)
-                    <a href="{{ route('add-stock') }}"
+                    <a href="{{ route('add-stock') }}" wire:navigate
                         class="px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-700 
                               hover:bg-blue-200 transition-colors">
                         Add Stock

@@ -218,7 +218,7 @@
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
-                                    <a href="{{ route('edit-shipment', $shipment->id) }}"
+                                    <a href="{{ route('edit-shipment', $shipment->id) }}" wire:navigate
                                         class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-xl transition-colors duration-200 text-center">
                                         Edit
                                     </a>

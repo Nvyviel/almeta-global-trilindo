@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-800">Activity</h2>
             @if (auth()->user()->is_admin == true)
-                <a href="{{ route('add-stock') }}"
+                <a href="{{ route('add-stock') }}" wire:navigate
                     class="flex items-center bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"

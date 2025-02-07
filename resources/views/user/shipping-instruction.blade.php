@@ -87,7 +87,7 @@
 
                         <!-- Right Section: Action Button -->
                         <div class="col-span-4 text-right">
-                            <a href="{{ route('shipping-instruction-detail', $container->id) }}"
+                            <a href="{{ route('shipping-instruction-detail', $container->id) }}" wire:navigate
                                 class="inline-flex items-center px-4 py-4 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

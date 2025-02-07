@@ -70,7 +70,7 @@
                 </div>
                 
                 <div class="flex justify-end space-x-2">
-                    <a href="{{ route('consignee') }}" 
+                    <a href="{{ route('consignee') }}" wire:navigate
                         class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                         Batal
                     </a>

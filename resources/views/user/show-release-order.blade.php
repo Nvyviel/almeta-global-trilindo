@@ -102,7 +102,7 @@
 
         <!-- Back Button -->
         <div class="flex items-center">
-            <a href="{{ route(request('source', 'approval')) }}" 
+            <a href="{{ route(request('source', 'approval')) }}" wire:navigate
                class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 transition-colors duration-150">
                 <i class="fa-solid fa-arrow-left-long mr-2"></i>
                 Back to List

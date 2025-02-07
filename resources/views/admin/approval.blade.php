@@ -54,7 +54,7 @@
                     </div>
                     <p class="text-gray-600 text-lg mb-6">Review and approve Bills of Lading with comprehensive validation.</p>
                     <div class="mt-auto">
-                        <a href="#" wire:navigate class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 transition-colors duration-300 w-full sm:w-auto">
+                        <a href="{{ route('list-bill') }}" wire:navigate class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700 transition-colors duration-300 w-full sm:w-auto">
                             Manage BL
                             <i class="fa-solid fa-arrow-right-long ml-2"></i>
                         </a>

@@ -6,11 +6,11 @@
             <div class="border-b border-gray-200 px-6 py-4">
                 <div class="flex justify-between items-center">
                     <h4 class="text-xl font-semibold text-gray-800">
-                        Shipping Instructions Detail - {{ $dataSi->container->id_order }}
+                        Shipping Instructions Detail {{ $dataSi->container->id_order }}
                     </h4>
                     <div class="flex items-center space-x-3">
                         <!-- Back Button -->
-                        <a href="{{ route('approval-si') }}"
+                        <a href="{{ route('approval-si') }}" wire:navigate
                             class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
                             Back
                         </a>

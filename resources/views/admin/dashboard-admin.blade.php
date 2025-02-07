@@ -18,7 +18,7 @@
                         Search
                     </button>
                     @if(request('search'))
-                        <a href="{{ route('dashboard-admin') }}" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-300">
+                        <a href="{{ route('dashboard-admin') }}" wire:navigate class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-300">
                             Reset
                         </a>
                     @endif
@@ -42,7 +42,7 @@
             <div class="bg-white border-b border-gray-200 p-4 hover:bg-gray-50 transition duration-300">
                 <div class="flex justify-between items-center mb-3">
                     <span class="text-gray-500 font-semibold">#{{ $loop->iteration }}</span>
-                    <a href="{{ route('detail-user', $user->id) }}" class="text-blue-600 underline hover:text-blue-800 font-medium">
+                    <a href="{{ route('detail-user', $user->id) }}" wire:navigate class="text-blue-600 underline hover:text-blue-800 font-medium">
                         {{ $user->email }}
                     </a>
                 </div>
@@ -81,7 +81,7 @@
                     <tr class="hover:bg-gray-50 transition duration-300">
                         <td class="p-3 whitespace-nowrap text-sm text-gray-500">{{ $loop->iteration }}</td>
                         <td class="p-3 whitespace-nowrap">
-                            <a href="{{ route('detail-user', $user->id) }}" class="text-blue-600 hover:text-blue-800 font-medium">
+                            <a href="{{ route('detail-user', $user->id) }}" wire:navigate class="text-blue-600 hover:text-blue-800 font-medium">
                                 {{ $user->email }}
                             </a>
                         </td>

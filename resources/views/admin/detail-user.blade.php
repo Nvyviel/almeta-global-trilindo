@@ -5,7 +5,7 @@
         {{-- Header Section --}}
         <div class="bg-gradient-to-r from-blue-100 to-blue-200 px-6 py-6 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center">
             <h1 class="text-3xl font-extrabold text-gray-900 mb-3 md:mb-0 tracking-tight">Detail Pengguna</h1>
-            <a href="{{ route('dashboard-admin') }}" 
+            <a href="{{ route('dashboard-admin') }}" wire:navigate
                class="btn btn-primary bg-blue-600 text-white hover:bg-blue-700 transition-all px-5 py-2 rounded-lg shadow-md flex items-center">
                 <i class="fas fa-arrow-left mr-3"></i>Kembali ke Daftar
             </a>

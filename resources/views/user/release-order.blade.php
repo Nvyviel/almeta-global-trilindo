@@ -98,7 +98,7 @@
                                         <div class="flex items-center space-x-2">
                                             <span class="text-xs text-gray-500">Weight:</span>
                                             <span
-                                                class="bg-green-100 text-green-800 px-2 py-0.5 rounded-full text-xs font-medium">
+                                                class="bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full text-xs font-medium">
                                                 {{ $container->weight }} kg
                                             </span>
                                         </div>
@@ -107,7 +107,7 @@
 
                                 <!-- Right Section: Action Button -->
                                 <div class="col-span-4 text-right">
-                                    <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'release-order']) }}"
+                                    <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'release-order']) }}" wire:navigate
                                         class="inline-flex items-center px-4 py-4 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">
                                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

@@ -66,7 +66,7 @@
 
                     {{-- Submit --}}
                     <div class="flex items-center justify-between mt-6">
-                        <a href="{{ route('register') }}" class="text-sm text-gray-600 hover:text-gray-800">Don't have an account? Register</a>
+                        <a href="{{ route('register') }}" wire:navigate class="text-sm text-gray-600 hover:text-gray-800">Don't have an account? Register</a>
                         <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">
                             Login
                         </button>
@@ -75,7 +75,7 @@
                     {{-- Forgot Password --}}
                     @if (Route::has('password.request'))
                         <div class="text-center mt-4">
-                            <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:text-blue-800">
+                            <a href="{{ route('password.request') }}" wire:navigate class="text-sm text-blue-600 hover:text-blue-800">
                                 Forgot your password?
                             </a>
                         </div>

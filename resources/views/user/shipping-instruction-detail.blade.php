@@ -8,7 +8,7 @@
                 <h4 class="text-xl font-semibold text-gray-800">
                     Shipping Instructions Detail - {{ $container->id_order }}
                 </h4>
-                <a href="{{ route('shipping-instruction') }}" 
+                <a href="{{ route('shipping-instruction') }}" wire:navigate
                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700">
                     Back
                 </a>

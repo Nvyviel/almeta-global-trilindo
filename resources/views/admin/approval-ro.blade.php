@@ -4,13 +4,13 @@
    <div class="min-h-screen px-4 sm:px-6 lg:px-8">
         <!-- Back Button and History Button -->
         <div class="max-w-7xl mx-auto mb-6 pt-6 flex justify-between items-center">
-            <a href="{{ route('approval-list') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-colors duration-200">
+            <a href="{{ route('approval-list') }}" wire:navigate class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 Back to Approval List
             </a>
-            <a href="{{ route('history-ro') }}" class="inline-flex items-center px-4 text-sm rounded-md transition duration-200">
+            <a href="{{ route('history-ro') }}" wire:navigate class="inline-flex items-center px-4 text-sm rounded-md transition duration-200">
                 <i class="fa-solid fa-clock-rotate-left mr-2 text-sm"></i> / History
             </a>
         </div>
@@ -59,7 +59,7 @@
                                 <i class="fa-solid fa-filter mr-2"></i>Filter Data
                             </button>
 
-                            <a href="{{ route('approval-ro') }}" class="flex-1 bg-gray-100 text-gray-700 px-6 py-2.5 rounded-lg text-center hover:bg-gray-200 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 shadow-sm">
+                            <a href="{{ route('approval-ro') }}" wire:navigate class="flex-1 bg-gray-100 text-gray-700 px-6 py-2.5 rounded-lg text-center hover:bg-gray-200 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 shadow-sm">
                                 <i class="fa-solid fa-rotate mr-2"></i>Reset
                             </a>
                         </div>
@@ -100,7 +100,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'approval-list']) }}" 
+                            <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'approval-list']) }}" wire:navigate
                                class="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors">
                                 <i class="fa-solid fa-arrow-right text-xl"></i>
                             </a>

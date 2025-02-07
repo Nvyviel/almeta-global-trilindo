@@ -42,7 +42,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">{{ $consignee->phone_number }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex space-x-2">
-                                    <a href="{{ route('consignee-edit', $consignee->id) }}" 
+                                    <a href="{{ route('consignee-edit', $consignee->id) }}" wire:navigate
                                         class="text-blue-600 hover:text-blue-900">
                                         Edit
                                     </a>

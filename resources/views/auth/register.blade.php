@@ -182,7 +182,7 @@
 
                     {{-- Submit --}}
                     <div class="flex items-center justify-between mt-6">
-                        <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-800">Already registered? Login</a>
+                        <a href="{{ route('login') }}" wire:navigate class="text-sm text-gray-600 hover:text-gray-800">Already registered? Login</a>
                         <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 focus:ring-2 focus:ring-blue-300">
                             Register
                         </button>
