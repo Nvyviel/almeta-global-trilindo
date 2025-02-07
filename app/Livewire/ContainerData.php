@@ -64,14 +64,13 @@ class ContainerData extends Component
 
     public function updatedIsDanger($value)
     {
-        // This method handles the checkbox toggle
         $this->is_danger = $value ? 'Yes' : 'No';
     }
 
     public function generateUniqueOrderId()
     {
         do {
-            $idOrder = strtoupper(Str::random(7));
+            $idOrder = 'RO-' . strtoupper(Str::random(7));
         } while (Container::where('id_order', $idOrder)->exists());
 
         return $idOrder;
@@ -79,35 +78,35 @@ class ContainerData extends Component
 
 
     public function addContainer()
-{
-    try {
-        $this->user_id = Auth::id();
+    {
+        try {
+            $this->user_id = Auth::id();
 
-        // Validate input
-        $validatedData = $this->validate();
+            // Validate input
+            $validatedData = $this->validate();
 
-        // Generate unique id_order
-        $validatedData['id_order'] = $this->generateUniqueOrderId();
+            // Generate unique id_order
+            $validatedData['id_order'] = $this->generateUniqueOrderId();
 
-        // Explicitly set status and is_danger
-        $validatedData['status'] = 'Requested';
-        $validatedData['is_danger'] = $this->is_danger;
+            // Explicitly set status and is_danger
+            $validatedData['status'] = 'Requested';
+            $validatedData['is_danger'] = $this->is_danger;
 
-        // Create container
-        Container::create($validatedData);
+            // Create container
+            Container::create($validatedData);
 
-        // Reset input fields
-        $this->reset();
+            // Reset input fields
+            $this->reset();
 
-        // Emit success event and redirect
-        $this->dispatch('container-created');
-        session()->flash('success', 'Container data created successfully!');
-        return redirect()->route('release-order');
-    } catch (\Exception $e) {
-        Log::error('Error creating container: ' . $e->getMessage());
-        session()->flash('error', 'Failed to create container. Please try again.');
+            // Emit success event and redirect
+            $this->dispatch('container-created');
+            session()->flash('success', 'Container data created successfully!');
+            return redirect()->route('release-order');
+        } catch (\Exception $e) {
+            Log::error('Error creating container: ' . $e->getMessage());
+            session()->flash('error', 'Failed to create container. Please try again.');
+        }
     }
-}
 
 
     public function render(Request $request)

@@ -31,4 +31,9 @@ class Container extends Model
     {
         return $this->hasMany(ShippingInstruction::class);
     }
+
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
 }

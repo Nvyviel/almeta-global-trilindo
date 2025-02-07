@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('layout')
-        <div class="min-h-screen bg-gray-50">
+        <div class="min-h-screen ">
             <!-- Main Navbar -->
             <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
@@ -20,13 +20,12 @@
                     <div class="relative">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                             <div class="relative">
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->company_name) }}&background=0D8AFD&color=fff"
-                                    alt="{{ Auth::user()->company_name }}"
-                                    class="w-10 h-10 rounded-full border-2 border-red-500">
-                                @if (!Auth::user()->is_admin)
-                                    <span
-                                        class="absolute bottom-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white bg-yellow-500"></span>
-                                @endif
+                                <div
+                                    class="w-10 h-10 rounded-full border-2 border-red-500 flex items-center justify-center bg-red-500">
+                                    <i class="fas fa-bell text-white"></i>
+                                    <!-- Notification indicator -->
+                                        {{-- <span class="absolute -top-1 -right-1 block h-3 w-3 rounded-full ring-2 ring-white bg-yellow-500"></span> --}}
+                                </div>
                             </div>
                             <div class="hidden md:block">
                                 <div class="text-sm font-medium text-gray-700">
@@ -183,7 +182,7 @@
             </div>
 
             <!-- Main Content Area -->
-            <main class="bg-gray-50 md:ml-64 pt-16 min-h-screen">
+            <main class="md:ml-64 pt-16 min-h-screen">
                 <div class="p-6">
                     @yield('component')
                 </div>

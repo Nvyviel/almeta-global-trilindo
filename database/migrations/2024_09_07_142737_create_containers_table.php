@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
 
             // CONTAINER DATA
-            $table->string('id_order', 7)->unique();
+            $table->string('id_order')->unique();
             $table->enum('container_type', ['40 Open Door', '20 Open Door', '40 Flat Rack', '20 Flat Rack', '40 Iso Tank', '20 Iso Tank', '20 Open Top', '40 Open Top', '20 Motorcycle Rack', '45 Open Top', '20 Container Office', '40 RF High Cube', '20 RF High Cube', '40 High Cube', '45 High Cube', '20 GP', '21 GP', '40 GP', '41 GP']);
             $table->integer('quantity');
             $table->string('commodity');

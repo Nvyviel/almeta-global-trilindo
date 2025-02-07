@@ -71,24 +71,29 @@ class ShipmentData extends Component
     public function addSchedule()
     {
         try {
+            // Hapus titik dari 'rate' dan 'rate_per_container' agar menjadi angka murni
+            $this->rate = str_replace('.', '', $this->rate);
+            $this->rate_per_container = str_replace('.', '', $this->rate_per_container);
+
             $validatedData = $this->validate();
 
             // Convert vessel name to uppercase
             $validatedData['vessel_name'] = strtoupper($validatedData['vessel_name']);
 
-            // Create the shipment
+            // Buat shipment baru
             Shipment::create($validatedData);
 
-            // Reset form
-            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta', 'rate']);
+            // Reset form setelah sukses
+            $this->reset(['from_city', 'to_city', 'vessel_name', 'closing_cargo', 'etb', 'etd', 'eta', 'rate', 'rate_per_container']);
 
-            // Show success message
+            // Tampilkan pesan sukses
             session()->flash('success', 'Shipment schedule created successfully!');
         } catch (\Exception $e) {
             Log::error('Error creating shipment: ' . $e->getMessage());
             session()->flash('error', 'Failed to create shipment schedule. Please try again.');
         }
     }
+
 
     public function deleteShipment($shipmentId)
     {

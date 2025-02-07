@@ -8,6 +8,7 @@ use App\Models\Shipment;
 use App\Models\ShippingInstruction;
 use App\Models\Consignee;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ShippingInstructionData extends Component
 {
@@ -29,6 +30,20 @@ class ShippingInstructionData extends Component
         $this->loadConsignees();
     }
 
+    protected function generateInstructionId()
+    {
+        do {
+            // Generate 7 random alphanumeric characters
+            $randomPart = strtoupper(Str::random(7));
+            $instructionId = "SI - " . $randomPart;
+            
+            // Check if the generated ID already exists
+            $exists = ShippingInstruction::where('instructions_id', $instructionId)->exists();
+        } while ($exists);
+
+        return $instructionId;
+    }
+
     protected function loadConsignees()
     {
         $this->consignees = Consignee::select(
@@ -39,7 +54,9 @@ class ShippingInstructionData extends Component
             'email',
             'phone_number',
             'consignee_address'
-        )->get();
+        )
+        ->where('user_id', $this->user->id)
+        ->get();
     }
 
     protected function loadAvailableShipments()
@@ -151,6 +168,7 @@ class ShippingInstructionData extends Component
         try {
             foreach (range(0, count($this->container_numbers) - 1) as $index) {
                 ShippingInstruction::create([
+                    'instructions_id' => $this->generateInstructionId(),
                     'user_id' => $this->user->id,
                     'shipment_id' => $this->shipment_id,
                     'container_id' => $this->container_id,
@@ -181,6 +199,7 @@ class ShippingInstructionData extends Component
 
     public function render()
     {
+        
         return view('livewire.shipping-instruction-data');
     }
 }

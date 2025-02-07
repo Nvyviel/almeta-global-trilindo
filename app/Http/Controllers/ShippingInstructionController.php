@@ -10,24 +10,22 @@ use App\Http\Controllers\Controller;
 class ShippingInstructionController extends Controller
 {
     public function showList(Request $request)
-{
-    $query = Container::with('shipment_container')
-            ->whereHas('shippingInstructions');
+    {
+        $query = Container::with(['shipment_container', 'shippingInstructions'])
+            ->whereHas('shippingInstructions')
+            ->where('user_id', auth()->id()); // Tambahkan filter user_id
 
-    // Jika parameter yang dikirim adalah 'filter', gunakan itu
-    if ($request->has('filter') && $request->filter != '') {
-        // Jika filter bukan 'all', tambahkan kondisi filter status
-        if ($request->filter !== 'all') {
-            $query->whereHas('shippingInstructions', function ($q) use ($request) {
-                // Pastikan format sesuai, misalnya dengan strtolower()
-                $q->where('status', $request->filter);
-            });
+        if ($request->has('filter') && $request->filter != '') {
+            if ($request->filter !== 'all') {
+                $query->whereHas('shippingInstructions', function ($q) use ($request) {
+                    $q->where('status', $request->filter);
+                });
+            }
         }
-    }
 
-    $containers = $query->paginate(10);
-    return view('user.shipping-instruction', compact('containers'));
-}
+        $containers = $query->paginate(10);
+        return view('user.shipping-instruction', compact('containers'));
+    }
 
     public function showDetail($container)
     {

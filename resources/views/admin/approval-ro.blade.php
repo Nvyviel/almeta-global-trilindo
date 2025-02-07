@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('component')
-   <div class="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8">
+   <div class="min-h-screen px-4 sm:px-6 lg:px-8">
         <!-- Back Button and History Button -->
         <div class="max-w-7xl mx-auto mb-6 pt-6 flex justify-between items-center">
             <a href="{{ route('approval-list') }}" class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-colors duration-200">
@@ -109,7 +109,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <span class="text-sm font-medium text-gray-600 block mb-1">Commodity</span>
-                                <p class="text-gray-900 text-lg">{{ $container->commodity }}</p>
+                                <p class="text-gray-900 text-lg">{{ strtoupper($container->commodity) }}</p>
                             </div>
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <span class="text-sm font-medium text-gray-600 block mb-1">Quantity</span>

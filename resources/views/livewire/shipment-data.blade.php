@@ -37,8 +37,8 @@
                         <!-- Rate -->
                         <div class="w-full">
                             <label for="rate" class="block text-gray-700 font-medium mb-2">Rate (IDR)</label>
-                            <input type="number" wire:model.defer="rate" id="rate"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all @error('rate') border-red-300 @enderror"
+                            <input type="text" id="rate" wire:model.defer="rate"
+                                class="format-number w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all @error('rate') border-red-300 @enderror"
                                 placeholder="Enter rate">
                             @error('rate')
                                 <span class="text-rose-500 text-sm mt-1">{{ $message }}</span>
@@ -49,8 +49,8 @@
                         <div class="w-full">
                             <label for="rate_per_container" class="block text-gray-700 font-medium mb-2">Rate Per
                                 Container (IDR)</label>
-                            <input type="number" wire:model.defer="rate_per_container" id="rate_per_container"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all @error('rate_per_container') border-red-300 @enderror"
+                            <input type="text" id="rate_per_container" wire:model.defer="rate_per_container"
+                                class="format-number w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:bg-white transition-all @error('rate_per_container') border-red-300 @enderror"
                                 placeholder="Enter rate per container">
                             @error('rate_per_container')
                                 <span class="text-rose-500 text-sm mt-1">{{ $message }}</span>
@@ -177,7 +177,7 @@
                                             </span>
                                             <span
                                                 class="bg-purple-50 text-purple-700 text-sm font-medium px-4 py-2 rounded-lg">
-                                                Rate/Container: Rp.
+                                                Rate per Container: Rp.
                                                 {{ number_format($shipment->rate_per_container, 0, ',', '.') }}
                                             </span>
                                         </div>
@@ -240,3 +240,39 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function formatNumber(input) {
+            let rawValue = input.value.replace(/\D/g, ''); // Hanya angka
+            if (rawValue.length > 9) rawValue = rawValue.substring(0, 9); // Batasi ke 999.999.999
+
+            let oldLength = input.value.length; // Panjang string sebelum diformat
+            let oldCursorPosition = input.selectionStart; // Posisi kursor sebelum diformat
+
+            // Format angka dengan titik setiap 3 digit
+            let formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            // Hitung perubahan panjang string
+            let newLength = formattedValue.length;
+            let lengthDiff = newLength - oldLength;
+
+            // Perbarui nilai input
+            input.value = formattedValue;
+
+            // Atur ulang posisi kursor agar tetap berada di tempat yang tepat
+            let newCursorPosition = oldCursorPosition + lengthDiff;
+            input.setSelectionRange(newCursorPosition, newCursorPosition);
+        }
+
+        document.querySelectorAll('.format-number').forEach(input => {
+            input.addEventListener('input', function() {
+                formatNumber(this);
+            });
+
+            // Agar angka tetap terformat saat input kehilangan fokus
+            input.addEventListener('blur', function() {
+                formatNumber(this);
+            });
+        });
+    });
+</script>

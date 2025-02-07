@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('shipping_instructions', function (Blueprint $table) {
             $table->id();
+            $table->string('instructions_id')->unique();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('container_id')->constrained()->onDelete('cascade');
             $table->foreignId('shipment_id')->constrained()->onDelete('cascade');

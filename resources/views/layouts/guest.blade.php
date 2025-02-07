@@ -23,15 +23,7 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased ">
-    <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-            <div class="text-2xl font-black text-red-600 tracking-tight">ALMETA</div>
-            <div class="hidden md:block border-l border-gray-300 pl-4 text-gray-500">
-                Logistics Management
-            </div>
-        </div>
-    </nav>
-    <main class="flex-1 bg   min-h-screen">
+    <main class="flex-1 min-h-screen">
                 <div>
                     {{ $slot }}
                 </div>

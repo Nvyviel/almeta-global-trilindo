@@ -44,8 +44,7 @@ class ContainerController extends Controller
     public function releaseOrder(Request $request)
     {
         $query = auth()->user()->container()->with('shipment_container');
-
-        // Cek apakah ada filter dan tidak memilih "all"
+        
         if ($request->has('filter') && $request->filter !== 'all') {
             $query->where('status', $request->filter);
         }
