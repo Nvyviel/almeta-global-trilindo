@@ -20,4 +20,9 @@ class Consignee extends Model
     {
         return $this->hasMany(shippingInstruction::class);
     }
+
+    public function containers()
+    {
+        return $this->hasMany(Container::class, 'consignee_id');
+    }
 }

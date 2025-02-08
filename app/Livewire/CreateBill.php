@@ -102,22 +102,13 @@ class CreateBill extends Component
     protected function generateUniqueBillId(): string
     {
         do {
-            $shipment = Shipment::find($this->shipment_id);
-            $container = Container::find($this->container_id);
-
-            $prefix = strtoupper($shipment->from_city);
-            $suffix = strtoupper($container->container_type);
-            
-            $prefix = substr($prefix, 0, 3);
-            $suffix = substr($suffix, 0, 3);
-            
-            $randomPart = strtoupper(Str::random(4));
-
-            $billId = "{$prefix}-{$suffix}-{$randomPart}";
+            $randomPart = strtoupper(Str::random(7));
+            $billId = "BL - {$randomPart}";
         } while (Bill::where('bill_id', $billId)->exists());
 
         return $billId;
     }
+
 
     public function createBill()
     {

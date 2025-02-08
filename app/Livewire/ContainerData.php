@@ -70,7 +70,7 @@ class ContainerData extends Component
     public function generateUniqueOrderId()
     {
         do {
-            $idOrder = 'RO-' . strtoupper(Str::random(7));
+            $idOrder = 'RO - ' . strtoupper(Str::random(7));
         } while (Container::where('id_order', $idOrder)->exists());
 
         return $idOrder;

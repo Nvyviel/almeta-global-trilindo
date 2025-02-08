@@ -1,6 +1,6 @@
 <x-app-layout>
     @section('layout')
-        <div class="min-h-screen ">
+        <div class="min-h-screen">
             <!-- Main Navbar -->
             <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
@@ -23,8 +23,6 @@
                                 <div
                                     class="w-10 h-10 rounded-full border-2 border-red-500 flex items-center justify-center bg-red-500">
                                     <i class="fas fa-bell text-white"></i>
-                                    <!-- Notification indicator -->
-                                        {{-- <span class="absolute -top-1 -right-1 block h-3 w-3 rounded-full ring-2 ring-white bg-yellow-500"></span> --}}
                                 </div>
                             </div>
                             <div class="hidden md:block">
@@ -71,14 +69,14 @@
 
             <!-- Mobile Navigation (Visible on small screens) -->
             <div id="mobile-menu"
-                class="md:hidden fixed w-full bg-blue-800 z-30 shadow-md transform transition-transform duration-300 -translate-y-full">
+                class="md:hidden fixed w-full bg-white z-30 shadow-md transform transition-transform duration-300 -translate-y-full">
                 <div class="px-4 py-3">
                     <nav class="flex flex-wrap gap-2">
                         @php
                             $mobileLinkClass =
                                 'flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out';
-                            $mobileActiveLinkClass = 'bg-blue-700 text-white';
-                            $mobileInactiveLinkClass = 'text-blue-200 hover:bg-blue-700 hover:text-white';
+                            $mobileActiveLinkClass = 'bg-gray-100 text-red-600';
+                            $mobileInactiveLinkClass = 'text-gray-600 hover:bg-gray-50 hover:text-red-600';
                         @endphp
 
                         <a href="{{ route('dashboard') }}" wire:navigate
@@ -103,7 +101,7 @@
                         </a>
 
                         @if (Auth::user() && Auth::user()->is_admin)
-                            <div class="w-full border-t border-blue-700 my-2"></div>
+                            <div class="w-full border-t border-gray-200 my-2"></div>
                             <a href="{{ route('dashboard-admin') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard-admin') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                                 <i class="fas fa-tachometer-alt mr-2"></i> Admin Dashboard
@@ -122,19 +120,19 @@
             </div>
 
             <!-- Desktop Sidebar (Visible on medium and larger screens) -->
-            <div class="hidden md:block fixed inset-y-0 left-0 z-30 w-64 bg-blue-800 text-white">
+            <div class="hidden md:block fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-200">
                 <div class="pt-20 md:pt-24 px-4">
                     <div class="mb-8 text-center">
-                        <div class="text-2xl font-bold text-white tracking-wider">Customer</div>
-                        <div class="text-xs text-blue-300">Relationship Management</div>
+                        <div class="text-2xl font-bold text-gray-800 tracking-wider">Customer</div>
+                        <div class="text-xs text-gray-500">Relationship Management</div>
                     </div>
-                    <div class="border-t border-blue-700 my-4"></div>
+                    <div class="border-t border-gray-200 my-4"></div>
                     <nav>
                         @php
                             $linkClass =
                                 'flex items-center px-4 py-2.5 text-sm font-medium rounded-md transition-colors duration-200 ease-in-out';
-                            $activeLinkClass = 'bg-blue-700 text-white';
-                            $inactiveLinkClass = 'hover:bg-blue-700 text-blue-200 hover:text-white';
+                            $activeLinkClass = 'bg-red-50 text-red-600';
+                            $inactiveLinkClass = 'text-gray-600 hover:bg-gray-50 hover:text-red-600';
                         @endphp
 
                         <div class="space-y-1">
@@ -151,7 +149,7 @@
                                 <i class="fas fa-file-alt mr-3"></i> Shipping Instruction
                             </a>
                             <a href="{{ route('list-bill') }}" wire:navigate
-                                class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                                class="{{ $linkClass }} {{ request()->routeIs('list-bill') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-scroll mr-3"></i> Bill of Lading
                             </a>
                             <a href="{{ route('seal') }}" wire:navigate
@@ -160,8 +158,8 @@
                             </a>
 
                             @if (Auth::user() && Auth::user()->is_admin)
-                                <div class="border-t border-blue-700 my-4"></div>
-                                <div class="text-xs text-blue-300 px-4 mb-2">ADMIN SECTION</div>
+                                <div class="border-t border-gray-200 my-4"></div>
+                                <div class="text-xs text-gray-400 px-4 mb-2">ADMIN SECTION</div>
 
                                 <a href="{{ route('dashboard-admin') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('dashboard-admin') ? $activeLinkClass : $inactiveLinkClass }}">
@@ -182,7 +180,7 @@
             </div>
 
             <!-- Main Content Area -->
-            <main class="md:ml-64 pt-16 min-h-screen">
+            <main class="md:ml-64 bg-gray-50 pt-16 min-h-screen">
                 <div class="p-6">
                     @yield('component')
                 </div>

@@ -13,7 +13,7 @@ class ShippingInstructionController extends Controller
     {
         $query = Container::with(['shipment_container', 'shippingInstructions'])
             ->whereHas('shippingInstructions')
-            ->where('user_id', auth()->id()); // Tambahkan filter user_id
+            ->where('user_id', auth()->id());
 
         if ($request->has('filter') && $request->filter != '') {
             if ($request->filter !== 'all') {

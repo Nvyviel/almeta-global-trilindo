@@ -42,8 +42,11 @@
                         <!-- Left Section: Container Details -->
                         <div class="col-span-8 space-y-2">
                             <div class="flex items-center space-x-3">
-                                <span class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold">
-                                    {{ $container->id_order }}
+                                {{-- <span class="bg-indigo-50 text-indigo-600 px-3 py-1 text-xs font-semibold">
+                                    {{ $container->shippingInstructions->instruction_id }}
+                                </span> --}}
+                                <span class="bg-indigo-50 text-indigo-600 px-3 py-1 text-xs font-semibold">
+                                     {{ $container->quantity }} Instructions
                                 </span>
                                 <span class="text-sm text-gray-500">
                                     {{ \Carbon\Carbon::parse($container->created_at)->format('d M Y') }}
@@ -72,16 +75,9 @@
                             <div class="grid grid-cols-3 gap-4">
                                 <div>
                                     <p class="font-medium text-gray-700">
-                                        {{ $container->shipment_container->vessel_name ?? 'No Vessel Name' }}</p>
+                                        {{ optional($container->shippingInstructions->first()->consignee)->industry ?? 'No Consignee Industry' }}</p>
                                     <p class="font-medium text-xs text-gray-500">{{ $container->container_type }}</p>
                                 </div>
-                            </div>
-
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs text-gray-500">Total:</span>
-                                <span class="bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full text-xs font-medium">
-                                     {{ $container->quantity }} container
-                                </span>
                             </div>
                         </div>
 

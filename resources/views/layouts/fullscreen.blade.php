@@ -70,7 +70,7 @@
             </nav>
 
             <!-- Main Content Area -->
-            <main class="flex-1 pt-28 min-h-screen">
+            <main class="flex-1 bg-gray-50 pt-28 min-h-screen">
                 <div>
                     @yield('component')
                 </div>

@@ -89,25 +89,15 @@
                         <label class="block text-sm font-medium text-gray-700">Container Type</label>
                         <select wire:model="container_type" name="container_type" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
                             <option value="" selected>Select Type</option>
-                            <option value="40 Open Door">40 Open Door</option>
-                            <option value="20 Open Door">20 Open Door</option>
-                            <option value="40 Flat Rack">40 Flat Rack</option>
-                            <option value="20 Flat Rack">20 Flat Rack</option>
                             <option value="40 Iso Tank">40 Iso Tank</option>
                             <option value="20 Iso Tank">20 Iso Tank</option>
                             <option value="20 Open Top">20 Open Top</option>
                             <option value="40 Open Top">40 Open Top</option>
-                            <option value="20 Motorcycle Rack">20 Motorcycle Rack</option>
                             <option value="45 Open Top">45 Open Top</option>
-                            <option value="20 Container Office">20 Container Office</option>
-                            <option value="40 RF High Cube">40 RF High Cube</option>
-                            <option value="20 RF High Cube">20 RF High Cube</option>
                             <option value="40 High Cube">40 High Cube</option>
                             <option value="45 High Cube">45 High Cube</option>
                             <option value="20 GP">20 GP</option>
-                            <option value="21 GP">21 GP</option>
                             <option value="40 GP">40 GP</option>
-                            <option value="41 GP">41 GP</option>
                         </select>
                     </div>
 
