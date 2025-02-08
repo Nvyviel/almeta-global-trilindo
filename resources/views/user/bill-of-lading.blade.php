@@ -1,5 +1,5 @@
-@extends('layouts.main')
+@extends('layouts.fullscreen')
 
 @section('component')
-    @livewire('create-bill')
+    <livewire:create-bill />
 @endsection

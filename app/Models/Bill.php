@@ -15,4 +15,14 @@ class Bill extends Model
     {
         return $this->belongsTo(Container::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function shipment()
+    {
+        return $this->belongsTo(Shipment::class);
+    }
 }

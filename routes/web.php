@@ -87,3 +87,5 @@ Route::put('/shipping-instruction/{id}/rejected', [ShippingInstructionController
 
 // BILL OF LADING
 Route::get('/bill-of-lading', [BillController::class, 'listBill'])->name('list-bill');
+Route::get('/bill-of-lading/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
+Route::get('/bill-of-lading/create', [BillController::class, 'createBill'])->name('create-bill');

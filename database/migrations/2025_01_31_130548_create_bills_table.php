@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('container_id')->constrained()->onDelete('cascade');
             $table->foreignId('shipping_instruction_id')->constrained()->onDelete('cascade');
             $table->enum('payment_term', ['Port To Port']);
+            $table->unsignedBigInteger('weight_rate');
             $table->unsignedBigInteger('document_price');
             $table->unsignedBigInteger('grand_total');
             $table->enum('status', ['Paid','Unpaid'])->default('Unpaid');

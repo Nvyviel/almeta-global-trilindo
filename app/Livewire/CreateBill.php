@@ -56,22 +56,22 @@ class CreateBill extends Component
     }
 
     public function updatedShipmentId($shipmentId)
-{
-    if ($shipmentId) {
-        $this->containers = Container::where('user_id', $this->user_id)
-            ->whereHas('shippingInstructions', function ($query) use ($shipmentId) {
-                $query->where('shipment_id', $shipmentId)
-                    ->where('status', 'Approved');
-            })
-            ->whereDoesntHave('bills') // Changed from 'bill' to 'bills'
-            ->select('id', 'id_order', 'quantity')
-            ->get();
-    } else {
-        $this->containers = [];
+    {
+        if ($shipmentId) {
+            $this->containers = Container::where('user_id', $this->user_id)
+                ->whereHas('shippingInstructions', function ($query) use ($shipmentId) {
+                    $query->where('shipment_id', $shipmentId)
+                        ->where('status', 'Approved');
+                })
+                ->whereDoesntHave('bills') // Changed from 'bill' to 'bills'
+                ->select('id', 'id_order', 'quantity')
+                ->get();
+        } else {
+            $this->containers = [];
+        }
+        $this->container_id = null;
+        $this->selectedData = null;
     }
-    $this->container_id = null;
-    $this->selectedData = null;
-}
 
     public function updatedContainerId($containerId)
     {
@@ -82,7 +82,11 @@ class CreateBill extends Component
             
             // Calculate rate_per_container multiplied by quantity
             $containerTotalRate = $shipment->rate_per_container * $container->quantity;
-            $totalPrice = $shipment->rate + $containerTotalRate + 250000; // rate + (rate_per_container * quantity) + document_price
+            
+            // Calculate weight-based charge (1,000,000 per 100kg)
+            $weightRate = ceil($container->weight / 100) * 90000;
+            
+            $totalPrice = $shipment->rate + $containerTotalRate + 250000 + $weightRate;
             
             $this->selectedData = [
                 'company_name' => $user->company_name,
@@ -93,6 +97,8 @@ class CreateBill extends Component
                 'quantity' => $container->quantity,
                 'rate_per_container' => $shipment->rate_per_container,
                 'container_total_rate' => $containerTotalRate,
+                'weight' => $container->weight,
+                'weight_rate' => $weightRate,
             ];
         } else {
             $this->selectedData = null;
@@ -125,10 +131,11 @@ class CreateBill extends Component
             $shipment = Shipment::find($this->shipment_id);
             $container = Container::find($this->container_id);
 
-            // Calculate grand total including quantity
+            // Calculate all components
             $document_price = 250000;
             $container_total_rate = $shipment->rate_per_container * $container->quantity;
-            $grand_total = $shipment->rate + $container_total_rate + $document_price;
+            $weight_rate = ceil($container->weight / 100) * 90000;
+            $grand_total = $shipment->rate + $container_total_rate + $document_price + $weight_rate;
 
             $bill = Bill::create([
                 'bill_id' => $this->bill_id,
@@ -139,6 +146,7 @@ class CreateBill extends Component
                 'status' => $this->status,
                 'payment_term' => 'Port To Port',
                 'document_price' => $document_price,
+                'weight_rate' => $weight_rate,
                 'grand_total' => $grand_total,
             ]);
 
