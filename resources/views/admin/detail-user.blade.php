@@ -1,4 +1,5 @@
 @extends('layouts.fullscreen')
+@section('title','Detail')
 @section('component')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">

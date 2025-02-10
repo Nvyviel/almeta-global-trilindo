@@ -33,7 +33,8 @@
     <div class="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
         {{-- Header Section --}}
         <div class="bg-blue-50 px-6 py-5 border-b border-gray-200 flex justify-between items-center">
-            <a href="{{ route('seal') }}" wire:navigate class="text-gray-600 hover:text-gray-800 transition-colors flex items-center">
+            <a href="{{ route('seal') }}" wire:navigate
+                class="text-gray-600 hover:text-gray-800 transition-colors flex items-center">
                 <i class="fa-solid fa-arrow-left-long mr-2"></i>
                 Back
             </a>
@@ -98,16 +99,16 @@
                     @enderror
                 </div>
 
-                {{-- Quantity --}}
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-3">
                         Quantity
                         <span class="text-gray-500 ml-1">(Available: {{ $availableStock }})</span>
                     </label>
-                    <input type="number" wire:model.live="quantity"
+                    <input type="number" wire:model="quantity" id="quantity-input"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500
-                    {{ $availableStock == 0 ? 'cursor-not-allowed opacity-50' : '' }}"
-                        min="1" max="{{ $availableStock }}" {{ $availableStock == 0 ? 'disabled' : '' }}>
+                        {{ $availableStock == 0 ? 'cursor-not-allowed opacity-50' : '' }}"
+                        min="1" max="{{ $availableStock }}" {{ $availableStock == 0 ? 'disabled' : '' }}
+                        onchange="updateTotalPrice(this.value)" oninput="updateTotalPrice(this.value)">
                     @error('quantity')
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -119,18 +120,17 @@
                 </div>
             </div>
 
-            {{-- Price Details --}}
+            {{-- Modified Price Details --}}
             <div class="bg-gray-50 rounded-xl p-6 space-y-4 border border-gray-200">
                 <div class="flex justify-between items-center">
                     <span class="text-gray-600 font-medium">Price per Unit:</span>
-                    <span class="text-lg font-semibold text-blue-800">Rp.
+                    <span class="text-lg font-semibold text-blue-800" id="price-per-unit">Rp.
                         {{ number_format($price, 0, ',', '.') }}</span>
                 </div>
 
-                <div class="border-t border-gray-200 pt-4 flex justify-between items-center"
-                    wire:poll.1000ms="calculateTotalPrice">
+                <div class="border-t border-gray-200 pt-4 flex justify-between items-center">
                     <span class="text-gray-600 font-medium text-base">Total Price:</span>
-                    <span class="text-2xl font-bold text-blue-900">Rp.
+                    <span class="text-2xl font-bold text-blue-900" id="total-price">Rp.
                         {{ number_format($totalPrice, 0, ',', '.') }}</span>
                 </div>
             </div>
@@ -200,5 +200,46 @@
             icon: 'error',
             confirmButtonColor: '#ef4444'
         });
+    });
+</script>
+<script>
+    // Get the base price from PHP
+    const basePrice = {{ $price }};
+    const availableStock = {{ $availableStock }};
+
+    function formatPrice(price) {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(price).replace('IDR', 'Rp.');
+    }
+
+    function updateTotalPrice(quantity) {
+        // Validate quantity
+        quantity = parseInt(quantity) || 0;
+        if (quantity < 1) quantity = 1;
+        if (quantity > availableStock) quantity = availableStock;
+
+        // Calculate total price
+        const totalPrice = quantity * basePrice;
+
+        // Update the display
+        document.getElementById('total-price').textContent = formatPrice(totalPrice);
+
+        // Update Livewire component's quantity
+        Livewire.dispatch('quantity-updated', { quantity: quantity });
+    }
+
+    // Initialize total price on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantityInput = document.getElementById('quantity-input');
+        updateTotalPrice(quantityInput.value);
+    });
+
+    // Listen for direct input changes
+    document.getElementById('quantity-input').addEventListener('input', function(e) {
+        updateTotalPrice(e.target.value);
     });
 </script>

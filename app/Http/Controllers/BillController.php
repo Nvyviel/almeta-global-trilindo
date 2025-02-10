@@ -27,13 +27,10 @@ class BillController extends Controller
     {
         $bill->load(['user', 'shipment', 'container']);
 
-        // Calculate the weight-based rate
         $weightRate = ceil($bill->container->weight / 100) * 90000;
 
-        // Calculate container total rate
         $containerTotalRate = $bill->container->rate_per_container * $bill->container->quantity;
 
-        // Prepare the total price
         $totalPrice = $bill->shipment->rate + $containerTotalRate + $weightRate + 250000;
 
         return view('user.bill-detail', compact('bill', 'weightRate', 'containerTotalRate', 'totalPrice'));

@@ -1,5 +1,6 @@
 @extends('layouts.main')
 
+@section('title','Seal')
 @section('component')
     <div class="mx-auto">
         {{-- @livewire('seal-payment') --}}
@@ -44,7 +45,7 @@
                         <div class="col-span-8 space-y-2">
                             <div class="flex items-center space-x-3">
 
-                                <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold">
+                                <span class="bg-blue-200 text-blue-800 border-blue-200 px-3 py-1 text-xs font-semibold">
                                     {{ $seal->id_seal }}
                                 </span>
                                 <span class="text-sm text-gray-500">
@@ -65,7 +66,7 @@
                                     $statusClasses = [
                                         'Success' => 'bg-green-100 text-green-800 border-green-200',
                                         'Canceled' => 'bg-red-100 text-red-800 border-red-200',
-                                        'Payment Proccess' => 'bg-blue-100 text-blue-800 border-blue-200',
+                                        'Payment Proccess' => 'bg-blue-50 text-blue-600 border-blue-100',
                                     ];
                                     $statusClass =
                                         $statusClasses[$seal->status] ?? 'bg-blue-100 text-blue-800 border-blue-200';
@@ -110,58 +111,61 @@
                     <p class="mt-4 text-sm text-gray-600">No seals found.</p>
                 </div>
             @endforelse
+            <div class="flex justify-center mt-6">
+            {{ $seals->links() }}
+        </div>
         </div>
     </div>
     @push('script')
-        <script>
-            function getSnapToken(sealId) {
-                // Get the button that was clicked using the data-seal-id attribute
-                const button = document.querySelector(`button[data-seal-id="${sealId}"]`);
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+<script>
+    function getSnapToken(sealId) {
+        const button = document.querySelector(`button[data-seal-id="${sealId}"]`);
+        if (button) {
+            button.disabled = true;
+        }
 
-                // Disable the button
-                if (button) {
-                    button.disabled = true;
+        fetch(`/get-snap-token/${sealId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    if (button) button.disabled = false;
+                    return;
                 }
 
-                fetch(`/get-snap-token/${sealId}`, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert(data.error);
-                            if (button) button.disabled = false;
-                            return;
-                        }
-
-                        window.snap.pay(data.snapToken, {
-                            onSuccess: function(result) {
-                                /* You will get notification from callback */
-                                window.location.href = '/seal/list';
-                            },
-                            onPending: function(result) {
-                                /* You will get notification from callback */
-                                window.location.href = '/seal/list';
-                            },
-                            onError: function(result) {
-                                alert('Payment Failed');
-                                if (button) button.disabled = false;
-                            },
-                            onClose: function() {
-                                if (button) button.disabled = false;
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        alert('Terjadi kesalahan saat memproses pembayaran');
+                window.snap.pay(data.snapToken, {
+                    onSuccess: function(result) {
+                        alert('Payment Success');
+                        window.location.href = '/seal/list';
+                    },
+                    onPending: function(result) {
+                        alert('Waiting for payment');
+                        window.location.href = '/seal/list';
+                    },
+                    onError: function(result) {
+                        alert('Payment Failed');
                         if (button) button.disabled = false;
-                    });
-            }
-        </script>
-    @endpush
+                    },
+                    onClose: function() {
+                        alert('Payment modal closed');
+                        if (button) button.disabled = false;
+                    }
+                });
+            })
+            .catch(error => {
+                alert('Terjadi kesalahan saat memproses pembayaran');
+                if (button) button.disabled = false;
+            });
+    }
+</script>
+@endpush
 @endsection
+

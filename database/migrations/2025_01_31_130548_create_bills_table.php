@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('document_price');
             $table->unsignedBigInteger('grand_total');
             $table->enum('status', ['Paid','Unpaid'])->default('Unpaid');
+            $table->string('upload_file');
             $table->timestamps();
         });
     }

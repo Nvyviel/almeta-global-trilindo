@@ -14,10 +14,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens([
             '/midtrans/callback'
         ]);
+
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {})->create();
 
 $app->middleware([
-    // Middleware global lainnya
-    \App\Http\Middleware\UserMiddleware::class, // Tambahkan ini untuk middleware auth
+    \App\Http\Middleware\UserMiddleware::class,
 ]);

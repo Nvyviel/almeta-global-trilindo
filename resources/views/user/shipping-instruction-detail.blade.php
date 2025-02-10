@@ -1,5 +1,6 @@
 @extends('layouts.main')
 
+@section('title','Detail')
 @section('component')
 <div class="container mx-auto px-4 py-6">
     <div class="bg-white rounded-lg shadow-md">

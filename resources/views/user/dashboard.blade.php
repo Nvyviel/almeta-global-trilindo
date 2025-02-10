@@ -1,4 +1,6 @@
 @extends('layouts.main')
+
+@section('title', 'Dashboard')
 @section('component')
     <div
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 {{ !request('pol') && !request('pod') ? 'h-[calc(100vh-9rem)] flex items-center justify-center' : '' }}">

@@ -1,4 +1,6 @@
 @extends('layouts.main')
+
+@section('title','Release Order')
 @section('component')
     <div class="min-h-screen">
         <div class="container mx-auto">

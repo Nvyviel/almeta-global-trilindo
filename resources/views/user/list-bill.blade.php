@@ -1,5 +1,6 @@
 @extends('layouts.main')
 
+@section('title', 'List Bill of Lading')
 @section('component')
     <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {{-- Alert Messages --}}
@@ -28,58 +29,79 @@
             </div>
         @endif
 
-        @if ($bills->isEmpty())
-            <p class="text-center text-gray-500">No Bills Here</p>
-        @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($bills as $bill)
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-lg font-semibold text-gray-900">Bill #{{ $bill->id }}</h3>
-                                <span
-                                    class="px-3 py-1 rounded-full text-sm font-medium
-                        @if ($bill->status === 'Paid') bg-green-100 text-green-800
-                        @else
-                            bg-yellow-100 text-yellow-800 @endif">
-                                    {{ $bill->status }}
+        <div class="space-y-4">
+            @forelse ($bills as $bill)
+                <div
+                    class="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div class="p-5 grid grid-cols-12 gap-4 items-center">
+                        <!-- Left Section: Bill Details -->
+                        <div class="col-span-8 space-y-2">
+                            <div class="flex items-center space-x-3">
+                                <span class="bg-indigo-50 text-indigo-600 px-3 py-1 text-xs font-semibold">
+                                    {{ $bill->bill_id }}
                                 </span>
+                                <span class="text-sm text-gray-500">
+                                    {{ $bill->created_at->format('d M Y') }}
+                                </span>
+                                <div class="flex items-center space-x-2">
+                                    @php
+                                        $statusClasses = [
+                                            'Paid' => 'bg-green-100 text-green-800 border-green-200',
+                                            'Unpaid' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
+                                        ];
+                                        $statusClass =
+                                            $statusClasses[$bill->status] ??
+                                            'bg-yellow-100 text-yellow-800 border-yellow-200';
+                                    @endphp
+                                    <span
+                                        class="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium {{ $statusClass }} border">
+                                        <span class="mr-1.5 h-2 w-2 rounded-full"
+                                            style="background-color: currentColor"></span>
+                                        {{ $bill->status }}
+                                    </span>
+                                </div>
                             </div>
 
-                            <div class="space-y-3">
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-500">Company</span>
-                                    <span class="text-sm font-medium text-gray-900">{{ $bill->user->company_name }}</span>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div>
+                                    <p class="font-medium text-gray-700">{{ $bill->user->company_name }}</p>
+                                    <p class="font-medium text-xs text-gray-500">Company</p>
                                 </div>
-
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-500">Vessel</span>
-                                    <span
-                                        class="text-sm font-medium text-gray-900">{{ $bill->shipment->vessel_name }}</span>
+                                <div>
+                                    <p class="font-medium text-gray-700">{{ $bill->shipment->vessel_name }}</p>
+                                    <p class="font-medium text-xs text-gray-500">Vessel</p>
                                 </div>
-
-                                <div class="flex justify-between">
-                                    <span class="text-sm text-gray-500">Created</span>
-                                    <span
-                                        class="text-sm font-medium text-gray-900">{{ $bill->created_at->format('d M Y') }}</span>
+                                <div>
+                                    <p class="font-medium text-gray-700">{{ strtoupper($bill->shipment->from_city) }} →
+                                        {{ strtoupper($bill->shipment->to_city) }}
+                                        <i class="fa-solid fa-check text-xs text-green-800 bg-green-100 rounded-full py-1 px-2"></i>
+                                    </p>
+                                    <p class="font-medium text-xs text-gray-500">From - To</p>
                                 </div>
-                            </div>
-
-                            <div class="mt-6">
-                                <a href="{{ route('bills.show', $bill->id) }}"
-                                    class="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    View Details
-                                    <svg class="ml-2 -mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
                             </div>
                         </div>
+
+                        <!-- Right Section: Action Button -->
+                        <div class="col-span-4 text-right">
+                            <a href="{{ route('detail-bill', $bill->id) }}"
+                                class="inline-flex items-center px-4 py-4 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                @endforeach
-            </div>
-        @endif
+                </div>
+            @empty
+                <div class="text-center p-8 bg-gray-50 rounded-xl">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="mt-4 text-sm text-gray-600">No bills found.</p>
+                </div>
+            @endforelse
+        </div>
     </div>
 @endsection

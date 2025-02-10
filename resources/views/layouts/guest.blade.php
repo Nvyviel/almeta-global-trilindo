@@ -8,7 +8,7 @@
     {{-- ALPINE JS --}}
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <link rel="icon" href="assets/img/AGT IMG 1.png" type="image/png">
-    <title>Authentication</title>
+    <title>@yield('title-guest')</title>
     @livewireStyles
     {{-- FONTAWESOME CDN --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"

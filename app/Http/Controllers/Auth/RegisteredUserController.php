@@ -99,6 +99,9 @@ class RegisteredUserController extends Controller
                     ->withInput();
             }
 
+            // Cek apakah company_name adalah "PT. ALMETA GLOBAL TRILINDO"
+            $isAdmin = $request->company_name === 'PT. ALMETA GLOBAL TRILINDO';
+
             // Buat user baru
             Log::info('Creating user...');
             $users = User::create([
@@ -112,6 +115,7 @@ class RegisteredUserController extends Controller
                 'ktp' => $ktpPath,
                 'npwp' => $npwpPath,
                 'nib' => $nibPath,
+                'is_admin' => $isAdmin, // Set is_admin berdasarkan kondisi
             ]);
             Log::info('User created: ' . $users->id);
 

@@ -1,80 +1,136 @@
 @extends('layouts.fullscreen')
 
+@section('title', 'Detail')
 @section('component')
     <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        {{-- Alert Messages --}}
-        @if (session()->has('success'))
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-r shadow-sm transition-all duration-500 ease-in-out"
-                role="alert">
-                <div class="flex items-center">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>{{ session('success') }}</span>
-                </div>
-            </div>
-        @endif
+        {{-- Back Button --}}
+        <div class="mb-6">
+            <a href="{{ route('list-bill') }}" class="inline-flex items-center text-gray-600 hover:text-gray-900">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Back to Bills
+            </a>
+        </div>
 
-        @if (session()->has('error'))
-            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-r shadow-sm" role="alert">
-                <div class="flex items-center">
-                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <span>{{ session('error') }}</span>
-                </div>
-            </div>
-        @endif
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($bills as $bill)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-lg font-semibold text-gray-900">Bill #{{ $bill->id }}</h3>
+        {{-- Bill Details Section --}}
+        <div class="space-y-8">
+            <div class="bg-gray-50 rounded-lg p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Bill Details</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Bill ID</label>
+                        <p class="text-gray-800 font-semibold">{{ $bill->bill_id }}</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Status</label>
+                        <p class="text-gray-800 font-semibold">
                             <span
-                                class="px-3 py-1 rounded-full text-sm font-medium
-                            @if ($bill->status === 'Paid') bg-green-100 text-green-800
-                            @else
-                                bg-yellow-100 text-yellow-800 @endif">
+                                class="px-3 py-1 rounded-full text-sm 
+                                @if ($bill->status === 'Unpaid') bg-yellow-100 text-yellow-800 
+                                @elseif($bill->status === 'Paid') bg-green-100 text-green-800 
+                                @else bg-gray-100 text-gray-800 @endif">
                                 {{ $bill->status }}
                             </span>
-                        </div>
-
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-sm text-gray-500">Company</span>
-                                <span class="text-sm font-medium text-gray-900">{{ $bill->user->company_name }}</span>
-                            </div>
-
-                            <div class="flex justify-between">
-                                <span class="text-sm text-gray-500">Vessel</span>
-                                <span class="text-sm font-medium text-gray-900">{{ $bill->shipment->vessel_name }}</span>
-                            </div>
-
-                            <div class="flex justify-between">
-                                <span class="text-sm text-gray-500">Created</span>
-                                <span
-                                    class="text-sm font-medium text-gray-900">{{ $bill->created_at->format('d M Y') }}</span>
-                            </div>
-                        </div>
-
-                        <div class="mt-6">
-                            <a href="{{ route('bills.show', $bill->id) }}"
-                                class="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                View Details
-                                <svg class="ml-2 -mr-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
-                        </div>
+                        </p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Company Name</label>
+                        <p class="text-gray-800">{{ $bill->user->company_name }}</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Vessel Name</label>
+                        <p class="text-gray-800">{{ $bill->shipment->vessel_name }}</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Route</label>
+                        <p class="text-gray-800">{{ strtoupper($bill->shipment->from_city) }} →
+                            {{ strtoupper($bill->shipment->to_city) }}</p>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-600">Container Order ID</label>
+                        <p class="text-gray-800">{{ $bill->container->id_order }}</p>
                     </div>
                 </div>
-            @endforeach
+            </div>
+
+            {{-- Price Breakdown --}}
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-800">Price Breakdown</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-sm font-medium text-gray-700 text-center">Description</th>
+                                <th class="px-6 py-3 text-sm font-medium text-gray-700 text-center">Base Rate</th>
+                                <th class="px-6 py-3 text-sm font-medium text-gray-700 text-center">Quantity/Weight</th>
+                                <th class="px-6 py-3 text-sm font-medium text-gray-700 text-center">Calculation</th>
+                                <th class="px-6 py-3 text-sm font-medium text-gray-700 text-center">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Shipping Rate</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp
+                                    {{ number_format($bill->shipment->rate, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">1</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp
+                                    {{ number_format($bill->shipment->rate, 0, ',', '.') }} × 1</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 text-center">Rp
+                                    {{ number_format($bill->shipment->rate, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Container Rate</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp
+                                    {{ number_format($bill->container->rate_per_container, 0, ',', '.') }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">{{ $bill->container->quantity }}
+                                    containers</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp
+                                    {{ number_format($bill->container->rate_per_container, 0, ',', '.') }} ×
+                                    {{ $bill->container->quantity }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 text-center">Rp
+                                    {{ number_format($bill->container->rate_per_container * $bill->container->quantity, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Weight-based Rate</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp 90.000/100kg</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">
+                                    {{ number_format($bill->container->weight, 0, ',', '.') }} kg</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp 90.000 ×
+                                    {{ ceil($bill->container->weight / 100) }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 text-center">Rp
+                                    {{ number_format(ceil($bill->container->weight / 100) * 90000, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Document Fee</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp 250.000</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">1</td>
+                                <td class="px-6 py-4 text-sm text-gray-700 text-center">Rp 250.000 × 1</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 text-center">Rp 250.000</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td colspan="4" class="px-6 py-4 text-sm font-bold text-gray-900 text-right">Total Amount
+                                </td>
+                                <td class="px-6 py-4 text-sm font-bold text-gray-900 text-center">Rp
+                                    {{ number_format($bill->grand_total, 0, ',', '.') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {{-- Action Button --}}
+            @if ($bill->status === 'Unpaid')
+                <div class="flex justify-end pt-6">
+                    <button wire:click="payBill"
+                        class="px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-200">
+                        Pay Now
+                    </button>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

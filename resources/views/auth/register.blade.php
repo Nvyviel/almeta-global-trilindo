@@ -1,4 +1,5 @@
 <x-guest-layout>
+    @section('title-guest', 'Register')
     <div class="min-h-screen flex">
         <!-- Fullscreen Background Image -->
         <div class="w-1/2 bg-cover bg-center fixed top-0 bottom-0 left-0" 
@@ -35,7 +36,7 @@
                                 value="{{ old('email') }}"
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('email') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none" 
                                 required 
-                                placeholder="Enter your email">
+                                placeholder="example@gmail.com">
                             @error('email')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -50,7 +51,7 @@
                                 value="{{ old('name') }}"
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('name') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none" 
                                 required 
-                                placeholder="Enter your full name">
+                                placeholder="Full name">
                             @error('name')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -64,7 +65,7 @@
                                 name="password" 
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('password') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none"  
                                 required 
-                                placeholder="Enter your password">
+                                placeholder="Password">
                             @error('password')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -95,7 +96,7 @@
                                 value="{{ old('company_name') }}"
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('company_name') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none" 
                                 required 
-                                placeholder="Enter your company name">
+                                placeholder="CV. EXAMPLE / PT. EXAMPLE">
                             @error('company_name')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -109,7 +110,7 @@
                                 value="{{ old('company_phone_number') }}"
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('company_phone_number') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none"
                                 required 
-                                placeholder="Enter your company phone number">
+                                placeholder="0812345678910">
                             @error('company_phone_number')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -123,7 +124,7 @@
                                 value="{{ old('company_location') }}"
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('company_location') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none"
                                 required 
-                                placeholder="Enter your company location">
+                                placeholder="City">
                             @error('company_location')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -133,7 +134,7 @@
                             <label for="company_address" class="block font-medium text-gray-700">Company Address</label>
                             <textarea id="company_address" 
                                     name="company_address"
-                                    placeholder="Enter your company address" 
+                                    placeholder="Example Street No. 99, Surabaya, East Java" 
                                     class="w-full resize-none h-28 mt-1 p-2 block rounded-md border shadow-sm @error('company_address') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none"></textarea>
                             @error('company_address')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>

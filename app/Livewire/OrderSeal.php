@@ -76,12 +76,13 @@ class OrderSeal extends Component
             $this->reduceStock($this->quantity);
             $this->dispatch('order-success');
             session()->flash('success', 'Order created successfully!');
-            
+
             $this->reset(['pickup_point', 'quantity']);
             $this->quantity = 1;
             $this->totalPrice = $this->price;
             $this->calculateAvailableStock();
 
+            return redirect()->route('seal')->navigate();
         } catch (\Exception $e) {
             $this->dispatch('purchaseError', $e->getMessage());
             session()->flash('error', 'Failed to create order: ' . $e->getMessage());

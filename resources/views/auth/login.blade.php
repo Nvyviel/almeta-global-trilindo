@@ -1,4 +1,5 @@
 <x-guest-layout>
+    @section('title-guest', 'Login')
     <div class="min-h-screen flex">
         <!-- Fullscreen Background Image -->
         <div class="w-1/2 bg-cover bg-center fixed top-0 bottom-0 left-0" 
@@ -34,7 +35,7 @@
                                 value="{{ old('email') }}"
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('email') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none" 
                                 required 
-                                placeholder="Enter your email">
+                                placeholder="example@gmail.com">
                             @error('email')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror
@@ -48,7 +49,7 @@
                                 name="password" 
                                 class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('password') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none"  
                                 required 
-                                placeholder="Enter your password">
+                                placeholder="Password">
                             @error('password')
                                 <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                             @enderror

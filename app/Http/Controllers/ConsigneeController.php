@@ -66,4 +66,9 @@ class ConsigneeController extends Controller
         return redirect()->route('consignee')
             ->with('success', 'Data consignee berhasil dihapus');
     }
+
+    public function createConsignee()
+    {
+        return view('user.create-consignee');
+    }
 }
