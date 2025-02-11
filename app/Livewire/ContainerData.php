@@ -79,29 +79,48 @@ class ContainerData extends Component
 
     public function addContainer()
     {
+        // Explicitly validate and store validation result
+        $validated = $this->validate([
+            'stuffing' => 'required',
+            'ownership_container' => 'required',
+            'load_type' => 'required',
+            'container_type' => 'required',
+            'quantity' => 'required|numeric',
+            'commodity' => 'required',
+            'weight' => 'required|numeric',
+            'notes' => 'nullable|string',
+            'is_danger' => 'in:Yes,No',
+            'shipment_id' => 'required|exists:shipments,id',
+            'user_id' => 'required|exists:users,id',
+        ], [
+            'stuffing.required' => 'The stuffing field is required.',
+            'ownership_container.required' => 'The ownership container field is required.',
+            'load_type.required' => 'The load type field is required.',
+            'container_type.required' => 'The container type field is required.',
+            'quantity.required' => 'The quantity field is required.',
+            'quantity.numeric' => 'The quantity must be a number.',
+            'commodity.required' => 'The commodity field is required.',
+            'weight.required' => 'The weight field is required.',
+            'weight.numeric' => 'The weight must be a number.',
+            'notes.string' => 'The notes must be a valid string.',
+            'is_danger.in' => 'The is danger field must be either Yes or No.',
+            'shipment_id.required' => 'The shipment ID is required.',
+            'shipment_id.exists' => 'The selected shipment ID is invalid.',
+            'user_id.required' => 'The user ID is required.',
+            'user_id.exists' => 'The selected user ID is invalid.',
+        ]);
+        
         try {
-            $this->user_id = Auth::id();
-
-            // Validate input
-            $validatedData = $this->validate();
-
             // Generate unique id_order
-            $validatedData['id_order'] = $this->generateUniqueOrderId();
-
-            // Explicitly set status and is_danger
-            $validatedData['status'] = 'Requested';
-            $validatedData['is_danger'] = $this->is_danger;
+            $validated['id_order'] = $this->generateUniqueOrderId();
+            $validated['status'] = 'Requested';
 
             // Create container
-            Container::create($validatedData);
+            Container::create($validated);
 
-            // Reset input fields
-            $this->reset();
-
-            // Emit success event and redirect
-            $this->dispatch('container-created');
             session()->flash('success', 'Container data created successfully!');
             return redirect()->route('release-order');
+            
         } catch (\Exception $e) {
             Log::error('Error creating container: ' . $e->getMessage());
             session()->flash('error', 'Failed to create container. Please try again.');

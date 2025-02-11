@@ -16,7 +16,7 @@
                     {{-- General Error Handling --}}
                     @if($errors->any())
                         <div class="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                            <strong class="font-bold">Oops! Ada beberapa masalah dengan pendaftaran Anda.</strong>
+                            <strong class="font-bold">Sorry, you cannot register because:</strong>
                             <ul class="mt-2 list-disc list-inside">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -94,7 +94,7 @@
                                 type="text" 
                                 name="company_name" 
                                 value="{{ old('company_name') }}"
-                                class="block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('company_name') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none" 
+                                class="uppercase block w-full mt-1 h-10 p-2 border rounded-md shadow-sm @error('company_name') border-red-500 @enderror focus:border-blue-400 focus:ring-blue-300 focus:outline-none" 
                                 required 
                                 placeholder="CV. EXAMPLE / PT. EXAMPLE">
                             @error('company_name')

@@ -40,7 +40,10 @@
                             </span>
                         </h1>
                         <p class="mt-6 max-w-3xl mx-auto text-xl sm:text-2xl text-gray-600 leading-relaxed">
-                            Fast, Safe, and Reliable Domestic Logistics Solutions for Your Business.
+                            Fast, Safe, and Reliable Domestic Logistics solutions for your business.
+                        </p>
+                        <p class="mt-3 max-w-3xl mx-auto text-sm sm:text-md text-gray-400">
+                            In a fast-paced business world, small and medium industries (IKM) need fast, safe and reliable logistics solutions to ensure their goods reach their destination efficiently. This website is presented as an end-to-end logistics platform specifically designed to meet domestic shipping needs, both for SMEs, distributors and other business actors.
                         </p>
                         <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 px-4">
                             <a href="{{ route('register') }}" wire:navigate
@@ -54,7 +57,7 @@
         </div>
 
         <!-- Features Section -->
-        <div class="relative z-10 py-16 bg-white/80 backdrop-blur-sm">
+        <div class="relative z-10 py-14 bg-white/80 backdrop-blur-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Feature 1 -->
@@ -96,7 +99,7 @@
 
     <!-- WhatsApp Contact Button -->
     <div class="fixed bottom-5 right-5 z-50">
-        <a href="https://wa.me/6281216996352" target="_blank" 
+        <a href="https://wa.me/6281216996352"  target="_blank" 
             class="flex items-center px-6 py-3 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
             <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C6.48 2 2 6.48 2 12c0 2.19.7 4.22 1.88 5.88L2 22l4.12-1.88C7.78 21.3 9.81 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.89 0-3.68-.55-5.2-1.59l-.37-.25-2.44 1.12 1.12-2.44-.25-.37C4.55 15.68 4 13.89 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8zm4.14-6.35c-.23-.12-1.34-.66-1.55-.74-.21-.08-.36-.12-.51.12-.15.23-.58.74-.71.89-.13.15-.26.17-.49.06-.23-.12-.98-.36-1.86-1.1-.69-.57-1.16-1.28-1.29-1.5-.13-.23-.01-.36.1-.49.11-.11.23-.26.34-.38.11-.13.15-.23.23-.38.08-.15.04-.28-.02-.38-.06-.1-.51-1.22-.7-1.67-.18-.44-.37-.38-.51-.39-.13 0-.28-.01-.42-.01s-.39.06-.59.28c-.2.23-.78.76-.78 1.85s.8 2.14.91 2.29c.11.15 1.57 2.4 3.8 3.36.53.23.95.36 1.27.46.53.17 1.02.15 1.41.09.43-.07 1.34-.55 1.53-1.07.19-.52.19-.96.13-1.07-.06-.11-.23-.17-.49-.29z"/>

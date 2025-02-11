@@ -7,7 +7,7 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Shipping Instructions</h1>
             <a href="{{ route('request-si') }}" wire:navigate
-                class="px-4 py-2 bg-red-200 text-red-700 rounded-full shadow hover:bg-red-300">
+                class="px-4 py-2 bg-red-600 text-white rounded-full shadow hover:bg-red-700">
                 + Shipping Instruction
             </a>
         </div>

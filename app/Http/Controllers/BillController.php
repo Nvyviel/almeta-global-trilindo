@@ -12,13 +12,24 @@ class BillController extends Controller
     {
         return view('user.bill-of-lading');
     }
-    // UNSOLVED ERROR
 
-    public function listBill()
+    public function listBill(Request $request) // Tambahkan parameter Request
     {
-        $bills = Bill::with(['user', 'shipment'])
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $query = Bill::with(['user', 'shipment'])
+            ->where('user_id', auth()->id());
+
+        // Filtering logic
+        if ($request->has('filter')) {
+            $filter = $request->input('filter');
+            if ($filter !== 'all') {
+                $query->where('status', ucfirst($filter)); // Capitalize first letter for matching DB value
+            }
+        }
+
+        $bills = $query->latest()->paginate(10);
+        
+        // Append query parameters to pagination links
+        $bills->appends($request->query());
 
         return view('user.list-bill', compact('bills'));
     }
