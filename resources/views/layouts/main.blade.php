@@ -2,10 +2,10 @@
     @section('layout')
         <div class="min-h-screen">
             <!-- Main Navbar -->
-            <nav class="fixed top-0 left-0 w-full bg-white shadow-md z-40 px-6 py-3 flex justify-between items-center">
+            <nav class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('dashboard') }}" wire:navigate>
-                        <div class="text-2xl font-black text-red-600 tracking-tight">ALMETA</div>
+                        <div class="text-2xl font-black text-red-700 tracking-tight">ALMETA</div>
                     </a>
                     <div class="hidden md:block border-l border-gray-300 pl-4 text-gray-400 text-sm">
                         Logistics Management
@@ -21,7 +21,7 @@
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                             <div class="relative">
                                 <div
-                                    class="w-10 h-10 rounded-full border-2 border-red-500 flex items-center justify-center bg-red-500">
+                                    class="w-10 h-10 rounded-full border-2 border-red-700 flex items-center justify-center bg-red-600">
                                     <i class="fas fa-bell text-white"></i>
                                 </div>
                             </div>
@@ -92,11 +92,11 @@
                             <i class="fas fa-file-alt mr-2"></i> Shipping Instruction
                         </a>
                         <a href="{{ route('list-bill') }}" wire:navigate
-                            class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                            class="{{ $mobileLinkClass }} {{ request()->routeIs('list-bill') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-scroll mr-2"></i> Bill of Lading
                         </a>
                         <a href="{{ route('seal') }}" wire:navigate
-                            class="{{ $mobileLinkClass }} {{ $mobileInactiveLinkClass }}">
+                            class="{{ $mobileLinkClass }} {{ request()->routeIs('seal') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-lock mr-2"></i> Seal
                         </a>
 
@@ -104,15 +104,27 @@
                             <div class="w-full border-t border-gray-200 my-2"></div>
                             <a href="{{ route('dashboard-admin') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard-admin') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                                <i class="fas fa-tachometer-alt mr-2"></i> Admin Dashboard
+                                <i class="fas fa-house-user mr-2"></i> Admin Dashboard
                             </a>
                             <a href="{{ route('create-shipment') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('create-shipment') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                                <i class="fas fa-plus-circle mr-2"></i> Create Shipment
+                                <i class="fas fa-plus-circle mr-2"></i> Create Schedule
                             </a>
-                            <a href="{{ route('approval-list') }}" wire:navigate
-                                class="{{ $mobileLinkClass }} {{ request()->routeIs('approval') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                                <i class="fas fa-check-circle mr-2"></i> Approval
+                            <a href="{{ route('approval-ro') }}" wire:navigate
+                                class="{{ $mobileLinkClass }} {{ request()->routeIs('approval-ro') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                                <i class="fa-solid fa-file-contract mr-2"></i> Approval Release Order
+                            </a>
+                            <a href="{{ route('approval-si') }}" wire:navigate
+                                class="{{ $mobileLinkClass }} {{ request()->routeIs('approval-si') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                                <i class="fa-solid fa-ship mr-2"></i> Shipping Instruction
+                            </a>
+                            <a href="{{ route('activity-seal') }}" wire:navigate
+                                class="{{ $mobileLinkClass }} {{ request()->routeIs('activity-seal') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                                <i class="fa-solid fa-stamp mr-2"></i> Activity Seal
+                            </a>
+                            <a href="{{ route('create-bill') }}" wire:navigate
+                                class="{{ $mobileLinkClass }} {{ request()->routeIs('create-bill') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                                <i class="fa-solid fa-file-invoice mr-2"></i> Create Bill of Lading
                             </a>
                         @endif
                     </nav>
@@ -153,7 +165,7 @@
                                 <i class="fas fa-scroll mr-3"></i> Bill of Lading
                             </a>
                             <a href="{{ route('seal') }}" wire:navigate
-                                class="{{ $linkClass }} {{ $inactiveLinkClass }}">
+                                class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-lock mr-3"></i> Seal
                             </a>
 
@@ -163,15 +175,27 @@
 
                                 <a href="{{ route('dashboard-admin') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('dashboard-admin') ? $activeLinkClass : $inactiveLinkClass }}">
-                                    <i class="fas fa-tachometer-alt mr-3"></i> Admin Dashboard
+                                    <i class="fas fa-house-user mr-3"></i> Admin Dashboard
                                 </a>
                                 <a href="{{ route('create-shipment') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('create-shipment') ? $activeLinkClass : $inactiveLinkClass }}">
                                     <i class="fas fa-plus-circle mr-3"></i> Create Schedule
                                 </a>
-                                <a href="{{ route('approval-list') }}" wire:navigate
-                                    class="{{ $linkClass }} {{ request()->routeIs('approval-list') ? $activeLinkClass : $inactiveLinkClass }}">
-                                    <i class="fas fa-check-circle mr-3"></i> Approval
+                                <a href="{{ route('approval-ro') }}" wire:navigate
+                                    class="{{ $linkClass }} {{ request()->routeIs('approval-ro') ? $activeLinkClass : $inactiveLinkClass }}">
+                                    <i class="fa-solid fa-file-contract mr-3"></i> Approval Release Order
+                                </a>
+                                <a href="{{ route('approval-si') }}" wire:navigate
+                                    class="{{ $linkClass }} {{ request()->routeIs('approval-si') ? $activeLinkClass : $inactiveLinkClass }}">
+                                    <i class="fa-solid fa-ship mr-3"></i> Shipping Instruction
+                                </a>
+                                <a href="{{ route('activity-seal') }}" wire:navigate
+                                    class="{{ $linkClass }} {{ request()->routeIs('activity-seal') ? $activeLinkClass : $inactiveLinkClass }}">
+                                    <i class="fa-solid fa-stamp mr-3"></i> Activity Seal
+                                </a>
+                                <a href="{{ route('create-bill') }}" wire:navigate
+                                    class="{{ $linkClass }} {{ request()->routeIs('create-bill') ? $activeLinkClass : $inactiveLinkClass }}">
+                                    <i class="fa-solid fa-file-invoice mr-3"></i> Create Bill of Lading
                                 </a>
                             @endif
                         </div>

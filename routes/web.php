@@ -30,75 +30,91 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-// BACKGROUND COMPANIES
-Route::get('/homepage', [ProfileController::class, 'index'])->name('homepage');
-Route::get('/service', [ProfileController::class, 'service'])->name('service');
+Route::prefix('/dashboard')->group(function() {
+    Route::middleware(['admin'])->group(function() {
+        Route::get('/admin', [AuthenticatedSessionController::class, 'roomAdmin'])->name('dashboard-admin');
+        Route::post('/{user}/is-admin', [AuthenticatedSessionController::class, 'isadmin'])->name('isadmin');
+    });
+});
 
+Route::prefix('/create')->group(function() {
+    Route::get('/release-order', [ContainerController::class, 'createNew'])->name('create-new-ro');
+    Route::get('/shipping-instruction', [ShippingInstructionController::class, 'requestSi'])->name('request-si');
+    Route::get('seal', [SealController::class, 'createSeal'])->name('create-seal');
+});
 
-// FILTERING (ALL)
-Route::get('/container/ro-filtering', [ContainerController::class, 'filteringRO'])->name('filtering-release-order');
-Route::get('/dashboard/shipment/filtering', [ShipmentController::class, 'filtering'])->name('filtering-shipment');
+Route::prefix('/filtering')->group(function() {
+    Route::get('/shipment', [ShipmentController::class, 'filtering'])->name('filtering-shipment');
+});
 
-// CONTAINER / RELEASE ORDER
-Route::get('/dashboard/release-order', [ContainerController::class, 'releaseOrder'])->name('release-order');
-Route::get('/release-order/detail/{id}', [ContainerController::class, 'showDetail'])->name('show-detail');
-Route::get('/book/new', [ContainerController::class, 'booking'])->name('booking');
-Route::post('/book/new', [ContainerController::class, 'createdata'])->name('bookingprocess');
-Route::get('/dashboard/create/new-ro', [ContainerController::class, 'createNew'])->name('create-new-ro');
+Route::prefix('/list')->group(function() {
+    Route::get('/seal', [SealController::class, 'seal'])->name('seal');
+    Route::get('/release-order', [ContainerController::class, 'releaseOrder'])->name('release-order');
+    Route::get('/shipping-instruction', [ShippingInstructionController::class, 'showList'])->name('shipping-instruction');
+    Route::get('/bill-of-lading', [BillController::class, 'listBill'])->name('list-bill');
+});
 
-// SEAL
-Route::get('/seal', [SealController::class, 'showListSeal'])->name('showListSeal');
-Route::get('/seal/list', [SealController::class, 'seal'])->name('seal');
+Route::prefix('/detail')->group(function() {
+    Route::get('/shipping-instruction/{id}', [ShippingInstructionController::class, 'detailSi'])->name('detail-si');
+    Route::get('/release-order/detail/{id}', [ContainerController::class, 'showDetail'])->name('show-detail');
+    Route::get('/bill-of-lading/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
+    Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
+});
+
+Route::prefix('/book')->group(function() {
+    Route::get('/new', [ContainerController::class, 'booking'])->name('booking');
+    Route::post('/new', [ContainerController::class, 'createdata'])->name('bookingprocess');
+});
+
+Route::prefix('/consignee')->group(function(){
+    Route::get('/management', [ConsigneeController::class, 'index'])->name('consignee');
+    Route::get('/{consignee}/edit', [ConsigneeController::class, 'edit'])->name('consignee-edit');
+    Route::put('/{consignee}', [ConsigneeController::class, 'update'])->name('consignee-update');
+    Route::delete('/{consignee}', [ConsigneeController::class, 'destroy'])->name('consignee-destroy');
+    Route::get('/create', [ConsigneeController::class, 'createConsignee'])->name('create-consignee');
+});
+
+// MIDTRANS PAYMENT GATEWAY
 Route::post('/get-snap-token/{id}', [SealController::class, 'getSnapToken'])->name('get.snap.token');
 Route::post('/midtrans/callback', [SealController::class, 'handleCallback'])->name('midtrans.callback');
 
-// CONSIGNEE
-Route::get('/consignee/management', [ConsigneeController::class, 'index'])->name('consignee');
-Route::get('/consignee/{consignee}/edit', [ConsigneeController::class, 'edit'])->name('consignee-edit');
-Route::put('/consignee/{consignee}', [ConsigneeController::class, 'update'])->name('consignee-update');
-Route::delete('/consignee/{consignee}', [ConsigneeController::class, 'destroy'])->name('consignee-destroy');
-Route::get('/consignee/create', [ConsigneeController::class, 'createConsignee'])->name('create-consignee');
+Route::prefix('/admin')->group(function() {
+    Route::middleware(['admin'])->group(function() {
+        Route::prefix('/detail')->group(function() {
+            Route::get('/user/{id}', [AuthenticatedSessionController::class, 'detail'])->name('detail-user');
+        });
 
-// SHIPPING INSTRUCTION
-Route::get('/shipping-instruction', [ShippingInstructionController::class, 'showList'])->name('shipping-instruction');
-Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
-Route::get('/dashboard/shipping-instruction/request', [ShippingInstructionController::class, 'requestSi'])->name('request-si');
+        Route::prefix('/create')->group(function() {
+            Route::get('/shipment', [ShipmentController::class, 'create'])->name('create-shipment');
+            Route::get('/bill-of-lading', [BillController::class, 'createBill'])->name('create-bill');
+            Route::post('/shipment/schedule', [ShipmentController::class, 'addschedule'])->name('addschedule');
+        });
 
-// BILL OF LADING
-Route::get('/bill-of-lading', [BillController::class, 'listBill'])->name('list-bill');
-Route::get('/bill-of-lading/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
+        Route::prefix('/approval')->group(function() {
+            Route::get('/release-order', [ShipmentController::class, 'approvalRo'])->name('approval-ro');
+            Route::get('/list', [RegisteredUserController::class, 'approvalList'])->name('approval-list');
+            Route::get('/shipping-instruction', [ShippingInstructionController::class, 'approvalSi'])->name('approval-si');
+        });
 
+        Route::prefix('/container')->group(function() {
+            Route::post('/containers/{id}/approve', [ShipmentController::class, 'approve'])->name('ro-approved');
+            Route::post('/containers/{id}/cancel', [ShipmentController::class, 'cancel'])->name('ro-canceled');
 
-Route::middleware(['admin'])->group(function () {
-    // if user()->is_admin = true
-    Route::get('/dashboard/admin', [AuthenticatedSessionController::class, 'roomAdmin'])->name('dashboard-admin');
-    Route::get('detail/user/{id}', [AuthenticatedSessionController::class, 'detail'])->name('detail-user');
-    Route::post('/dashboard/admin/{user}/is-admin', [AuthenticatedSessionController::class, 'isadmin'])->name('isadmin');
+        });
 
-    // CONTAINER / RELEASE ORDER
-    Route::get('/approval/release-order', [ShipmentController::class, 'approvalRo'])->name('approval-ro');
-    Route::post('/containers/{id}/approve', [ShipmentController::class, 'approve'])->name('ro-approved');
-    Route::post('/containers/{id}/cancel', [ShipmentController::class, 'cancel'])->name('ro-canceled');
-    Route::get('/history/release-order', [ContainerController::class, 'historyRo'])->name('history-ro');
+        Route::prefix('/history')->group(function() {
+            Route::get('/release-order', [ShipmentController::class, 'historyRo'])->name('history-ro');
+            Route::get('/seal', [SealController::class, 'activitySeal'])->name('activity-seal');
+        });
 
-    Route::get('/approval/list', [RegisteredUserController::class, 'approvalList'])->name('approval-list');
+        Route::prefix('/shipments')->group(function() {
+            Route::get('{shipment}/edit', [ShipmentController::class, 'edit'])->name('edit-shipment');
+            Route::put('{shipment}', [ShipmentController::class, 'update'])->name('update-shipment');
+        });
 
-    //SHIPMENT
-    Route::get('create/shipment', [ShipmentController::class, 'create'])->name('create-shipment');
-    Route::post('/shipment/create/schedule', [ShipmentController::class, 'addschedule'])->name('addschedule');
-    Route::get('/shipments/{shipment}/edit', [ShipmentController::class, 'edit'])->name('edit-shipment');
-    Route::put('/shipments/{shipment}', [ShipmentController::class, 'update'])->name('update-shipment');
-
-    // SEAL
-    Route::get('/approval/seal/add-stock', [SealController::class, 'addStock'])->name('add-stock');
-    Route::get('/seal/activity', [SealController::class, 'activitySeal'])->name('activity-seal');
+        Route::get('/approvalseal/add-stock', [SealController::class, 'addStock'])->name('add-stock');
     
-    // BILL OF LADING
-    Route::get('/bill-of-lading/create', [BillController::class, 'createBill'])->name('create-bill');
-    
-    // SHIPPING INSTRUCTION
-    Route::get('/approval/shipping-instruction', [ShippingInstructionController::class, 'approvalSi'])->name('approval-si');
-    Route::put('/shipping-instruction/{id}/approved', [ShippingInstructionController::class, 'approvedSi'])->name('approved-si');
-    Route::put('/shipping-instruction/{id}/rejected', [ShippingInstructionController::class, 'rejectedSi'])->name('rejected-si');
-    Route::get('/shipping-instruction/detail/{id}', [ShippingInstructionController::class, 'detailSi'])->name('detail-si');
+        Route::put('/shipping-instruction/{id}/approved', [ShippingInstructionController::class, 'approvedSi'])->name('approved-si');
+        Route::put('/shipping-instruction/{id}/rejected', [ShippingInstructionController::class, 'rejectedSi'])->name('rejected-si');
+        });
 });

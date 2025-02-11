@@ -2,15 +2,15 @@
     @section('title-guest', 'Almeta - Reliable Logistics')
     
     <!-- Background gradient wrapper -->
-    <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div class="min-h-screen bg-gradient-to-b to-white">
         <!-- Navigation -->
-        <nav class="border-b border-gray-100 backdrop-blur-sm bg-white/80 fixed w-full top-0 z-50">
+        <nav class="border-b border-gray-100 backdrop-blur-sm bg-white/80 fixed w-full top-0 z-50 shadow-md">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center py-6">
+                <div class="flex justify-between items-center py-3">
                     <div class="flex items-center space-x-2">
-                        <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-600 to-red-800">
+                        <a href="#" class="text-xl font-bold bg-clip-text text-red-700">
                             PT. Almeta Global Trilindo
-                        </span>
+                        </>
                     </div>
                     <div class="flex items-center space-x-4">
                         <a href="{{ route('login') }}" wire:navigate
@@ -35,8 +35,8 @@
                 <div class="py-20 sm:py-32 lg:py-40">
                     <div class="text-center">
                         <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight">
-                            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-red-700">
-                                ALMETA LOGISTICS
+                            <span class="block text-red-700">
+                                ALMETA
                             </span>
                         </h1>
                         <p class="mt-6 max-w-3xl mx-auto text-xl sm:text-2xl text-gray-600 leading-relaxed">
@@ -101,7 +101,7 @@
             <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C6.48 2 2 6.48 2 12c0 2.19.7 4.22 1.88 5.88L2 22l4.12-1.88C7.78 21.3 9.81 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.89 0-3.68-.55-5.2-1.59l-.37-.25-2.44 1.12 1.12-2.44-.25-.37C4.55 15.68 4 13.89 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8zm4.14-6.35c-.23-.12-1.34-.66-1.55-.74-.21-.08-.36-.12-.51.12-.15.23-.58.74-.71.89-.13.15-.26.17-.49.06-.23-.12-.98-.36-1.86-1.1-.69-.57-1.16-1.28-1.29-1.5-.13-.23-.01-.36.1-.49.11-.11.23-.26.34-.38.11-.13.15-.23.23-.38.08-.15.04-.28-.02-.38-.06-.1-.51-1.22-.7-1.67-.18-.44-.37-.38-.51-.39-.13 0-.28-.01-.42-.01s-.39.06-.59.28c-.2.23-.78.76-.78 1.85s.8 2.14.91 2.29c.11.15 1.57 2.4 3.8 3.36.53.23.95.36 1.27.46.53.17 1.02.15 1.41.09.43-.07 1.34-.55 1.53-1.07.19-.52.19-.96.13-1.07-.06-.11-.23-.17-.49-.29z"/>
             </svg>
-            Contact Us
+            Customer Service
         </a>
     </div>
 </x-guest-layout>

@@ -61,7 +61,7 @@
 
                         <!-- Direction Icon -->
                         <div class="hidden lg:flex lg:col-span-2 justify-center items-center pb-3">
-                            <i class="fa-solid fa-arrow-right-long text-lg text-blue-500 bg-blue-100 py-2 px-4 rounded-full"></i>
+                            <i class="fa-solid fa-arrow-right-long text-lg text-blue-500"></i>
                         </div>
 
                         <!-- POD Selection -->

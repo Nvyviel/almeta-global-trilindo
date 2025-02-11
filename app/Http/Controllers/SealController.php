@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 class SealController extends Controller
 {
 
-    public function showListSeal()
+    public function createSeal()
     {
         return view('user.create-seal');
     }
