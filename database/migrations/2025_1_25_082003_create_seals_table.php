@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('id_seal');
-            $table->enum('pickup_point', ['surabaya', 'pontianak', 'semarang', 'banjarmasin', 'bandung', 'jakarta']);
+            $table->enum('pickup_point', ['surabaya', 'pontianak', 'semarang', 'banjarmasin', 'sampit', 'jakarta', 'kumai', 'samarinda', 'balikpapan', 'berau', 'palu', 'bitung', 'gorontalo', 'ambon']);
             $table->integer('quantity');
             $table->string('total_price');
             $table->bigInteger('price');

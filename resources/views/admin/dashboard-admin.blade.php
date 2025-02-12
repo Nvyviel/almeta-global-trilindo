@@ -3,92 +3,72 @@
 @section('title', 'Dashboard Admin')
 @section('component')
     <div class="container mx-auto px-4 py-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 border-b border-gray-200">
-            <div class="bg-white p-4 rounded-lg shadow">
-                <h3 class="text-lg font-semibold mb-4">Users by Location</h3>
-                <div id="locationChart"></div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-100 mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Users</p>
+                        <p class="text-2xl font-semibold text-gray-700">{{ $totalUsers }}</p>
+                    </div>
+                </div>
             </div>
-            <div class="bg-white p-4 rounded-lg shadow">
-                <h3 class="text-lg font-semibold mb-4">Monthly User Registration</h3>
-                <div id="registrationChart"></div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-yellow-100 mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Admins</p>
+                        <p class="text-2xl font-semibold text-gray-700">{{ $totalAdmins }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-green-100 mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Shipments</p>
+                        <p class="text-2xl font-semibold text-gray-700">{{ $totalShipments }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-purple-100 mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Seals</p>
+                        <p class="text-2xl font-semibold text-gray-700">{{ $totalSeals }}</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <script>
-            // Location Chart
-            var locationOptions = {
-                series: [{
-                    name: 'Total Users',
-                    data: [44, 55, 41, 37, 22]
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 300,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                plotOptions: {
-                    bar: {
-                        borderRadius: 4,
-                        horizontal: true,
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                xaxis: {
-                    categories: ['New York', 'London', 'Tokyo', 'Paris', 'Singapore'],
-                },
-                colors: ['#3B82F6'],
-                tooltip: {
-                    y: {
-                        formatter: function(val) {
-                            return val + " users"
-                        }
-                    }
-                }
-            };
-
-            var locationChart = new ApexCharts(document.querySelector("#locationChart"), locationOptions);
-            locationChart.render();
-
-            // Registration Chart
-            var registrationOptions = {
-                series: [{
-                    name: 'New Users',
-                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-                }],
-                chart: {
-                    type: 'line',
-                    height: 300,
-                    toolbar: {
-                        show: false
-                    }
-                },
-                stroke: {
-                    curve: 'smooth',
-                    width: 3
-                },
-                xaxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
-                },
-                markers: {
-                    size: 4
-                },
-                colors: ['#3B82F6'],
-                tooltip: {
-                    y: {
-                        formatter: function(val) {
-                            return val + " users"
-                        }
-                    }
-                }
-            };
-
-            var registrationChart = new ApexCharts(document.querySelector("#registrationChart"), registrationOptions);
-            registrationChart.render();
-        </script>
-
+        
         <div class="bg-white overflow-hidden">
             {{-- Search Section --}}
             <div class="bg-gray-50 p-4 border-b border-gray-200">

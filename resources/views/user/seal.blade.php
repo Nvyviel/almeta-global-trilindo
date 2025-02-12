@@ -1,9 +1,8 @@
 @extends('layouts.main')
 
-@section('title','Seal')
+@section('title', 'Seal')
 @section('component')
     <div class="mx-auto">
-        {{-- @livewire('seal-payment') --}}
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Seal Management</h1>
@@ -112,60 +111,60 @@
                 </div>
             @endforelse
             <div class="flex justify-center mt-6">
-            {{ $seals->links() }}
-        </div>
+                {{ $seals->links() }}
+            </div>
         </div>
     </div>
     @push('script')
-<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.client_key') }}"></script>
-<script>
-    function getSnapToken(sealId) {
-        const button = document.querySelector(`button[data-seal-id="${sealId}"]`);
-        if (button) {
-            button.disabled = true;
-        }
-
-        fetch(`/get-snap-token/${sealId}`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                    if (button) button.disabled = false;
-                    return;
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key="{{ config('services.midtrans.client_key') }}"></script>
+        <script>
+            function getSnapToken(sealId) {
+                const button = document.querySelector(`button[data-seal-id="${sealId}"]`);
+                if (button) {
+                    button.disabled = true;
                 }
 
-                window.snap.pay(data.snapToken, {
-                    onSuccess: function(result) {
-                        alert('Payment Success');
-                        window.location.href = '/seal/list';
-                    },
-                    onPending: function(result) {
-                        alert('Waiting for payment');
-                        window.location.href = '/seal/list';
-                    },
-                    onError: function(result) {
-                        alert('Payment Failed');
-                        if (button) button.disabled = false;
-                    },
-                    onClose: function() {
-                        alert('Payment modal closed');
-                        if (button) button.disabled = false;
-                    }
-                });
-            })
-            .catch(error => {
-                alert('Terjadi kesalahan saat memproses pembayaran');
-                if (button) button.disabled = false;
-            });
-    }
-</script>
-@endpush
-@endsection
+                fetch(`/get-snap-token/${sealId}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            if (button) button.disabled = false;
+                            return;
+                        }
 
+                        window.snap.pay(data.snapToken, {
+                            onSuccess: function(result) {
+                                alert('Payment Success');
+                                window.location.href = '/seal/list';
+                            },
+                            onPending: function(result) {
+                                alert('Waiting for payment');
+                                window.location.href = '/seal/list';
+                            },
+                            onError: function(result) {
+                                alert('Payment Failed');
+                                if (button) button.disabled = false;
+                            },
+                            onClose: function() {
+                                alert('Payment modal closed');
+                                if (button) button.disabled = false;
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        alert('Terjadi kesalahan saat memproses pembayaran');
+                        if (button) button.disabled = false;
+                    });
+            }
+        </script>
+    @endpush
+@endsection

@@ -30,7 +30,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        Log::info('Store function called.'); // Logging awal
+        Log::info('Store function called.');
 
         try {
             // Validasi input

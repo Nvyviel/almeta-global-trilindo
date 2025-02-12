@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Shipment;
+use App\Models\StockSeal;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,8 +26,6 @@ class AuthenticatedSessionController extends Controller
 
     public function isadmin(User $user)
     {
-        // Hanya izinkan perubahan jika pengguna saat ini adalah super admin (ID 1)
-        // dan bukan mengubah akun super admin
         if (auth()->user()->id === 1 && $user->id !== 1) {
             $user->is_admin = !$user->is_admin;
             $user->save();
@@ -67,10 +66,6 @@ class AuthenticatedSessionController extends Controller
         return redirect()->route('dashboard');
     }
 
-
-    /**
-     * Destroy an authenticated session.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
@@ -90,15 +85,20 @@ class AuthenticatedSessionController extends Controller
             $searchTerm = $request->input('search');
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('name', 'like', "%{$searchTerm}%")
-                ->orWhere('email', 'like', "%{$searchTerm}%")
-                ->orWhere('company_name', 'like', "%{$searchTerm}%")
-                ->orWhere('company_location', 'like', "%{$searchTerm}%");
+                    ->orWhere('email', 'like', "%{$searchTerm}%")
+                    ->orWhere('company_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('company_location', 'like', "%{$searchTerm}%");
             });
         }
 
         $users = $query->paginate(5);
 
-        return view('admin.dashboard-admin', compact('users'));
+        $totalUsers = User::where('is_admin', 0)->count();
+        $totalAdmins = User::where('is_admin', 1)->count();
+        $totalShipments = Shipment::count();
+        $totalSeals = StockSeal::sum('stock');
+
+        return view('admin.dashboard-admin', compact('users', 'totalUsers', 'totalAdmins', 'totalShipments', 'totalSeals'));
     }
 
     public function detail($id)

@@ -73,6 +73,22 @@ class ShipmentController extends Controller
         return view('user.dashboard', compact('shipments'));
     }
 
+    public function guestFiltering(Request $request)
+    {
+        $pod = $request->input('pod');
+        $pol = $request->input('pol');
+
+        if (empty($pod) || empty($pol)) {
+            return view('user.index', ['shipments' => collect()]);
+        }
+
+        $shipments = Shipment::where('to_city', $pod)
+        ->where('from_city', $pol)
+        ->get();
+
+        return view('user.index', compact('shipments'));
+    }
+
     public function approvalRo(Request $request)
     {
         // Ambil filter dari request
