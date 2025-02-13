@@ -89,8 +89,8 @@
         </div>
 
         <!-- Search Section -->
-        <div class="relative z-10 py-10" id="filtering">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative z-10 py-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="filtering">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl font-bold text-gray-900 sm:text-4xl mb-2">
                         Find your perfect route

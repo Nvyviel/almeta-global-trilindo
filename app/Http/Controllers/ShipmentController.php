@@ -121,7 +121,6 @@ class ShipmentController extends Controller
         // Eksekusi query
         $name_ship = $name_ship->get();
 
-        // Ambil semua nama kapal
         $availableVessel = Shipment::pluck('vessel_name');
 
         return view('admin.approval-ro', compact('name_ship', 'availableVessel'));

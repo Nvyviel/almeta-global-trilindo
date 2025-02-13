@@ -38,7 +38,7 @@
         <div class="space-y-4">
             @forelse ($containers as $container)
                 <div
-                    class="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    class="bg-white border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="p-5 grid grid-cols-12 gap-4 items-center">
                         <!-- Left Section: Container Details -->
                         <div class="col-span-8 space-y-2">

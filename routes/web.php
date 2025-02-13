@@ -16,14 +16,14 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 require __DIR__ . '/auth.php';
 
-Route::middleware('guest')->group(function() {
+Route::middleware('accessable')->group(function() {
     // Route::get('/', function () {
     // return view('user.index');
     // })->name('landing-page');
     Route::get('/', [ShipmentController::class, 'guestFiltering'])->name('landing-page');
 });
 
-Route::middleware(['session'])->group(function() {
+Route::middleware('session')->group(function() {
     Route::get('/dashboard', function () {
         $shipments = Shipment::all();
         return view('user.dashboard', compact('shipments'));
@@ -80,7 +80,10 @@ Route::middleware(['session'])->group(function() {
     });
 
     // MIDTRANS PAYMENT GATEWAY
-    Route::post('/get-snap-token/{id}', [SealController::class, 'getSnapToken'])->name('get.snap.token');
+    Route::prefix('/get-snap-token')->group(function() {
+        Route::get('/get-snap-token/{id}', [BillController::class, 'getSnapToken'])->name('bill-snap-token');
+        Route::post('/get-snap-token/{id}', [SealController::class, 'getSnapToken'])->name('seal-snap-token');
+    });
     Route::post('/midtrans/callback', [SealController::class, 'handleCallback'])->name('midtrans.callback');
 
     Route::prefix('/admin')->group(function() {

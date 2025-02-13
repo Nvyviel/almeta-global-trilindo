@@ -2,6 +2,19 @@
 
 @section('title', 'Dashboard')
 @section('component')
+    @if (session('success'))
+        <div
+            class="flex items-center justify-between bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+            <div>
+                <span class="mt-2 list-disc list-inside">
+                    {{ session('success') }}
+                </span>
+            </div>
+            <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900">
+                <span class="text-2xl">&times;</span>
+            </button>
+        </div>
+    @endif
     <div
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 {{ !request('pol') && !request('pod') ? 'h-[calc(100vh-9rem)] flex items-center justify-center' : '' }}">
         <div class="{{ !request('pol') && !request('pod') ? 'w-full' : '' }}">
@@ -73,7 +86,8 @@
                                     class="block w-full pl-4 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white">
                                     <option disabled selected>Select Port of Discharge</option>
                                     @foreach ($fromCities as $city)
-                                        <option value="{{ $city }}" {{ request('pod') == $city ? 'selected' : '' }}>
+                                        <option value="{{ $city }}"
+                                            {{ request('pod') == $city ? 'selected' : '' }}>
                                             {{ strtoupper($city) }}
                                         </option>
                                     @endforeach
@@ -133,9 +147,11 @@
                                                     <h3 class="text-xl font-bold text-gray-900 mb-1">
                                                         {{ $shipment->vessel_name }}
                                                     </h3>
-                                                    <span class="font-medium text-sm ml-3">{{ strtoupper($shipment->from_city) }}</span>
+                                                    <span
+                                                        class="font-medium text-sm ml-3">{{ strtoupper($shipment->from_city) }}</span>
                                                     <i class="fa-solid fa-arrow-right-long text-xs text-gray-500 p-2"></i>
-                                                    <span class="font-medium text-sm">{{ strtoupper($shipment->to_city) }}</span>
+                                                    <span
+                                                        class="font-medium text-sm">{{ strtoupper($shipment->to_city) }}</span>
                                                 </div>
                                                 <p class="text-xs text-gray-500">
                                                     Closing:

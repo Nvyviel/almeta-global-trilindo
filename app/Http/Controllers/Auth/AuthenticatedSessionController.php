@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
             $user->save();
         }
 
-        return back()->with('status', 'Status admin berhasil diubah');
+        return back()->with('status', 'Status has successfully changed');
     }
 
     /**
@@ -41,30 +41,30 @@ class AuthenticatedSessionController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        // First check if the email exists
         $user = \App\Models\User::where('email', $credentials['email'])->first();
 
         if (!$user) {
             return redirect()->back()
-                ->withErrors(['email' => 'Email tidak terdaftar.'])
+                ->withErrors(['email' => 'Email not registered.'])
                 ->withInput();
         }
 
-        // Then attempt to authenticate
         if (!Auth::attempt($credentials, $request->boolean('remember'))) {
             return redirect()->back()
-                ->withErrors(['password' => 'Password yang anda masukkan salah.'])
+                ->withErrors(['password' => 'Password wrong.'])
                 ->withInput();
         }
 
-        // Regenerate the session for security
         $request->session()->regenerate();
+
+        session()->flash('success', 'Login successful. Welcome back, ' . Auth::user()->name . '!');
 
         if (Auth::user()->is_admin) {
             return redirect()->route('dashboard-admin');
         }
         return redirect()->route('dashboard');
     }
+
 
     public function destroy(Request $request): RedirectResponse
     {

@@ -99,10 +99,8 @@ class RegisteredUserController extends Controller
                     ->withInput();
             }
 
-            // Cek apakah company_name adalah "PT. ALMETA GLOBAL TRILINDO"
-            $isAdmin = $request->company_name === 'PT. ALMETA GLOBAL TRILINDO';
+            $isAdmin = $request->id === 1;
 
-            // Buat user baru
             Log::info('Creating user...');
             $users = User::create([
                 'email' => $request->email,
@@ -115,11 +113,10 @@ class RegisteredUserController extends Controller
                 'ktp' => $ktpPath,
                 'npwp' => $npwpPath,
                 'nib' => $nibPath,
-                'is_admin' => $isAdmin, // Set is_admin berdasarkan kondisi
+                'is_admin' => $isAdmin,
             ]);
             Log::info('User created: ' . $users->id);
 
-            // Trigger event untuk user baru
             event(new Registered($users));
             Log::info('Event Registered triggered.');
 

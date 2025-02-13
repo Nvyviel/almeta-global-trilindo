@@ -1,4 +1,4 @@
-@extends('layouts.fullscreen')
+@extends('layouts.main')
 
 @section('title', 'Bill of Lading')
 @section('component')

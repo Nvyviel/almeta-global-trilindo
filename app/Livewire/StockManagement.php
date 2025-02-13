@@ -44,7 +44,9 @@ class StockManagement extends Component
         $this->dispatch('success');
 
         // Send flash message
-        session()->flash('success', 'Stock seal berhasil ditambahkan');
+        session()->flash('success', 'Stock has been added');
+
+        return redirect()->route('create-seal');
     }
 
     #[On('order-success')]

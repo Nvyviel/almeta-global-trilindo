@@ -46,7 +46,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-gray-500 text-sm">Total Shipments</p>
+                        <p class="text-gray-500 text-sm">Available Ship</p>
                         <p class="text-2xl font-semibold text-gray-700">{{ $totalShipments }}</p>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-gray-500 text-sm">Total Seals</p>
+                        <p class="text-gray-500 text-sm">Stock Seals</p>
                         <p class="text-2xl font-semibold text-gray-700">{{ $totalSeals }}</p>
                     </div>
                 </div>

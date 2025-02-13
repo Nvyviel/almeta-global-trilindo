@@ -2,15 +2,17 @@
     {{-- Notifications Container with Refined Styling --}}
     <div class="space-y-4 mb-6">
         {{-- Success Notification --}}
-        @if (session()->has('success'))
-            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow-md flex items-center">
-                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+        @if (session('success'))
+            <div
+                class="flex items-center justify-between bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+                <div>
+                    <span class="mt-2 list-disc list-inside">
+                        {{ session('success') }}
+                    </span>
                 </div>
-                <p class="text-gray-800 font-medium">{{ session('success') }}</p>
+                <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900">
+                    <span class="text-2xl">&times;</span>
+                </button>
             </div>
         @endif
     </div>
@@ -51,13 +53,29 @@
 
             {{-- Submit Button --}}
             <button type="submit"
-                class="w-full px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 flex items-center justify-center">
-                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                class="w-full px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 flex items-center justify-center"
+                wire:loading.class="opacity-75 cursor-wait" wire:loading.attr="disabled">
+
+                {{-- Loading Spinner (hidden by default) --}}
+                <svg wire:loading class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                        stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+
+                {{-- Button Icon (shown when not loading) --}}
+                <svg wire:loading.remove class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd"
                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
                         clip-rule="evenodd" />
                 </svg>
-                Add Stock
+
+                {{-- Button Text --}}
+                <span wire:loading.remove>Add Stock</span>
+                <span wire:loading>Adding...</span>
             </button>
         </form>
     </div>

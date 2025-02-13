@@ -2,14 +2,10 @@
 
 @section('title', 'List Bill of Lading')
 @section('component')
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="mx-auto">
         {{-- Header Section --}}
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800">Bill of Lading</h1>
-            <a href="{{ route('create-bill') }}" wire:navigate
-                class="px-4 py-2 bg-red-600 text-white rounded-full shadow hover:bg-red-700 transition-all duration-200">
-                + Create Bill
-            </a>
         </div>
 
         {{-- Alert Messages --}}
@@ -60,7 +56,7 @@
         <div class="space-y-4">
             @forelse ($bills as $bill)
                 <div
-                    class="bg-white rounded-xl border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    class="bg-white border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div class="p-5 grid grid-cols-12 gap-4 items-center">
                         {{-- Left Section: Bill Details --}}
                         <div class="col-span-8 space-y-2">
@@ -116,7 +112,7 @@
                         {{-- Right Section: Action Buttons --}}
                         <div class="col-span-4 flex justify-end space-x-3">
                             @if ($bill->status === 'Unpaid')
-                                <button wire:click="payBill({{ $bill->id }})"
+                                <button onclick="payBill({{ $bill->id }})"
                                     class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-full hover:bg-green-100">
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -124,6 +120,7 @@
                                     </svg>
                                 </button>
                             @endif
+
                             <a href="{{ route('detail-bill', $bill->id) }}"
                                 class="inline-flex items-center px-4 py-4 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,10 +141,38 @@
                 </div>
             @endforelse
         </div>
-
-        {{-- Pagination --}}
         <div class="mt-6">
             {{ $bills->links() }}
         </div>
     </div>
 @endsection
+<script>
+    function payBill(billId) {
+        fetch(`/get-snap-token/${billId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.snapToken) {
+                    window.snap.pay(data.snapToken, {
+                        onSuccess: function(result) {
+                            alert('Pembayaran berhasil!');
+                            location.reload();
+                        },
+                        onPending: function(result) {
+                            alert('Menunggu pembayaran...');
+                        },
+                        onError: function(result) {
+                            alert('Pembayaran gagal!');
+                        }
+                    });
+                } else {
+                    alert('Gagal mendapatkan token pembayaran.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+<script type="text/javascript"
+    src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>

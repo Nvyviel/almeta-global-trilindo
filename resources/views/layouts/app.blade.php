@@ -23,7 +23,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased from-red-50 via-white to-blue-50 relative">
+<body class="font-sans antialiased">
     <div class="min-h-screen">
         @include('layouts.navigation')
         @yield('layout')

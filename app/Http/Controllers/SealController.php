@@ -42,7 +42,6 @@ class SealController extends Controller
         return view('admin.stock-seal');
     }
 
-
     public function getSnapToken(Request $request, $id)
     {
         if (!auth()->check()) {

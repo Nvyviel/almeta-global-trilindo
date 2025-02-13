@@ -2,13 +2,15 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Bill;
 use App\Models\User;
+use Livewire\Component;
 use App\Models\Shipment;
 use App\Models\Container;
-use App\Models\ShippingInstruction;
 use Illuminate\Support\Str;
+use App\Models\ShippingInstruction;
+use Illuminate\Support\Facades\Storage;
+use Livewire\WithFileUploads;
 
 class CreateBill extends Component
 {
@@ -18,16 +20,20 @@ class CreateBill extends Component
     public $status = 'Unpaid';
     public $bill_id;
     public $selectedData = null;
-
+    public $uploadFile;
+    
     public $users = [];
     public $shipments = [];
     public $containers = [];
+
+    use WithFileUploads;
 
     protected $rules = [
         'user_id' => 'required|exists:users,id',
         'shipment_id' => 'required|exists:shipments,id',
         'container_id' => 'required|exists:containers,id',
         'status' => 'required|in:Paid,Unpaid',
+        'uploadFile' => 'required|file|mimes:pdf|max:10240'
     ];
 
     public function mount()
@@ -127,9 +133,13 @@ class CreateBill extends Component
                 ->firstOrFail();
 
             $this->bill_id = $this->generateUniqueBillId();
-            
+
             $shipment = Shipment::find($this->shipment_id);
             $container = Container::find($this->container_id);
+
+            // Handle file upload
+            $fileName = $this->bill_id . '.' . $this->uploadFile->getClientOriginalExtension();
+            $filePath = $this->uploadFile->storeAs('bills', $fileName, 'public');
 
             // Calculate all components
             $document_price = 250000;
@@ -148,11 +158,15 @@ class CreateBill extends Component
                 'document_price' => $document_price,
                 'weight_rate' => $weight_rate,
                 'grand_total' => $grand_total,
+                'upload_file' => $filePath,
             ]);
 
             session()->flash('success', 'Bill created successfully with ID: ' . $this->bill_id);
-            $this->reset(['user_id', 'shipment_id', 'container_id', 'status', 'selectedData']);
+            $this->reset(['user_id', 'shipment_id', 'container_id', 'status', 'selectedData', 'uploadFile']);
         } catch (\Exception $e) {
+            if (isset($filePath) && Storage::disk('public')->exists($filePath)) {
+                Storage::disk('public')->delete($filePath);
+            }
             session()->flash('error', 'Failed to create bill: ' . $e->getMessage());
         }
     }

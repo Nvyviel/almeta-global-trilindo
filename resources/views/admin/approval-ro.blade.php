@@ -1,142 +1,161 @@
 @extends('layouts.main')
 
+@section('title', 'Approval Release Order')
 @section('component')
-   <div class="min-h-screen px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto px-4 py-6">
         <!-- Back Button and History Button -->
-        <div class="max-w-7xl mx-auto mb-6 pt-6 flex justify-between items-center">
-            <a href="{{ route('approval-list') }}" wire:navigate class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        <div class="flex justify-between items-center mb-6">
+            <a href="{{ route('history-ro') }}" wire:navigate
+                class="flex items-center text-gray-600 hover:text-gray-800 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Back to Approval List
-            </a>
-            <a href="{{ route('history-ro') }}" wire:navigate class="inline-flex items-center px-4 text-sm rounded-md transition duration-200">
-                <i class="fa-solid fa-clock-rotate-left mr-2 text-sm"></i> / History
+                History
             </a>
         </div>
 
         <!-- Search and Filter Section -->
-        <div class="max-w-4xl mx-auto mb-8">
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <div class="px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-800">
-                    <h2 class="text-2xl font-bold text-white text-center">Filtering Vessel</h2>
-                </div>
-                <div class="p-6">
-                    <form method="GET" action="{{ route('approval-ro') }}" class="space-y-4">
-                        <!-- Rest of the filter form remains the same -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label for="selectedVessel" class="block text-sm font-medium text-gray-700 mb-1">Select Vessel</label>
-                                <select 
-                                    id="selectedVessel"
-                                    name="selectedVessel"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white shadow-sm"
-                                >
-                                    <option value="">Choose a Vessel</option>
-                                    @foreach($availableVessel as $name)
-                                        <option value="{{ $name }}" {{ request('selectedVessel') == $name ? 'selected' : '' }}>
-                                            {{ $name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div>
-                                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                                <input 
-                                    type="text" 
-                                    id="search"
-                                    name="search"
-                                    value="{{ request('search') }}"
-                                    placeholder="Search by commodity or company..."
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
-                                >
-                            </div>
+        <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
+            <div class="bg-gray-50 p-4 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-800">Filter Vessel</h2>
+            </div>
+            <div class="p-4">
+                <form method="GET" action="{{ route('approval-ro') }}" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="selectedVessel" class="block text-sm font-medium text-gray-600 mb-1">Select
+                                Vessel</label>
+                            <select id="selectedVessel" name="selectedVessel"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                                <option value="">Choose a Vessel</option>
+                                @foreach ($availableVessel as $name)
+                                    <option value="{{ $name }}"
+                                        {{ request('selectedVessel') == $name ? 'selected' : '' }}>
+                                        {{ $name }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
-                        <div class="flex space-x-4 pt-2">
-                            <button type="submit" class="flex-1 bg-blue-600 text-white px-6 py-2.5 rounded-lg hover:bg-blue-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-sm">
-                                <i class="fa-solid fa-filter mr-2"></i>Filter Data
-                            </button>
-
-                            <a href="{{ route('approval-ro') }}" wire:navigate class="flex-1 bg-gray-100 text-gray-700 px-6 py-2.5 rounded-lg text-center hover:bg-gray-200 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 shadow-sm">
-                                <i class="fa-solid fa-rotate mr-2"></i>Reset
-                            </a>
+                        <div>
+                            <label for="search" class="block text-sm font-medium text-gray-600 mb-1">Search</label>
+                            <input type="text" id="search" name="search" value="{{ request('search') }}"
+                                placeholder="Search by commodity or company..."
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
                         </div>
-                    </form>
+                    </div>
 
-                    @if(session('success'))
-                        <div class="mt-4 p-4 bg-green-50 border-l-4 border-green-400 text-green-700 rounded-r-md">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm">{{ session('success') }}</p>
-                                </div>
-                            </div>
+                    <div class="flex space-x-3">
+                        <button type="submit"
+                            class="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            </svg>
+                            Filter Data
+                        </button>
+
+                        <a href="{{ route('approval-ro') }}" wire:navigate
+                            class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-300 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Reset
+                        </a>
+                    </div>
+                </form>
+
+                @if (session('success'))
+                    <div class="mt-4 p-4 bg-green-50 border-l-4 border-green-400 text-green-700">
+                        <div class="flex">
+                            <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            <p class="ml-3 text-sm">{{ session('success') }}</p>
                         </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
             </div>
         </div>
 
         <!-- Container Cards -->
-        <div class="max-w-4xl mx-auto space-y-6">
+        <div class="space-y-4">
             @forelse ($name_ship->where('status', 'Requested') as $container)
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300">
+                <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
                     <div class="p-6">
-                        <div class="flex justify-between items-start mb-6">
+                        <div class="flex justify-between items-start mb-4">
                             <div class="space-y-2">
-                                <h2 class="text-2xl font-bold text-gray-900">
-                                    <i class="fa-solid fa-building mr-2 text-blue-600"></i>{{ $container->user->company_name }}
-                                </h2>
-                                <div>
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 border-yellow-200">
-                                        <span class="mr-1.5 h-2 w-2 rounded-full" style="background-color: currentColor"></span>
-                                        {{ $container->status }}
-                                    </span>
+                                <div class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 mr-2"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                    </svg>
+                                    <h2 class="text-xl font-semibold text-gray-900">{{ $container->user->company_name }}
+                                    </h2>
                                 </div>
+                                <span
+                                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                                    <span class="w-2 h-2 mr-1.5 rounded-full bg-yellow-400"></span>
+                                    {{ $container->status }}
+                                </span>
                             </div>
-                            <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'approval-list']) }}" wire:navigate
-                               class="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors">
-                                <i class="fa-solid fa-arrow-right text-xl"></i>
+                            <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'approval-list']) }}"
+                                wire:navigate class="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7" />
+                                </svg>
                             </a>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                            <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-md">
                                 <span class="text-sm font-medium text-gray-600 block mb-1">Commodity</span>
-                                <p class="text-gray-900 text-lg">{{ strtoupper($container->commodity) }}</p>
+                                <p class="text-gray-900 font-semibold">{{ strtoupper($container->commodity) }}</p>
                             </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="bg-gray-50 p-4 rounded-md">
                                 <span class="text-sm font-medium text-gray-600 block mb-1">Quantity</span>
-                                <p class="text-gray-900 text-lg">{{ $container->quantity }}</p>
+                                <p class="text-gray-900 font-semibold">{{ $container->quantity }}</p>
                             </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="bg-gray-50 p-4 rounded-md">
                                 <span class="text-sm font-medium text-gray-600 block mb-1">Vessel</span>
-                                <p class="text-gray-900 text-lg">{{ $container->shipment_container->vessel_name }}</p>
+                                <p class="text-gray-900 font-semibold">{{ $container->shipment_container->vessel_name }}
+                                </p>
                             </div>
                         </div>
 
-                        <!-- Action Buttons -->
-                        <div class="mt-6 flex space-x-4">
+                        <div class="mt-6 flex space-x-3">
                             <form action="{{ route('ro-approved', $container->id) }}" method="POST" class="flex-1">
                                 @csrf
-                                <button type="submit" 
-                                    class="w-full inline-flex justify-center items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 shadow-sm">
-                                    <i class="fa-solid fa-check mr-2"></i>
+                                <button type="submit"
+                                    class="w-full flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
+                                    </svg>
                                     Approve
                                 </button>
                             </form>
-                            
+
                             <form action="{{ route('ro-canceled', $container->id) }}" method="POST" class="flex-1">
                                 @csrf
-                                <button type="submit" 
-                                    class="w-full inline-flex justify-center items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 shadow-sm">
-                                    <i class="fa-solid fa-times mr-2"></i>
+                                <button type="submit"
+                                    class="w-full flex items-center justify-center px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
                                     Cancel
                                 </button>
                             </form>
@@ -144,14 +163,14 @@
                     </div>
                 </div>
             @empty
-                <div class="text-center py-12 bg-white rounded-xl shadow-md">
-                    <i class="fa-solid fa-box-open text-6xl text-gray-300 mb-4"></i>
-                    <h2 class="text-xl font-semibold text-gray-800 mb-2">
-                        No Release Orders Found
-                    </h2>
-                    <p class="text-gray-500 max-w-sm mx-auto">
-                        There are currently no release orders available for review.
-                    </p>
+                <div class="bg-white rounded-lg shadow p-6 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    </svg>
+                    <h2 class="text-xl font-semibold text-gray-800 mb-2">No Release Orders Found</h2>
+                    <p class="text-gray-500">There are currently no release orders available for review.</p>
                 </div>
             @endforelse
         </div>

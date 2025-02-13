@@ -108,7 +108,7 @@
                             </a>
                             <a href="{{ route('create-shipment') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('create-shipment') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                                <i class="fas fa-plus-circle mr-2"></i> Create Schedule
+                                <i class="fas fa-plus-circle mr-2"></i> Schedule
                             </a>
                             <a href="{{ route('approval-ro') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('approval-ro') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
@@ -134,11 +134,6 @@
             <!-- Desktop Sidebar (Visible on medium and larger screens) -->
             <div class="hidden md:block fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-200">
                 <div class="pt-20 md:pt-24 px-4">
-                    <div class="mb-8 text-center">
-                        <div class="text-2xl font-bold text-gray-800 tracking-wider">Customer</div>
-                        <div class="text-xs text-gray-500">Relationship Management</div>
-                    </div>
-                    <div class="border-t border-gray-200 my-4"></div>
                     <nav>
                         @php
                             $linkClass =
@@ -168,6 +163,10 @@
                                 class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-lock mr-3"></i> Seal
                             </a>
+                            <a href="#" wire:navigate
+                                class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
+                                <i class="fas fa-question mr-3"></i> Customer Service
+                            </a>
 
                             @if (Auth::user() && Auth::user()->is_admin)
                                 <div class="border-t border-gray-200 my-4"></div>
@@ -179,7 +178,7 @@
                                 </a>
                                 <a href="{{ route('create-shipment') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('create-shipment') ? $activeLinkClass : $inactiveLinkClass }}">
-                                    <i class="fas fa-plus-circle mr-3"></i> Create Schedule
+                                    <i class="fas fa-plus-circle mr-3"></i> Schedule
                                 </a>
                                 <a href="{{ route('approval-ro') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('approval-ro') ? $activeLinkClass : $inactiveLinkClass }}">

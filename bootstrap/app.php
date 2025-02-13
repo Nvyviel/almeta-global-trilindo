@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'session' => SessionMiddleware::class,
             'admin' => AdminMiddleware::class,
-            'guest' => GuestMiddleware::class,
+            'accessable' => GuestMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {})->create();

@@ -2,17 +2,19 @@
     {{-- Notifications Container with Refined Styling --}}
     <div class="space-y-4 mb-6">
         {{-- Success Notification --}}
-        @if (session()->has('success'))
-            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg shadow-md flex items-center">
-                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <p class="text-gray-800 font-medium">{{ session('success') }}</p>
-            </div>
-        @endif
+        @if (session('success'))
+                    <div
+                        class="flex items-center justify-between bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+                        <div>
+                            <span class="mt-2 list-disc list-inside">
+                                {{ session('success') }}
+                            </span>
+                        </div>
+                        <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900">
+                            <span class="text-2xl">&times;</span>
+                        </button>
+                    </div>
+                @endif
 
         {{-- Error Notification --}}
         @if (session()->has('error'))
