@@ -18,7 +18,7 @@
 
         {{-- Error Notification --}}
         @if (session()->has('error'))
-            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg shadow-md flex items-center">
+            <div class="flex items-center justify-between bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
                 <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-4">
                     <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
