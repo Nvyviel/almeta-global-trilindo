@@ -111,13 +111,18 @@ Route::middleware('session')->group(function () {
             });
 
             Route::prefix('/history')->group(function () {
-                Route::get('/release-order', [ShipmentController::class, 'historyRo'])->name('history-ro');
+                Route::get('/release-order', [ContainerController::class, 'historyRo'])->name('history-ro');
                 Route::get('/seal', [SealController::class, 'activitySeal'])->name('activity-seal');
             });
 
             Route::prefix('/shipments')->group(function () {
                 Route::get('{shipment}/edit', [ShipmentController::class, 'edit'])->name('edit-shipment');
                 Route::put('{shipment}', [ShipmentController::class, 'update'])->name('update-shipment');
+            });
+
+            Route::prefix('/upload')->group(function () {
+                Route::post('/release-order/{id}', [ShipmentController::class, 'uploadRoPdf'])->name('upload-ro-pdf');
+                Route::post('/shipping-instruction/{id}', [ShippingInstructionController::class, 'uploadSiFile'])->name('upload-si-file');
             });
 
             Route::get('/approvalseal/add-stock', [SealController::class, 'addStock'])->name('add-stock');

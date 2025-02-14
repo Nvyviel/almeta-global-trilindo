@@ -126,21 +126,57 @@ class ShipmentController extends Controller
         return view('admin.approval-ro', compact('name_ship', 'availableVessel'));
     }
 
+    public function uploadRoPdf(Request $request, $id)
+    {
+        $request->validate([
+            'pdf_ro' => 'required|mimes:pdf|max:2048' // Validates that the file is a PDF and not larger than 2MB
+        ]);
+
+        $container = Container::findOrFail($id);
+
+        if ($request->hasFile('pdf_ro')) {
+            // Generate unique filename
+            $filename = 'ro_' . $container->id_order . '_' . time() . '.pdf';
+
+            // Store the file
+            $path = $request->file('pdf_ro')->storeAs('release-orders', $filename, 'public');
+
+            // Update container record
+            $container->update([
+                'pdf-ro' => $path
+            ]);
+
+            return redirect()->back()->with('success', 'Release Order PDF has been uploaded successfully');
+        }
+
+        return redirect()->back()->with('error', 'No file was uploaded');
+    }
 
     public function approve($id)
     {
         $container = Container::findOrFail($id);
-        
-        // // Check authorization
-        // if (!auth()->user()->can('approve', $container)) {
-        //     abort(403);
-        // }
-        
-        $container->update([
-            'status' => 'Approved'
+
+        request()->validate([
+            'pdf_ro' => 'required|mimes:pdf|max:10240', // max 10MB
         ]);
-        
-        return redirect()->back()->with('success', 'Container has been approved successfully');
+
+        if (request()->hasFile('pdf_ro')) {
+            // Generate unique filename
+            $filename = 'ro_' . $container->id_order . '_' . time() . '.pdf';
+
+            // Store the file
+            $path = request()->file('pdf_ro')->storeAs('release-orders', $filename, 'public');
+
+            // Update container with file path and status
+            $container->update([
+                'pdf-ro' => $path,
+                'status' => 'Approved'
+            ]);
+
+            return redirect()->back()->with('success', 'Release Order has been approved and document uploaded successfully');
+        }
+
+        return redirect()->back()->with('error', 'Please upload the Release Order PDF before approving');
     }
 
     public function cancel($id)
@@ -158,4 +194,6 @@ class ShipmentController extends Controller
         
         return redirect()->back()->with('success', 'Container has been canceled successfully');
     }
+
+    
 }

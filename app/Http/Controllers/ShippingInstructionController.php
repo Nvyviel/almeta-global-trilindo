@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shipment;
 use App\Models\Container;
 use Illuminate\Http\Request;
 use App\Models\ShippingInstruction;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ShippingInstructionController extends Controller
 {
@@ -30,7 +33,7 @@ class ShippingInstructionController extends Controller
     public function showDetail($container)
     {
         $container = Container::with(['shipment_container', 'shippingInstructions'])
-        ->findOrFail($container);
+            ->findOrFail($container);
 
         return view('user.shipping-instruction-detail', compact('container'));
     }
@@ -42,32 +45,121 @@ class ShippingInstructionController extends Controller
 
     public function approvalSi(Request $request)
     {
-        $query = ShippingInstruction::with(['user', 'container', 'shipment', 'consignee']);
+        try {
+            // Get filters from request
+            $selectedVessel = $request->query('selectedVessel');
+            $search = $request->query('search');
 
-        if ($request->has('status') && $request->status != '') {
-            $query->where('status', $request->status);
-        } else {
+            // Initial query with explicit select
+            $query = ShippingInstruction::select('shipping_instructions.*')
+                ->with([
+                    'user',
+                    'container.shipment_container',
+                    'shipment',
+                    'consignee'
+                ]);
+
+            if ($selectedVessel) {
+                $query->whereHas('container.shipment_container', function ($q) use ($selectedVessel) {
+                    $q->where('vessel_name', $selectedVessel);
+                });
+            }
+
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->whereHas('container', function ($subQ) use ($search) {
+                        $subQ->where('commodity', 'LIKE', "%$search%");
+                    })
+                        ->orWhereHas('user', function ($subQ) use ($search) {
+                            $subQ->where('company_name', 'LIKE', "%$search%");
+                        });
+                });
+            }
+
             $query->where('status', 'Requested');
-        }
 
-        $shippingInstructions = $query->paginate(10);
-        return view('admin.approval-si', compact('shippingInstructions'));
+            $availableVessel = Shipment::pluck('vessel_name');
+            $shippingInstructions = $query->paginate(10);
+
+            return view('admin.approval-si', compact('shippingInstructions', 'availableVessel'));
+        } catch (\Exception $e) {
+            Log::error('Error in approvalSi:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return back()->with('error', 'An error occurred while loading shipping instructions.');
+        }
     }
 
     public function detailSi($id)
     {
         $dataSi = ShippingInstruction::with('user', 'container.shipment_container', 'shipment', 'consignee')
-                    ->findOrFail($id);
+            ->findOrFail($id);
         return view('admin.approval-si-detail', compact('dataSi'));
     }
 
+    public function uploadSiFile(Request $request, $id)
+    {
+        // SEMENTARA ADA TOMBOL UNTUK UPLOAD FILE. NEXT TOMBOL UPLOAD JADI 1 SAMA TOMBOL APPROVE ALL
+        try {
+            // Validate the request
+            $request->validate([
+                'si_file' => 'required|mimes:pdf|max:10240'
+            ]);
+
+            // Find the initial shipping instruction
+            $shippingInstruction = ShippingInstruction::findOrFail($id);
+
+            // Get the container's order ID
+            $orderId = $shippingInstruction->container->id_order;
+
+            // Find all shipping instructions with the same order ID
+            $relatedInstructions = ShippingInstruction::whereHas('container', function ($query) use ($orderId) {
+                $query->where('id_order', $orderId);
+            })->get();
+
+            if ($request->hasFile('si_file')) {
+                // Generate unique filename
+                $fileName = 'SI_' . time() . '_' . $orderId . '.' . $request->si_file->extension();
+
+                // Store the file
+                $path = $request->file('si_file')->storeAs('shipping-instructions', $fileName, 'public');
+
+                // Delete old files if they exist
+                foreach ($relatedInstructions as $instruction) {
+                    if ($instruction['upload_file_si']) {
+                        Storage::disk('public')->delete($instruction['upload_file_si']);
+                    }
+                }
+
+                // Update all related shipping instructions with the new file path
+                foreach ($relatedInstructions as $instruction) {
+                    $instruction->update([
+                        'upload_file_si' => $path
+                    ]);
+                }
+
+                return redirect()->back()->with('success', 'Shipping Instruction file has been uploaded successfully');
+            }
+
+            return redirect()->back()->with('error', 'No file was uploaded');
+        } catch (\Exception $e) {
+            Log::error('Error in uploadSiFile:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return redirect()->back()->with('error', 'An error occurred while uploading the file');
+        }
+    }
 
     public function approvedSi($id)
     {
         $shippingInstructions = ShippingInstruction::findOrFail($id);
 
         // Find all shipping instructions with the same order ID
-        $sameOrderInstructions = ShippingInstruction::whereHas('container', function($query) use ($shippingInstructions) {
+        $sameOrderInstructions = ShippingInstruction::whereHas('container', function ($query) use ($shippingInstructions) {
             $query->where('id_order', $shippingInstructions->container->id_order);
         })->get();
 
@@ -86,7 +178,7 @@ class ShippingInstructionController extends Controller
         $shippingInstructions = ShippingInstruction::findOrFail($id);
 
         // Find all shipping instructions with the same order ID
-        $sameIdSi = ShippingInstruction::whereHas('container', function($query) use ($shippingInstructions) {
+        $sameIdSi = ShippingInstruction::whereHas('container', function ($query) use ($shippingInstructions) {
             $query->where('id_order', $shippingInstructions->container->id_order);
         })->get();
 

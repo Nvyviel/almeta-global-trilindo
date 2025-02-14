@@ -222,7 +222,7 @@
                             </p>
                         @endif
                         <p class="text-xs text-gray-500">
-                            Accepted file types: PDF, JPG, JPEG, PNG (max. 10MB)
+                            Accepted file types: Only PDF (max. 10MB)
                         </p>
                     </div>
                 </div>

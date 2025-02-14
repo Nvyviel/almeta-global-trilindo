@@ -35,8 +35,6 @@ class ContainerController extends Controller
             $container = $user->container()->where('id', $id)->firstOrFail();
         }
 
-        // MENAMPILKAN DATA SHIPMENT BERDASARKAN YANG DI ORDER (UNSOLVED)
-
         return view('user.show-release-order', compact('container'));
     }
 

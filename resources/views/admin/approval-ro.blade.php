@@ -133,9 +133,54 @@
                             </div>
                         </div>
 
+                        <div
+                            class="mt-6 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+                            <div class="border-b border-gray-200 bg-gray-50 px-8 py-4">
+                                <h3 class="text-xl font-semibold text-gray-900">Upload Release Order</h3>
+                            </div>
+                            <div class="p-8">
+                                <div class="space-y-4">
+                                    <div x-data="{ fileChosen: false }" class="space-y-2">
+                                        <label class="block text-sm font-medium text-gray-700">
+                                            Upload Release Order Document
+                                        </label>
+                                        <div class="mt-1 flex items-center space-x-4">
+                                            <div class="flex-1">
+                                                <label
+                                                    class="flex items-center justify-center px-6 py-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors duration-200 @error('pdf_ro') border-red-500 @enderror">
+                                                    <input type="file" name="pdf_ro" id="pdf_ro" class="sr-only"
+                                                        accept=".pdf" x-on:change="fileChosen = true" required>
+                                                    <svg class="w-5 h-5 mr-2 text-gray-400" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                                    </svg>
+                                                    <span class="text-sm text-gray-600">Choose file or drag and drop</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div x-show="fileChosen" class="text-sm text-gray-500" style="display: none;">
+                                            File selected: <span
+                                                x-text="document.getElementById('pdf_ro').files[0]?.name"></span>
+                                        </div>
+                                        @error('pdf_ro')
+                                            <p class="text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                        <p class="text-xs text-gray-500">
+                                            Accepted file types: Only PDF (max. 10MB)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons Section -->
                         <div class="mt-6 flex space-x-3">
-                            <form action="{{ route('ro-approved', $container->id) }}" method="POST" class="flex-1">
+                            <form action="{{ route('ro-approved', $container->id) }}" method="POST" class="flex-1"
+                                enctype="multipart/form-data">
                                 @csrf
+                                <input type="file" name="pdf_ro" id="approve_pdf_ro" class="hidden" accept=".pdf">
                                 <button type="submit"
                                     class="w-full flex items-center justify-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
@@ -175,4 +220,17 @@
             @endforelse
         </div>
     </div>
+    <script>
+        document.getElementById('pdf_ro').addEventListener('change', function(e) {
+            // Get the selected file
+            const file = e.target.files[0];
+
+            // Create a new FileList object
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+
+            // Set the file to the hidden input
+            document.getElementById('approve_pdf_ro').files = dataTransfer.files;
+        });
+    </script>
 @endsection
