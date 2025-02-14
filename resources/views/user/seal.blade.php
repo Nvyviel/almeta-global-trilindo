@@ -44,7 +44,7 @@
                         <div class="col-span-8 space-y-2">
                             <div class="flex items-center space-x-3">
 
-                                <span class="bg-blue-200 text-blue-800 border-blue-200 px-3 py-1 text-xs font-semibold">
+                                <span class="bg-blue-50 text-blue-800 border-blue-200 px-3 py-1 text-xs font-semibold">
                                     {{ $seal->id_seal }}
                                 </span>
                                 <span class="text-sm text-gray-500">
@@ -91,8 +91,8 @@
                             @if ($seal->status === 'Payment Proccess')
                                 <form id="payment-form">
                                     @csrf
-                                    <button type="button" data-seal-id="{{ $seal->id_seal }}"
-                                        onclick="getSnapToken({{ $seal->id_seal }})"
+                                    <button type="button" data-seal-id="{{ $seal->id }}"
+                                        onclick="getSnapToken({{ $seal->id }})"
                                         class="mt-4 inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md shadow-sm transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         <span>Pay Now</span>
                                     </button>
@@ -103,10 +103,6 @@
                 </div>
             @empty
                 <div class="text-center p-8 bg-gray-50 rounded-xl">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
                     <p class="mt-4 text-sm text-gray-600">No seals found.</p>
                 </div>
             @endforelse
@@ -125,7 +121,7 @@
                     button.disabled = true;
                 }
 
-                fetch(`/get-snap-token/seal/ ${sealId}`, {
+                fetch(`/get-snap-token/seal/${sealId}`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,

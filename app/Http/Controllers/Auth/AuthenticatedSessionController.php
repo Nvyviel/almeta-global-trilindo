@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Auth;
 
 use Carbon\Carbon;
+use Midtrans\Snap;
+use App\Models\Bill;
+use App\Models\Seal;
 use App\Models\User;
+use Midtrans\Config;
 use App\Models\Shipment;
 use App\Models\StockSeal;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;

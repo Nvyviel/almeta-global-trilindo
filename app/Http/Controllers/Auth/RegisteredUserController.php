@@ -99,7 +99,9 @@ class RegisteredUserController extends Controller
                     ->withInput();
             }
 
-            $isAdmin = $request->id === 1;
+            // Check if this will be the first user in the database
+            $isAdmin = User::count() === 0;
+            Log::info('Checking if user will be admin: ' . ($isAdmin ? 'Yes' : 'No'));
 
             Log::info('Creating user...');
             $users = User::create([
