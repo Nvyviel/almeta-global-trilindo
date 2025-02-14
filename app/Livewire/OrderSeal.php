@@ -82,7 +82,7 @@ class OrderSeal extends Component
             $this->totalPrice = $this->price;
             $this->calculateAvailableStock();
 
-            return redirect()->route('seal')->navigate();
+            return redirect()->route('seal');
         } catch (\Exception $e) {
             $this->dispatch('purchaseError', $e->getMessage());
             session()->flash('error', 'Failed to create order: ' . $e->getMessage());

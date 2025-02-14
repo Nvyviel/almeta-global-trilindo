@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use App\Models\ShippingInstruction;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class CreateBill extends Component
 {
@@ -39,6 +40,20 @@ class CreateBill extends Component
     public function mount()
     {
         $this->users = User::select('id', 'company_name')->get();
+    }
+
+    public function cleanupOldUploads()
+    {
+        if ($this->uploadFile instanceof TemporaryUploadedFile) {
+            $this->uploadFile->delete();
+        }
+    }
+
+    public function updatedUploadFile()
+    {
+        $this->validate([
+            'uploadFile' => 'file|mimes:pdf,jpg,jpeg,png|max:10240'
+        ]);
     }
 
     public function updatedUserId($userId)
@@ -137,9 +152,13 @@ class CreateBill extends Component
             $shipment = Shipment::find($this->shipment_id);
             $container = Container::find($this->container_id);
 
-            // Handle file upload
-            $fileName = $this->bill_id . '.' . $this->uploadFile->getClientOriginalExtension();
-            $filePath = $this->uploadFile->storeAs('bills', $fileName, 'public');
+            // Handle file upload with better error handling
+            if ($this->uploadFile instanceof TemporaryUploadedFile) {
+                $fileName = $this->bill_id . '.' . $this->uploadFile->getClientOriginalExtension();
+                $filePath = $this->uploadFile->storeAs('bills', $fileName, 'public');
+            } else {
+                throw new \Exception('Invalid file upload');
+            }
 
             // Calculate all components
             $document_price = 250000;
@@ -161,6 +180,7 @@ class CreateBill extends Component
                 'upload_file' => $filePath,
             ]);
 
+            $this->cleanupOldUploads();
             session()->flash('success', 'Bill created successfully with ID: ' . $this->bill_id);
             $this->reset(['user_id', 'shipment_id', 'container_id', 'status', 'selectedData', 'uploadFile']);
         } catch (\Exception $e) {

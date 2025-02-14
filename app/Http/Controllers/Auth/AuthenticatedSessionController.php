@@ -106,4 +106,105 @@ class AuthenticatedSessionController extends Controller
         $user = User::findOrFail($id);
         return view('admin.detail-user', compact('user'));
     }
+
+    public function handleCallback(Request $request)
+    {
+        try {
+            Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+            Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+
+            // Debugging Log
+            Log::info('Received Midtrans Callback', ['request' => $request->all()]);
+
+            $notificationBody = json_decode($request->getContent(), true);
+
+            if (!isset($notificationBody['order_id']) || !isset($notificationBody['transaction_status'])) {
+                Log::error('Invalid Midtrans Callback Data', ['data' => $notificationBody]);
+                return response()->json(['error' => 'Invalid data'], 400);
+            }
+
+            $orderId = $notificationBody['order_id'];
+            $transactionStatus = $notificationBody['transaction_status'];
+            $fraudStatus = $notificationBody['fraud_status'] ?? null;
+            $paymentType = $notificationBody['payment_type'] ?? null;
+
+            $type = explode(" - ", $orderId);
+
+
+        
+            if($type[0] == "BL"){
+                // Cek apakah order ditemukan
+                $bill = Bill::where('bill_id', $orderId)->first();
+                if (!$bill) {
+                    Log::error('Seal not found for order: ' . $orderId);
+                    return response()->json(['error' => 'Order not found'], 404);
+                }
+
+                Log::info('Processing transaction', ['bill_id' => $orderId, 'status' => $transactionStatus]);
+
+                switch ($transactionStatus) {
+                    case 'capture':
+                        if ($paymentType == 'credit_card') {
+                            $bill->status = ($fraudStatus == 'challenge') ? 'payment_process' : 'success';
+                        }
+                        break;
+                    case 'settlement':
+                        $bill->status = 'Paid';
+                        break;
+                    case 'pending':
+                        $bill->status = 'Unpaid';
+                        break;
+                    case 'deny':
+                    case 'expire':
+                    case 'cancel':
+                        $bill->status = 'Canceled';
+                        break;
+                }
+
+                $bill->save();
+
+                Log::info('Transaction updated successfully', ['bill_id' => $orderId, 'new_status' => $bill->status]);
+
+                return response()->json(['status' => 'success']);
+            }
+
+
+            // Cek apakah order ditemukan
+            $seal = Seal::where('id_seal', $orderId)->first();
+            if (!$seal) {
+                Log::error('Seal not found for order: ' . $orderId);
+                return response()->json(['error' => 'Order not found'], 404);
+            }
+
+            Log::info('Processing transaction', ['order_id' => $orderId, 'status' => $transactionStatus]);
+
+            switch ($transactionStatus) {
+                case 'capture':
+                    if ($paymentType == 'credit_card') {
+                        $seal->status = ($fraudStatus == 'challenge') ? 'payment_process' : 'success';
+                    }
+                    break;
+                case 'settlement':
+                    $seal->status = 'Success';
+                    break;
+                case 'pending':
+                    $seal->status = 'Payment Proccess';
+                    break;
+                case 'deny':
+                case 'expire':
+                case 'cancel':
+                    $seal->status = 'Canceled';
+                    break;
+            }
+
+            $seal->save();
+
+            Log::info('Transaction updated successfully', ['order_id' => $orderId, 'new_status' => $seal->status]);
+
+            return response()->json(['status' => 'success']);
+        } catch (\Exception $e) {
+            Log::error('Midtrans callback error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

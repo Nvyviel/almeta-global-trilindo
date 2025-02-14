@@ -20,7 +20,7 @@
         ];
     @endphp
     <!-- Background gradient wrapper -->
-    <div class="min-h-screen bg-gradient-to-br from-red-50 via-white to-blue-50 relative">
+    <div class="min-h-screen bg-gray-50 relative">
         <!-- Animated background elements -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
             <div

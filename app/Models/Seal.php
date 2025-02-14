@@ -14,9 +14,9 @@ class Seal extends Model
 
     public static function generateIdSeal()
     {
-        $letter = chr(rand(65, 90));
+        $letter = "S";
         $numbers = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
-        return $letter . '-' . $numbers;
+        return $letter . ' - ' . $numbers;
     }
 
     public function user()

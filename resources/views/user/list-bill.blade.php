@@ -112,13 +112,16 @@
                         {{-- Right Section: Action Buttons --}}
                         <div class="col-span-4 flex justify-end space-x-3">
                             @if ($bill->status === 'Unpaid')
-                                <button onclick="payBill({{ $bill->id }})"
-                                    class="inline-flex items-center px-4 py-2 bg-green-50 text-green-700 rounded-full hover:bg-green-100">
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                                    </svg>
-                                </button>
+                                <form id="payment-form">
+                                    @csrf
+                                    <button type="button" onclick="payBill({{ $bill->id }})"
+                                        class="inline-flex items-center px-4 py-4 bg-green-50 text-green-700 rounded-full hover:bg-green-100">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                                        </svg>
+                                    </button>
+                                </form>
                             @endif
 
                             <a href="{{ route('detail-bill', $bill->id) }}"
@@ -145,34 +148,59 @@
             {{ $bills->links() }}
         </div>
     </div>
-@endsection
-<script>
-    function payBill(billId) {
-        fetch(`/get-snap-token/${billId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.snapToken) {
-                    window.snap.pay(data.snapToken, {
-                        onSuccess: function(result) {
-                            alert('Pembayaran berhasil!');
-                            location.reload();
-                        },
-                        onPending: function(result) {
-                            alert('Menunggu pembayaran...');
-                        },
-                        onError: function(result) {
-                            alert('Pembayaran gagal!');
-                        }
-                    });
-                } else {
-                    alert('Gagal mendapatkan token pembayaran.');
+    @push('script')
+        <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+            data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+        <script>
+            function payBill(billId) {
+                // Disable button
+                const button = document.querySelector(`button[onclick="payBill(${billId})"]`);
+                if (button) {
+                    button.disabled = true;
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-</script>
-<script type="text/javascript"
-    src="https://app.sandbox.midtrans.com/snap/snap.js"
-    data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+                console.log(billId)
+
+                fetch(`/get-snap-token/bill/${billId}`, {
+                        method: 'POST', // Sesuaikan dengan method endpoint
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert(data.error);
+                            if (button) button.disabled = false;
+                            return;
+                        }
+
+                        window.snap.pay(data.snapToken, {
+                            onSuccess: function(result) {
+                                alert('Pembayaran berhasil!');
+                                location.reload();
+                            },
+                            onPending: function(result) {
+                                alert('Menunggu pembayaran...');
+                                location.reload();
+                            },
+                            onError: function(result) {
+                                alert('Pembayaran gagal!');
+                                if (button) button.disabled = false;
+                            },
+                            onClose: function() {
+                                alert('Modal pembayaran ditutup');
+                                if (button) button.disabled = false;
+                            }
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat memproses pembayaran');
+                        if (button) button.disabled = false;
+                    });
+            }
+        </script>
+    @endpush
+@endsection

@@ -91,8 +91,8 @@
                             @if ($seal->status === 'Payment Proccess')
                                 <form id="payment-form">
                                     @csrf
-                                    <button type="button" data-seal-id="{{ $seal->id }}"
-                                        onclick="getSnapToken({{ $seal->id }})"
+                                    <button type="button" data-seal-id="{{ $seal->id_seal }}"
+                                        onclick="getSnapToken({{ $seal->id_seal }})"
                                         class="mt-4 inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md shadow-sm transition-colors duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                         <span>Pay Now</span>
                                     </button>
@@ -125,7 +125,7 @@
                     button.disabled = true;
                 }
 
-                fetch(`/get-snap-token/${sealId}`, {
+                fetch(`/get-snap-token/seal/ ${sealId}`, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -144,11 +144,11 @@
                         window.snap.pay(data.snapToken, {
                             onSuccess: function(result) {
                                 alert('Payment Success');
-                                window.location.href = '/seal/list';
+                                window.location.href = '/dashboard';
                             },
                             onPending: function(result) {
                                 alert('Waiting for payment');
-                                window.location.href = '/seal/list';
+                                window.location.href = '/dashboard';
                             },
                             onError: function(result) {
                                 alert('Payment Failed');
