@@ -158,7 +158,7 @@
                             <!-- Search Button -->
                             <div class="lg:col-span-12">
                                 <button id="submitButton" type="submit"
-                                    class="w-full bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors duration-200 font-medium flex items-center justify-center group">
+                                    class="w-full bg-blue-700 text-white py-3 px-6 rounded-lg hover:bg-blue-800 transition-colors duration-200 font-medium flex items-center justify-center group">
                                     <span id="buttonText">Find Available Ships</span>
                                     <i
                                         class="fa-solid fa-ship ml-2 group-hover:translate-x-1 transition-transform duration-200"></i>

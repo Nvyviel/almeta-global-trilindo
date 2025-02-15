@@ -1,5 +1,6 @@
 @extends('layouts.fullscreen')
 
+@section('title', 'Profile')
 @section('component')
     <div class="min-h-screen bg-gray-50 py-4 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto space-y-6">

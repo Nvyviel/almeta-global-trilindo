@@ -194,6 +194,8 @@ class ShippingInstructionData extends Component
         } catch (\Exception $e) {
             session()->flash('error', 'Failed to create shipping instructions: ' . $e->getMessage());
         }
+
+        return redirect()->route('shipping-instruction-detail');
     }
 
     public function render()

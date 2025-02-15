@@ -116,7 +116,7 @@
 
     <!-- Modal for Profile Update -->
     <div id="profileModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center z-50">
-        <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl mx-4">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl mx-4">
             <div class="border-b border-gray-200 bg-gray-50 px-6 py-4 rounded-t-xl">
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-semibold text-gray-900">{{ __('Update Profile Information') }}</h2>
@@ -135,18 +135,87 @@
                 @csrf
                 @method('patch')
 
-                <div class="space-y-4">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                        <input id="name" name="name" type="text"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            value="{{ Auth::user()->name }}" required />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Personal Information -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-medium text-gray-900">Personal Information</h3>
+
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                            <input id="name" name="name" type="text"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                value="{{ Auth::user()->name }}" required />
+                        </div>
+
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input id="email" name="email" type="email"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                value="{{ Auth::user()->email }}" required />
+                        </div>
                     </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                        <input id="email" name="email" type="email"
+
+                    <!-- Company Information -->
+                    <div class="space-y-4">
+                        <h3 class="text-lg font-medium text-gray-900">Company Information</h3>
+
+                        <div>
+                            <label for="company_name" class="block text-sm font-medium text-gray-700">Company
+                                Name</label>
+                            <input id="company_name" name="company_name" type="text"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                value="{{ Auth::user()->company_name }}" required />
+                        </div>
+
+                        <div>
+                            <label for="company_phone_number" class="block text-sm font-medium text-gray-700">Company
+                                Phone Number</label>
+                            <input id="company_phone_number" name="company_phone_number" type="tel"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                value="{{ Auth::user()->company_phone_number }}" required />
+                        </div>
+
+                        <div>
+                            <label for="company_location" class="block text-sm font-medium text-gray-700">Company
+                                Location</label>
+                            <input id="company_location" name="company_location" type="text"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                                value="{{ Auth::user()->company_location }}" required />
+                        </div>
+                    </div>
+
+                    <!-- Company Address (Full Width) -->
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="company_address" class="block text-sm font-medium text-gray-700">Company
+                            Address</label>
+                        <textarea id="company_address" name="company_address" rows="3"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                            value="{{ Auth::user()->email }}" required />
+                            required>{{ Auth::user()->company_address }}</textarea>
+                    </div>
+
+                    <!-- Document Updates -->
+                    <div class="col-span-1 md:col-span-2 space-y-4">
+                        <h3 class="text-lg font-medium text-gray-900">Document Updates</h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label for="ktp" class="block text-sm font-medium text-gray-700">KTP</label>
+                                <input id="ktp" name="ktp" type="file" accept="image/*"
+                                    class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                            </div>
+
+                            <div>
+                                <label for="npwp" class="block text-sm font-medium text-gray-700">NPWP</label>
+                                <input id="npwp" name="npwp" type="file" accept="image/*"
+                                    class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                            </div>
+
+                            <div>
+                                <label for="nib" class="block text-sm font-medium text-gray-700">NIB</label>
+                                <input id="nib" name="nib" type="file" accept="image/*"
+                                    class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

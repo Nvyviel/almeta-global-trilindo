@@ -17,6 +17,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Controllers\PaymentController;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -90,20 +91,29 @@ class AuthenticatedSessionController extends Controller
             $searchTerm = $request->input('search');
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('name', 'like', "%{$searchTerm}%")
-                    ->orWhere('email', 'like', "%{$searchTerm}%")
-                    ->orWhere('company_name', 'like', "%{$searchTerm}%")
-                    ->orWhere('company_location', 'like', "%{$searchTerm}%");
+                ->orWhere('email', 'like', "%{$searchTerm}%")
+                ->orWhere('company_name', 'like', "%{$searchTerm}%")
+                ->orWhere('company_location', 'like', "%{$searchTerm}%");
             });
         }
 
-        $users = $query->paginate(5);
+        $paymentController = new PaymentController();
+        $profits = $paymentController->calculateProfits();
 
+        $users = $query->paginate(5);
         $totalUsers = User::where('is_admin', 0)->count();
         $totalAdmins = User::where('is_admin', 1)->count();
         $totalShipments = Shipment::count();
         $totalSeals = StockSeal::sum('stock');
 
-        return view('admin.dashboard-admin', compact('users', 'totalUsers', 'totalAdmins', 'totalShipments', 'totalSeals'));
+        return view('admin.dashboard-admin', compact(
+            'users',
+            'totalUsers',
+            'totalAdmins',
+            'totalShipments',
+            'totalSeals',
+            'profits'
+        ));
     }
 
     public function detail($id)

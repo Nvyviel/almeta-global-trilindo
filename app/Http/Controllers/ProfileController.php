@@ -26,15 +26,31 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validated = $request->validated();
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Handle file uploads
+        if ($request->hasFile('ktp')) {
+            $validated['ktp'] = $request->file('ktp')->store('documents', 'public');
+        }
+        if ($request->hasFile('npwp')) {
+            $validated['npwp'] = $request->file('npwp')->store('documents', 'public');
+        }
+        if ($request->hasFile('nib')) {
+            $validated['nib'] = $request->file('nib')->store('documents', 'public');
         }
 
-        $request->user()->save();
+        // Update user information
+        $user->fill($validated);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Handle email verification if email is changed
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
+
+        return Redirect::route('profile-edit')->with('status', 'profile-updated');
     }
 
     /**
