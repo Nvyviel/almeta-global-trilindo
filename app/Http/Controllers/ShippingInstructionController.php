@@ -16,7 +16,8 @@ class ShippingInstructionController extends Controller
     {
         $query = Container::with(['shipment_container', 'shippingInstructions'])
             ->whereHas('shippingInstructions')
-            ->where('user_id', auth()->id());
+            ->where('user_id', auth()->id())
+            ->orderByDesc('id');
 
         if ($request->has('filter') && $request->filter != '') {
             if ($request->filter !== 'all') {
@@ -154,23 +155,72 @@ class ShippingInstructionController extends Controller
         }
     }
 
-    public function approvedSi($id)
+    public function approvedSi(Request $request, $id)
     {
-        $shippingInstructions = ShippingInstruction::findOrFail($id);
+        // Validate request
+        $request->validate([
+            'si_file' => 'required|mimes:pdf|max:10240', // max 10MB
+        ],
+            [
+                'si_file.required' => 'File Shipping Instruction harus diupload untuk melakukan approval'
+            ]
+        );
 
-        // Find all shipping instructions with the same order ID
-        $sameOrderInstructions = ShippingInstruction::whereHas('container', function ($query) use ($shippingInstructions) {
-            $query->where('id_order', $shippingInstructions->container->id_order);
-        })->get();
+        try {
+            // Find the initial shipping instruction
+            $shippingInstruction = ShippingInstruction::findOrFail($id);
 
-        // Update all related shipping instructions
-        foreach ($sameOrderInstructions as $instruction) {
-            $instruction->update([
-                'status' => 'Approved'
+            // Get the container's order ID
+            $orderId = $shippingInstruction->container->id_order;
+
+            // Find all shipping instructions with the same order ID
+            $relatedInstructions = ShippingInstruction::whereHas('container', function ($query) use ($orderId) {
+                $query->where('id_order', $orderId);
+            })->get();
+
+            if ($request->hasFile('si_file')) {
+                // Generate unique filename using order ID
+                $fileName = 'SI_' . time() . '_' . $orderId . '.pdf';
+
+                // Store the file
+                $path = $request->file('si_file')->storeAs(
+                    'shipping-instructions',
+                    $fileName,
+                    'public'
+                );
+
+                // Delete old files if they exist
+                foreach ($relatedInstructions as $instruction) {
+                    if ($instruction->upload_file_si) {
+                        Storage::disk('public')->delete('shipping-instructions/' . $instruction->upload_file_si);
+                    }
+                }
+
+                // Update all related shipping instructions
+                foreach ($relatedInstructions as $instruction) {
+                    $instruction->update([
+                        'upload_file_si' => $fileName,
+                        'status' => 'Approved'
+                    ]);
+                }
+
+                return redirect()->back()->with('success', 'Semua Shipping Instruction dengan ID order yang sama berhasil diapprove.');
+            }
+
+            return redirect()->back()
+                ->with('error', 'File Shipping Instruction wajib diupload untuk melakukan approval.')
+                ->withInput();
+        } catch (\Exception $e) {
+            // Log error untuk debugging
+            Log::error('SI Approval Error:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
             ]);
-        }
 
-        return redirect()->back()->with('success', 'Shipping Instruction has been Approved successfully');
+            return redirect()->back()
+                ->with('error', 'Terjadi kesalahan saat melakukan approval shipping instruction.')
+                ->withInput();
+        }
     }
 
     public function rejectedSi($id)

@@ -133,13 +133,8 @@
                             </div>
                         </div>
 
-                        <div
-                            class="mt-6 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
-                            <div class="border-b border-gray-200 bg-gray-50 px-8 py-4">
-                                <h3 class="text-xl font-semibold text-gray-900">Upload Release Order</h3>
-                            </div>
                             <div class="p-8">
-                                <div class="space-y-4">
+                                <div class="space-y-2">
                                     <div x-data="{ fileChosen: false }" class="space-y-2">
                                         <label class="block text-sm font-medium text-gray-700">
                                             Upload Release Order Document
@@ -160,9 +155,8 @@
                                                 </label>
                                             </div>
                                         </div>
-                                        <div x-show="fileChosen" class="text-sm text-gray-500" style="display: none;">
-                                            File selected: <span
-                                                x-text="document.getElementById('pdf_ro').files[0]?.name"></span>
+                                        <div x-show="fileChosen" class="text-sm text-gray-500" x-data="{ fileName: '' }" x-init="$watch('fileChosen', () => fileName = document.getElementById('pdf_ro').files[0]?.name || '')" style="display: none;">
+                                            File selected: <span x-text="fileName"></span>
                                         </div>
                                         @error('pdf_ro')
                                             <p class="text-sm text-red-600">{{ $message }}</p>
@@ -173,7 +167,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
                         <!-- Buttons Section -->
                         <div class="mt-6 flex space-x-3">

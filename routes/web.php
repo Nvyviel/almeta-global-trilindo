@@ -62,7 +62,6 @@ Route::middleware('session')->group(function () {
     });
 
     Route::prefix('/detail')->group(function () {
-        Route::get('/shipping-instruction/{id}', [ShippingInstructionController::class, 'detailSi'])->name('detail-si');
         Route::get('/release-order/detail/{id}', [ContainerController::class, 'showDetail'])->name('show-detail');
         Route::get('/bill-of-lading/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
         Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
@@ -91,6 +90,7 @@ Route::middleware('session')->group(function () {
         Route::middleware(['admin'])->group(function () {
             Route::prefix('/detail')->group(function () {
                 Route::get('/user/{id}', [AuthenticatedSessionController::class, 'detail'])->name('detail-user');
+                Route::get('/shipping-instruction/{id}', [ShippingInstructionController::class, 'detailSi'])->name('detail-si');
             });
 
             Route::prefix('/create')->group(function () {

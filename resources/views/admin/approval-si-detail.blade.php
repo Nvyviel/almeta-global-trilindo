@@ -7,7 +7,7 @@
             <div class="border-b border-gray-200 px-6 py-4">
                 <div class="flex justify-between items-center">
                     <h4 class="text-xl font-semibold text-gray-800">
-                        Shipping Instructions Detail {{ $dataSi->container->id_order }}
+                        {{ $dataSi->container->id_order }}
                     </h4>
                     <div class="flex items-center space-x-3">
                         <!-- Back Button -->

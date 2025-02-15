@@ -163,11 +163,8 @@
                                 class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-lock mr-3"></i> Seal
                             </a>
-                            <a href="#" wire:navigate
-                                class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
-                                <i class="fas fa-question mr-3"></i> Customer Service
-                            </a>
-
+                        
+                            
                             @if (Auth::user() && Auth::user()->is_admin)
                                 <div class="border-t border-gray-200 my-4"></div>
                                 <div class="text-xs text-gray-400 px-4 mb-2">ADMIN SECTION</div>
