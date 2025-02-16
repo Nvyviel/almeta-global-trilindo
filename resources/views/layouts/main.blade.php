@@ -80,7 +80,7 @@
                         @endphp
 
                         <a href="{{ route('dashboard') }}" wire:navigate
-                            class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                            class="{{ $mobileLinkClass }} {{ (request()->routeIs('dashboard') || request()->routeIs('filtering-shipment')) ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-home mr-2"></i> Dashboard
                         </a>
                         <a href="{{ route('release-order') }}" wire:navigate
@@ -144,7 +144,7 @@
 
                         <div class="space-y-1">
                             <a href="{{ route('dashboard') }}" wire:navigate
-                                class="{{ $linkClass }} {{ request()->routeIs('dashboard') ? $activeLinkClass : $inactiveLinkClass }}">
+                                class="{{ $linkClass }} {{ (request()->routeIs('dashboard') || request()->routeIs('filtering-shipment')) ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-home mr-3"></i> Dashboard
                             </a>
                             <a href="{{ route('release-order') }}" wire:navigate

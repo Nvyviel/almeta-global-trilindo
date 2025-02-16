@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-gray-50 py-8">
+<div class="min-h-screen py-8">
     {{-- Fixed Notifications --}}
     @if (session()->has('success'))
         <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md mx-4">
@@ -33,9 +33,9 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Create Shipment Form Section -->
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="bg-blue-600 p-6">
-                <h1 class="text-3xl font-bold text-white text-center">Create Shipment Schedule</h1>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-[#2563EB] p-6">
+                <h1 class="text-2xl font-semibold text-white text-center">Create Shipment Schedule</h1>
             </div>
 
             <div class="p-6">
@@ -43,9 +43,9 @@
                     <div class="space-y-6">
                         <!-- Vessel Name -->
                         <div class="w-full">
-                            <label for="vessel_name" class="block text-gray-700 font-medium mb-2">Vessel Name</label>
+                            <label for="vessel_name" class="block text-gray-600 font-medium mb-2">Vessel Name</label>
                             <input type="text" wire:model.defer="vessel_name" id="vessel_name"
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('vessel_name') border-red-300 @enderror"
+                                class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('vessel_name') border-red-300 @enderror"
                                 placeholder="Enter vessel name" style="text-transform: uppercase;" autofocus>
                             @error('vessel_name')
                                 <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
@@ -56,9 +56,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Rate -->
                             <div>
-                                <label for="rate" class="block text-gray-700 font-medium mb-2">Rate (IDR)</label>
+                                <label for="rate" class="block text-gray-600 font-medium mb-2">Rate (IDR)</label>
                                 <input type="text" id="rate" wire:model.defer="rate"
-                                    class="format-number w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('rate') border-red-300 @enderror"
+                                    class="format-number w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('rate') border-red-300 @enderror"
                                     placeholder="Enter rate">
                                 @error('rate')
                                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
@@ -67,10 +67,10 @@
 
                             <!-- Rate Per Container -->
                             <div>
-                                <label for="rate_per_container" class="block text-gray-700 font-medium mb-2">Rate Per
+                                <label for="rate_per_container" class="block text-gray-600 font-medium mb-2">Rate Per
                                     Container (IDR)</label>
                                 <input type="text" id="rate_per_container" wire:model.defer="rate_per_container"
-                                    class="format-number w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('rate_per_container') border-red-300 @enderror"
+                                    class="format-number w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('rate_per_container') border-red-300 @enderror"
                                     placeholder="Enter rate per container">
                                 @error('rate_per_container')
                                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
@@ -82,10 +82,10 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <!-- Closing Cargo -->
                             <div>
-                                <label for="closing_cargo" class="block text-gray-700 font-medium mb-2">Closing
+                                <label for="closing_cargo" class="block text-gray-600 font-medium mb-2">Closing
                                     Cargo</label>
                                 <input type="datetime-local" wire:model.defer="closing_cargo" id="closing_cargo"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('closing_cargo') border-red-300 @enderror">
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('closing_cargo') border-red-300 @enderror">
                                 @error('closing_cargo')
                                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                                 @enderror
@@ -93,9 +93,9 @@
 
                             <!-- ETB -->
                             <div>
-                                <label for="etb" class="block text-gray-700 font-medium mb-2">ETB</label>
+                                <label for="etb" class="block text-gray-600 font-medium mb-2">ETB</label>
                                 <input type="datetime-local" wire:model.defer="etb" id="etb"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('etb') border-red-300 @enderror">
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('etb') border-red-300 @enderror">
                                 @error('etb')
                                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                                 @enderror
@@ -103,9 +103,9 @@
 
                             <!-- ETD -->
                             <div>
-                                <label for="etd" class="block text-gray-700 font-medium mb-2">ETD</label>
+                                <label for="etd" class="block text-gray-600 font-medium mb-2">ETD</label>
                                 <input type="datetime-local" wire:model.defer="etd" id="etd"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('etd') border-red-300 @enderror">
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('etd') border-red-300 @enderror">
                                 @error('etd')
                                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                                 @enderror
@@ -113,9 +113,9 @@
 
                             <!-- ETA -->
                             <div>
-                                <label for="eta" class="block text-gray-700 font-medium mb-2">ETA</label>
+                                <label for="eta" class="block text-gray-600 font-medium mb-2">ETA</label>
                                 <input type="datetime-local" wire:model.defer="eta" id="eta"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('eta') border-red-300 @enderror">
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('eta') border-red-300 @enderror">
                                 @error('eta')
                                     <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                                 @enderror
@@ -126,10 +126,10 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- POL -->
                             <div>
-                                <label for="from_city" class="block text-gray-700 font-medium mb-2">Port of Loading
+                                <label for="from_city" class="block text-gray-600 font-medium mb-2">Port of Loading
                                     (POL)</label>
                                 <select wire:model.defer="from_city" id="from_city"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('from_city') border-red-300 @enderror">
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('from_city') border-red-300 @enderror">
                                     <option value="">Select Port of Loading</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
@@ -142,10 +142,10 @@
 
                             <!-- POD -->
                             <div>
-                                <label for="to_city" class="block text-gray-700 font-medium mb-2">Port of Discharge
+                                <label for="to_city" class="block text-gray-600 font-medium mb-2">Port of Discharge
                                     (POD)</label>
                                 <select wire:model.defer="to_city" id="to_city"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('to_city') border-red-300 @enderror">
+                                    class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB] @error('to_city') border-red-300 @enderror">
                                     <option value="">Select Port of Discharge</option>
                                     @foreach ($cities as $city)
                                         <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
@@ -160,7 +160,7 @@
                         <!-- Submit Button -->
                         <div class="flex justify-center mt-8">
                             <button type="submit"
-                                class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+                                class="px-6 py-3 bg-[#2563EB] text-white font-medium rounded-lg shadow-sm hover:bg-[#1d4ed8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2 transition-all duration-200"
                                 wire:loading.attr="disabled" wire:loading.class="opacity-75 cursor-not-allowed">
                                 <span wire:loading.remove>Create Shipment</span>
                                 <span wire:loading>Processing...</span>
@@ -173,21 +173,21 @@
 
         <!-- Shipments List Section -->
         <div class="mt-8">
-            <div class="bg-blue-600 p-6 rounded-lg mb-6">
-                <h2 class="text-2xl font-bold text-white text-center">Shipments List</h2>
+            <div class="bg-[#2563EB] p-6 rounded-lg mb-6">
+                <h2 class="text-xl font-semibold text-white text-center">Shipments List</h2>
             </div>
 
             @if ($shipments->count() > 0)
                 <div class="space-y-6">
                     @foreach ($shipments as $shipment)
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-white rounded-lg shadow-md overflow-hidden">
                             <div class="bg-gray-50 p-4 border-b border-gray-200">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                    <h3 class="text-xl font-bold text-gray-800">{{ $shipment->vessel_name }}</h3>
+                                    <h3 class="text-lg font-semibold text-gray-700">{{ $shipment->vessel_name }}</h3>
                                     <div class="flex flex-col md:flex-row md:items-center gap-4">
                                         <div class="flex items-center space-x-2 text-gray-600">
                                             <span>{{ strtoupper($shipment->from_city) }}</span>
-                                            <span class="text-blue-500">&rarr;</span>
+                                            <span class="text-[#2563EB]">&rarr;</span>
                                             <span>{{ strtoupper($shipment->to_city) }}</span>
                                         </div>
                                     </div>
@@ -198,12 +198,12 @@
                                 <div class="grid grid-cols-2 gap-4 mb-4">
                                     <div>
                                         <p class="text-sm font-medium text-gray-500">Rate</p>
-                                        <p class="text-gray-800">Rp. {{ number_format($shipment->rate, 0, ',', '.') }}
+                                        <p class="text-gray-700">Rp. {{ number_format($shipment->rate, 0, ',', '.') }}
                                         </p>
                                     </div>
                                     <div>
                                         <p class="text-sm font-medium text-gray-500">Rate per Container</p>
-                                        <p class="text-gray-800">Rp.
+                                        <p class="text-gray-700">Rp.
                                             {{ number_format($shipment->rate_per_container, 0, ',', '.') }}</p>
                                     </div>
                                 </div>
@@ -211,30 +211,30 @@
                                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                                     <div>
                                         <p class="text-sm font-medium text-gray-500">Closing Cargo</p>
-                                        <p class="text-gray-800">
+                                        <p class="text-gray-700">
                                             {{ \Carbon\Carbon::parse($shipment->closing_cargo)->format('d M Y, H:i') }}
                                         </p>
                                     </div>
                                     <div>
                                         <p class="text-sm font-medium text-gray-500">ETB</p>
-                                        <p class="text-gray-800">
+                                        <p class="text-gray-700">
                                             {{ \Carbon\Carbon::parse($shipment->etb)->format('d M Y, H:i') }}</p>
                                     </div>
                                     <div>
                                         <p class="text-sm font-medium text-gray-500">ETD</p>
-                                        <p class="text-gray-800">
+                                        <p class="text-gray-700">
                                             {{ \Carbon\Carbon::parse($shipment->etd)->format('d M Y, H:i') }}</p>
                                     </div>
                                     <div>
                                         <p class="text-sm font-medium text-gray-500">ETA</p>
-                                        <p class="text-gray-800">
+                                        <p class="text-gray-700">
                                             {{ \Carbon\Carbon::parse($shipment->eta)->format('d M Y, H:i') }}</p>
                                     </div>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <a href="{{ route('edit-shipment', $shipment->id) }}" wire:navigate
-                                        class="inline-flex justify-center items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200">
+                                        class="inline-flex justify-center items-center px-4 py-2 bg-[#2563EB] text-white font-medium rounded-lg hover:bg-[#1d4ed8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2 transition-all duration-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -244,7 +244,7 @@
                                     </a>
                                     <button wire:click="deleteShipment({{ $shipment->id }})"
                                         wire:confirm="Are you sure you want to delete this shipment?"
-                                        class="inline-flex justify-center items-center px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200">
+                                        class="inline-flex justify-center items-center px-4 py-2 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
                                             viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -258,13 +258,13 @@
                     @endforeach
                 </div>
             @else
-                <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                <div class="bg-white rounded-lg shadow-md p-8 text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
-                    <p class="text-xl font-semibold text-gray-500">No shipments available!</p>
+                    <p class="text-lg font-medium text-gray-500">No shipments available!</p>
                 </div>
             @endif
         </div>

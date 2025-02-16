@@ -241,4 +241,22 @@ class ShippingInstructionController extends Controller
 
         return redirect()->back()->with('success', 'Shipping Instruction has been Rejected successfully');
     }
+
+    public function historySi()
+    {
+        $instructions = ShippingInstruction::with('consignee')->get();
+        return view('admin.history-si', compact('instructions'));
+    }
+
+    // public function updateStatus(Request $request, $id)
+    // {
+    //     $instruction = ShippingInstruction::findOrFail($id);
+    //     $newStatus = $instruction->status === 'Approved' ? 'Rejected' : 'Approved';
+    //     $instruction->update(['status' => $newStatus]);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'newStatus' => $newStatus
+    //     ]);
+    // }
 }

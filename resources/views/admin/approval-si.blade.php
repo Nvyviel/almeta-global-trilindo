@@ -5,7 +5,7 @@
     <div class="container mx-auto px-4 py-6">
         <!-- Back Button and History Button -->
         <div class="flex justify-between items-center mb-6">
-            <a href="#" wire:navigate
+            <a href="{{ route('history-si') }}" wire:navigate
                 class="flex items-center text-gray-600 hover:text-gray-800 transition duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">

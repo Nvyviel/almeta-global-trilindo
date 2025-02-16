@@ -1,5 +1,6 @@
 @extends('layouts.fullscreen')
 
+@section('title','History Release Order')
 @section('component')
     <div class="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8">
     <!-- Back Button -->
@@ -14,7 +15,7 @@
 
     <!-- History Container Section -->
     <div class="max-w-4xl mx-auto space-y-6">
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Container History</h2>
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">History</h2>
 
         @forelse ($containers as $container)
             <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300">

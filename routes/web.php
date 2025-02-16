@@ -112,6 +112,8 @@ Route::middleware('session')->group(function () {
 
             Route::prefix('/history')->group(function () {
                 Route::get('/release-order', [ContainerController::class, 'historyRo'])->name('history-ro');
+                Route::get('/shipping-instruction', [ShippingInstructionController::class, 'historySi'])->name('history-si');
+                // Route::post('/shipping-instruction/{id}/update', [ShippingInstructionController::class, 'updateStatus'])->name('update-status');
                 Route::get('/seal', [SealController::class, 'activitySeal'])->name('activity-seal');
             });
 
