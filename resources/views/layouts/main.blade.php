@@ -1,7 +1,6 @@
 <x-app-layout>
     @section('layout')
         <div class="min-h-screen">
-            <!-- Main Navbar -->
             <nav
                 class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
@@ -13,19 +12,12 @@
                     </div>
                 </div>
 
-                <!-- Profile Dropdown -->
                 <div class="flex items-center space-x-4" x-data="{ open: false }">
                     <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-gray-700">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                     <div class="relative">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                            <div class="relative">
-                                <div
-                                    class="w-10 h-10 rounded-full border-2 border-red-700 flex items-center justify-center bg-red-600">
-                                    <i class="fas fa-bell text-white"></i>
-                                </div>
-                            </div>
                             <div class="hidden md:block">
                                 <div class="text-sm font-medium text-gray-700">
                                     {{ Auth::user()->company_name }}
@@ -37,7 +29,6 @@
                             <i class="fas fa-chevron-down text-gray-400 ml-2"></i>
                         </button>
 
-                        <!-- Dropdown Menu -->
                         <div x-show="open" @click.away="open = false"
                             class="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
                             <div class="px-4 py-3 bg-gray-50 border-b">
@@ -68,7 +59,6 @@
                 </div>
             </nav>
 
-            <!-- Mobile Navigation (Visible on small screens) -->
             <div id="mobile-menu"
                 class="md:hidden fixed w-full bg-white z-30 shadow-md transform transition-transform duration-300 -translate-y-full">
                 <div class="px-4 py-3">
@@ -132,7 +122,6 @@
                 </div>
             </div>
 
-            <!-- Desktop Sidebar (Visible on medium and larger screens) -->
             <div class="hidden md:block fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-200">
                 <div class="pt-20 md:pt-24 px-4">
                     <nav>
@@ -200,20 +189,19 @@
                 </div>
             </div>
 
-            <!-- Main Content Area -->
-            <main class="md:ml-64 bg-gray-50 pt-16 min-h-screen">
-                <div class="p-6">
+            <main class="md:ml-64 bg-gray-50 pt-16 min-h-screen flex flex-col">
+                <div class="p-6 flex-grow">
                     @yield('component')
                 </div>
+                <footer class="w-full text-gray-500 py-2 sm:py-2 mt-auto">
+                    <div class="pt-3 sm:pt-2 text-center">
+                        <p class="text-sm sm:text-base text-gray-500">Powered by PT. ALMETA GLOBAL TRILINDO</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2024 All rights reserved.</p>
+                    </div>
+                </footer>
             </main>
         </div>
 
-        <footer class="relative z-10 bg-gray-900 text-white py-2 sm:py-2">
-        <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 text-center">
-                    <p class="text-sm sm:text-base text-gray-400">Powered by PT. ALMETA GLOBAL TRILINDO</p>
-                    <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2024 All rights reserved.</p>
-                </div>
-</footer>
         <script>
             function confirmLogout() {
                 Swal.fire({
@@ -232,22 +220,36 @@
                 });
             }
 
-            // Tambahkan script ini setelah script confirmLogout()
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', initMobileMenu);
+            document.addEventListener('livewire:navigated', initMobileMenu);
+
+            function initMobileMenu() {
                 const mobileMenuButton = document.getElementById('mobile-menu-button');
                 const mobileMenu = document.getElementById('mobile-menu');
 
-                mobileMenuButton.addEventListener('click', function() {
-                    // Toggle class untuk mengubah transform
-                    if (mobileMenu.classList.contains('-translate-y-full')) {
-                        mobileMenu.classList.remove('-translate-y-full');
-                        mobileMenu.classList.add('translate-y-16'); // Sesuaikan dengan height navbar
-                    } else {
-                        mobileMenu.classList.add('-translate-y-full');
-                        mobileMenu.classList.remove('translate-y-16');
-                    }
-                });
-            });
+                if (mobileMenuButton && mobileMenu) {
+                    // Hapus event listener lama untuk menghindari duplikasi
+                    mobileMenuButton.removeEventListener('click', toggleMobileMenu);
+                    // Tambahkan event listener baru
+                    mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+                    // Pastikan menu tertutup saat halaman dimuat/navigasi selesai
+                    mobileMenu.classList.add('-translate-y-full');
+                    mobileMenu.classList.remove('translate-y-16');
+                }
+            }
+
+            function toggleMobileMenu() {
+                const mobileMenu = document.getElementById('mobile-menu');
+
+                if (mobileMenu.classList.contains('-translate-y-full')) {
+                    mobileMenu.classList.remove('-translate-y-full');
+                    mobileMenu.classList.add('translate-y-16');
+                } else {
+                    mobileMenu.classList.add('-translate-y-full');
+                    mobileMenu.classList.remove('translate-y-16');
+                }
+            }
         </script>
     @endsection
 </x-app-layout>

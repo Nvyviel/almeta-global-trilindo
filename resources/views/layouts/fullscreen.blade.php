@@ -74,6 +74,12 @@
                 <div>
                     @yield('component')
                 </div>
+                <footer class="relative z-10 text-gray-500 py-2 sm:py-2">
+                    <div class="pt-3 sm:pt-2 text-center">
+                        <p class="text-sm sm:text-base text-gray-500">Powered by PT. ALMETA GLOBAL TRILINDO</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2024 All rights reserved.</p>
+                    </div>
+                </footer>
             </main>
         </div>
 
