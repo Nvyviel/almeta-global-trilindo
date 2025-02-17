@@ -45,7 +45,7 @@ class StockManagement extends Component
             'text' => 'Stock has been added successfully'
         ]);
 
-        return redirect()->route('seal')->with('success', 'Success updated Stock');
+        return redirect()->route('create-seal')->with('success', 'Success updated Stock');
     }
 
     public function editModal($id)

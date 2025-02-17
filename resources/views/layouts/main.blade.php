@@ -2,7 +2,8 @@
     @section('layout')
         <div class="min-h-screen">
             <!-- Main Navbar -->
-            <nav class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm shadow-md z-40 px-6 py-3 flex justify-between items-center">
+            <nav
+                class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm shadow-md z-40 px-6 py-3 flex justify-between items-center">
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('dashboard') }}" wire:navigate>
                         <div class="text-2xl font-black text-red-700 tracking-tight">ALMETA</div>
@@ -80,7 +81,7 @@
                         @endphp
 
                         <a href="{{ route('dashboard') }}" wire:navigate
-                            class="{{ $mobileLinkClass }} {{ (request()->routeIs('dashboard') || request()->routeIs('filtering-shipment')) ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                            class="{{ $mobileLinkClass }} {{ request()->routeIs('dashboard') || request()->routeIs('filtering-shipment') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-home mr-2"></i> Dashboard
                         </a>
                         <a href="{{ route('release-order') }}" wire:navigate
@@ -144,7 +145,7 @@
 
                         <div class="space-y-1">
                             <a href="{{ route('dashboard') }}" wire:navigate
-                                class="{{ $linkClass }} {{ (request()->routeIs('dashboard') || request()->routeIs('filtering-shipment')) ? $activeLinkClass : $inactiveLinkClass }}">
+                                class="{{ $linkClass }} {{ request()->routeIs('dashboard') || request()->routeIs('filtering-shipment') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-home mr-3"></i> Dashboard
                             </a>
                             <a href="{{ route('release-order') }}" wire:navigate
@@ -163,8 +164,8 @@
                                 class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-lock mr-3"></i> Seal
                             </a>
-                        
-                            
+
+
                             @if (Auth::user() && Auth::user()->is_admin)
                                 <div class="border-t border-gray-200 my-4"></div>
                                 <div class="text-xs text-gray-400 px-4 mb-2">ADMIN SECTION</div>
@@ -207,6 +208,12 @@
             </main>
         </div>
 
+        <footer class="relative z-10 bg-gray-900 text-white py-2 sm:py-2">
+        <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 text-center">
+                    <p class="text-sm sm:text-base text-gray-400">Powered by PT. ALMETA GLOBAL TRILINDO</p>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2024 All rights reserved.</p>
+                </div>
+</footer>
         <script>
             function confirmLogout() {
                 Swal.fire({
@@ -224,6 +231,23 @@
                     }
                 });
             }
+
+            // Tambahkan script ini setelah script confirmLogout()
+            document.addEventListener('DOMContentLoaded', function() {
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+
+                mobileMenuButton.addEventListener('click', function() {
+                    // Toggle class untuk mengubah transform
+                    if (mobileMenu.classList.contains('-translate-y-full')) {
+                        mobileMenu.classList.remove('-translate-y-full');
+                        mobileMenu.classList.add('translate-y-16'); // Sesuaikan dengan height navbar
+                    } else {
+                        mobileMenu.classList.add('-translate-y-full');
+                        mobileMenu.classList.remove('translate-y-16');
+                    }
+                });
+            });
         </script>
     @endsection
 </x-app-layout>

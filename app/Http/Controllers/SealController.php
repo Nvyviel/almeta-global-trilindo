@@ -22,16 +22,21 @@ class SealController extends Controller
     {
         $filter = $request->get('filter', 'all');
 
-        $seals = Seal::where('user_id', auth()->id())
-            ->orderBy('created_at', 'desc')->paginate(10);
+        // Buat query dasar
+        $query = Seal::where('user_id', auth()->id());
 
+        // Tambahkan filter jika bukan 'all'
         if ($filter !== 'all') {
-            $seals->where('status', $filter);
+            $query->where('status', $filter);
         }
+
+        // Urutkan dan lakukan pagination di akhir
+        $seals = $query->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('user.seal', compact('seals'));
     }
-
+    
     public function activitySeal()
     {
         $seals = Seal::orderBy('created_at', 'desc')->paginate(10);

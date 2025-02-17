@@ -17,7 +17,7 @@ class OrderSeal extends Component
     public $seal;
 
     protected $rules = [
-        'pickup_point' => 'required|in:surabaya,pontianak,semarang,banjarmasin,bandung,jakarta',
+        'pickup_point' => 'required|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon',
         'quantity' => 'required|integer|min:1'
     ];
 
