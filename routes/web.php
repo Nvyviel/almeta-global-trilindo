@@ -58,12 +58,12 @@ Route::middleware('session')->group(function () {
         Route::get('/seal', [SealController::class, 'seal'])->name('seal');
         Route::get('/release-order', [ContainerController::class, 'releaseOrder'])->name('release-order');
         Route::get('/shipping-instruction', [ShippingInstructionController::class, 'showList'])->name('shipping-instruction');
-        Route::get('/bill-of-lading', [BillController::class, 'listBill'])->name('list-bill');
+        Route::get('/bills', [BillController::class, 'listBill'])->name('list-bill');
     });
 
     Route::prefix('/detail')->group(function () {
         Route::get('/release-order/detail/{id}', [ContainerController::class, 'showDetail'])->name('show-detail');
-        Route::get('/bill-of-lading/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
+        Route::get('/bills/{bill}', [BillController::class, 'detailBill'])->name('detail-bill');
         Route::get('/shipping-instruction/{container}', [ShippingInstructionController::class, 'showDetail'])->name('shipping-instruction-detail');
     });
 
@@ -95,7 +95,7 @@ Route::middleware('session')->group(function () {
 
             Route::prefix('/create')->group(function () {
                 Route::get('/shipment', [ShipmentController::class, 'create'])->name('create-shipment');
-                Route::get('/bill-of-lading', [BillController::class, 'createBill'])->name('create-bill');
+                Route::get('/bills', [BillController::class, 'createBill'])->name('create-bill');
                 Route::post('/shipment/schedule', [ShipmentController::class, 'addschedule'])->name('addschedule');
             });
 

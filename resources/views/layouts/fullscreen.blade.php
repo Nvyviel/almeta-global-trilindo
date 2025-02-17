@@ -14,18 +14,9 @@
 
                 <!-- Profile Dropdown -->
                 <div class="flex items-center space-x-4" x-data="{ open: false }">
-                    <button id="mobile-menu-button" class="md:hidden text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
                     <div class="relative">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
                             <div class="relative">
-                                <div
-                                    class="w-10 h-10 rounded-full border-2 border-red-500 flex items-center justify-center bg-red-500">
-                                    <i class="fas fa-bell text-white"></i>
-                                    <!-- Notification indicator -->
-                                    {{-- <span class="absolute -top-1 -right-1 block h-3 w-3 rounded-full ring-2 ring-white bg-yellow-500"></span> --}}
-                                </div>
                             </div>
                             <div class="hidden md:block">
                                 <div class="text-sm font-medium text-gray-700">
@@ -77,7 +68,7 @@
                 <footer class="relative z-10 text-gray-500 py-2 sm:py-2">
                     <div class="pt-3 sm:pt-2 text-center">
                         <p class="text-sm sm:text-base text-gray-500">Powered by PT. ALMETA GLOBAL TRILINDO</p>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2024 All rights reserved.</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2025 All rights reserved.</p>
                     </div>
                 </footer>
             </main>

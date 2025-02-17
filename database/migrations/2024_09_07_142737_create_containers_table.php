@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('weight');
             $table->enum('is_danger', ['No', 'Yes']);
             $table->enum('status', ['Requested', 'Approved', 'Canceled'])->default('Requested');
-            $table->string('pdf-ro')->nullable();
+            $table->string('pdf_ro')->nullable();
             $table->timestamps();
         });
     }

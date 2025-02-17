@@ -76,7 +76,7 @@
 
         @if (auth()->user()->id == 1)
             {{-- Profit Cards Section --}}
-            <div class="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4 mb-4 sm:mb-6">
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-3 sm:gap-4 mb-4 sm:mb-6">
                 {{-- Ship Profit Card --}}
                 <div class="bg-white rounded-lg shadow p-3 sm:p-6">
                     <div class="flex items-center">

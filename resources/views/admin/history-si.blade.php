@@ -3,22 +3,19 @@
 @section('title','History Shipping Instruction')
 @section('component')
     <div class="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8">
-        <!-- Back Button -->
         <div class="max-w-7xl mx-auto mb-6 pt-6">
-            <a href="{{ route('dashboard-admin') }}" wire:navigate
+            <a href="{{ route('approval-si') }}" wire:navigate
                 class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 shadow-sm transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
-                Back to Dashboard
+                Back to Approval
             </a>
         </div>
 
-        <!-- History Container Section -->
         <div class="max-w-4xl mx-auto space-y-6">
             <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">Shipping Instructions History</h2>
-
             @forelse ($instructions as $instruction)
                 <div
                     class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-all duration-300">
@@ -52,17 +49,6 @@
                             </div>
                         </div>
 
-                        {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <span class="text-sm font-medium text-gray-600 block mb-1">Container Number</span>
-                                <p class="text-gray-900 text-lg">{{ $instruction->no_container }}</p>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <span class="text-sm font-medium text-gray-600 block mb-1">Seal Number</span>
-                                <p class="text-gray-900 text-lg">{{ $instruction->no_seal }}</p>
-                            </div>
-                        </div> --}}
-
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <span class="text-sm font-medium text-gray-600 block mb-1">Company</span>
@@ -81,7 +67,7 @@
                             </div>
                         @endif
 
-                        @if ($instruction->upload_file_si)
+                        {{-- @if ($instruction->upload_file_si)
                             <div class="mt-4">
                                 <a href="{{ asset('storage/' . $instruction->upload_file_si) }}"
                                     class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors duration-200"
@@ -90,7 +76,7 @@
                                     View SI Document
                                 </a>
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
             @empty

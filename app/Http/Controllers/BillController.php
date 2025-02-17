@@ -15,7 +15,7 @@ class BillController extends Controller
 {
     public function createBill()
     {
-        return view('user.bill-of-lading');
+        return view('user.bills');
     }
 
     public function listBill(Request $request) // Tambahkan parameter Request

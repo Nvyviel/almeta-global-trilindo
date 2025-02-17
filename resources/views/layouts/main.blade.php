@@ -84,7 +84,7 @@
                         </a>
                         <a href="{{ route('list-bill') }}" wire:navigate
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('list-bill') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                            <i class="fas fa-scroll mr-2"></i> Bill of Lading
+                            <i class="fas fa-scroll mr-2"></i> Bills
                         </a>
                         <a href="{{ route('seal') }}" wire:navigate
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('seal') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
@@ -115,7 +115,7 @@
                             </a>
                             <a href="{{ route('create-bill') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('create-bill') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                                <i class="fa-solid fa-file-invoice mr-2"></i> Create Bill of Lading
+                                <i class="fa-solid fa-file-invoice mr-2"></i> Create Bills
                             </a>
                         @endif
                     </nav>
@@ -147,7 +147,7 @@
                             </a>
                             <a href="{{ route('list-bill') }}" wire:navigate
                                 class="{{ $linkClass }} {{ request()->routeIs('list-bill') ? $activeLinkClass : $inactiveLinkClass }}">
-                                <i class="fas fa-scroll mr-3"></i> Bill of Lading
+                                <i class="fas fa-scroll mr-3"></i> Bill
                             </a>
                             <a href="{{ route('seal') }}" wire:navigate
                                 class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
@@ -181,7 +181,7 @@
                                 </a>
                                 <a href="{{ route('create-bill') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('create-bill') ? $activeLinkClass : $inactiveLinkClass }}">
-                                    <i class="fa-solid fa-file-invoice mr-3"></i> Create Bill of Lading
+                                    <i class="fa-solid fa-file-invoice mr-3"></i> Create Bills
                                 </a>
                             @endif
                         </div>
@@ -196,7 +196,7 @@
                 <footer class="w-full text-gray-500 py-2 sm:py-2 mt-auto">
                     <div class="pt-3 sm:pt-2 text-center">
                         <p class="text-sm sm:text-base text-gray-500">Powered by PT. ALMETA GLOBAL TRILINDO</p>
-                        <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2024 All rights reserved.</p>
+                        <p class="text-xs sm:text-sm text-gray-500 mt-2">&copy; 2025 All rights reserved.</p>
                     </div>
                 </footer>
             </main>

@@ -41,7 +41,7 @@ class ContainerController extends Controller
 
     public function releaseOrder(Request $request)
     {
-        $query = auth()->user()->container()->with('shipment_container');
+        $query = auth()->user()->container()->with('shipment_container')->orderBy('created_at', 'desc');
         
         if ($request->has('filter') && $request->filter !== 'all') {
             $query->where('status', $request->filter);

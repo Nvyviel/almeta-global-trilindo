@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Bill of Lading')
+@section('title', 'Bills')
 @section('component')
     <livewire:create-bill/>
 @endsection

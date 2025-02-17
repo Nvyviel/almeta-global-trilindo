@@ -17,13 +17,14 @@
         </div>
 
         <!-- Search and Filter Section -->
+        <!-- Search and Filter Section -->
         <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
             <div class="bg-gray-50 p-4 border-b border-gray-200">
                 <h2 class="text-lg font-semibold text-gray-800">Filter Vessel</h2>
             </div>
             <div class="p-4">
-                <form method="GET" action="{{ route('shipping-instruction') }}" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <form method="GET" action="{{ route('approval-si') }}" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <label for="selectedVessel" class="block text-sm font-medium text-gray-600 mb-1">Select
                                 Vessel</label>
@@ -45,6 +46,14 @@
                                 placeholder="Search by commodity or company..."
                                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
                         </div>
+
+                        <div>
+                            <label for="instructions_id" class="block text-sm font-medium text-gray-600 mb-1">Instructions
+                                ID</label>
+                            <input type="text" id="instructions_id" name="instructions_id"
+                                value="{{ request('instructions_id') }}" placeholder="Search by Instructions ID..."
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                        </div>
                     </div>
 
                     <div class="flex space-x-3">
@@ -58,7 +67,7 @@
                             Filter Data
                         </button>
 
-                        <a href="{{ route('shipping-instruction') }}" wire:navigate
+                        <a href="{{ route('approval-si') }}" wire:navigate
                             class="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition duration-300 flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">

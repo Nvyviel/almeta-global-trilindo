@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
-@section('title', 'List Bill of Lading')
+@section('title', 'List Bills')
 @section('component')
     <div class="mx-auto px-4 sm:px-6 lg:px-8">
         {{-- Header Section --}}
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-            <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-0">Bill of Lading</h1>
+            <h1 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-0">Bills</h1>
         </div>
 
         {{-- Alert Messages --}}

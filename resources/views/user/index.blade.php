@@ -352,12 +352,12 @@
         </div>
 
         <!-- Footer -->
-        <footer class="relative z-10 bg-gray-900 text-white py-12 sm:py-16">
+        <footer class="relative z-10 bg-gray-50 text-black py-12 sm:py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12">
                     <!-- Contact Information -->
                     <div class="space-y-4">
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Contact Information</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6">Contact Information</h3>
                         <div class="space-y-3">
                             <div class="flex items-start">
                                 <i class="fas fa-map-marker-alt mt-1 mr-3 text-red-500"></i>
@@ -373,7 +373,7 @@
 
                     <!-- Email Information -->
                     <div class="space-y-4">
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Email Us</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6">Email Us</h3>
                         <div class="space-y-3">
                             <div class="flex items-center">
                                 <i class="fas fa-envelope mr-3 text-red-500"></i>
@@ -388,8 +388,8 @@
 
                     <!-- About Us -->
                     <div class="space-y-4">
-                        <h3 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">About Us</h3>
-                        <p class="text-sm sm:text-base text-gray-400">Your trusted partner in domestic logistics
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">About Us</h3>
+                        <p class="text-sm sm:text-base text-gray-800">Your trusted partner in domestic logistics
                             solutions. We provide fast, safe, and reliable shipping services in Indonesia.</p>
                     </div>
                 </div>

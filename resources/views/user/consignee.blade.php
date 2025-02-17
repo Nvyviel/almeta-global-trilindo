@@ -4,7 +4,7 @@
 @section('component')
     <div class="mx-4">
         <a href="{{ route('create-consignee') }}" wire:navigate
-            class="bg-red-100 text-red-800 px-3 py-2 rounded-full hover:bg-red-200 inline-flex items-center">
+            class="bg-red-700 text-white px-3 py-2 rounded-full hover:bg-red-800 inline-flex items-center">
             + Consignee
         </a>
     </div>
@@ -30,38 +30,38 @@
                     <thead>
                         <tr class="bg-gray-100">
                             <th
-                                class="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-4 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 No</th>
                             <th
-                                class="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-4 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Industry</th>
                             <th
-                                class="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-4 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Name</th>
                             <th
-                                class="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-4 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Email</th>
                             <th
-                                class="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-4 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 City</th>
                             <th
-                                class="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-4 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Phone Number</th>
                             <th
-                                class="px-6 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                class="px-4 py-3 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Action</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         @forelse($consignees as $index => $consignee)
                             <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $index + $consignees->firstItem() }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $consignee->industry }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $consignee->name_consignee }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $consignee->email }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $consignee->city }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $consignee->phone_number }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-4 py-4 whitespace-nowrap">{{ $index + $consignees->firstItem() }}</td>
+                                <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->industry }}</td>
+                                <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->name_consignee }}</td>
+                                <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->email }}</td>
+                                <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->city }}</td>
+                                <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->phone_number }}</td>
+                                <td class="px-4 py-4 whitespace-nowrap">
                                     <div class="flex space-x-2">
                                         <a href="{{ route('consignee-edit', $consignee->id) }}" wire:navigate
                                             class="text-blue-600 hover:text-blue-900">
@@ -70,7 +70,6 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                             </svg>
-
                                         </a>
                                         <form action="{{ route('consignee-destroy', $consignee->id) }}" method="POST"
                                             class="inline">
