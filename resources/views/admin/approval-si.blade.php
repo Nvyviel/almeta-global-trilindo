@@ -16,8 +16,6 @@
             </a>
         </div>
 
-        <!-- Search and Filter Section -->
-        <!-- Search and Filter Section -->
         <div class="bg-white rounded-lg shadow overflow-hidden mb-6">
             <div class="bg-gray-50 p-4 border-b border-gray-200">
                 <h2 class="text-lg font-semibold text-gray-800">Filter Vessel</h2>
@@ -48,11 +46,10 @@
                         </div>
 
                         <div>
-                            <label for="instructions_id" class="block text-sm font-medium text-gray-600 mb-1">Instructions
+                            <label for="instructions_id" class="block text-sm font-medium text-gray-600 mb-1">Release Order ID
                                 ID</label>
-                            <input type="text" id="instructions_id" name="instructions_id"
-                                value="{{ request('instructions_id') }}" placeholder="Search by Instructions ID..."
-                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                            <input type="text" id="order_id" name="order_id" value="{{ request('order_id') }}" placeholder="Search by Release Order ID..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
                         </div>
                     </div>
 

@@ -50,7 +50,7 @@ class ShippingInstructionController extends Controller
             // Get filters from request
             $selectedVessel = $request->query('selectedVessel');
             $search = $request->query('search');
-            $instructionsId = $request->query('instructions_id');
+            $orderId = $request->query('order_id'); // Ubah dari instructions_id ke order_id
 
             // Initial query with explicit select
             $query = ShippingInstruction::select('shipping_instructions.*')
@@ -78,8 +78,10 @@ class ShippingInstructionController extends Controller
                 });
             }
 
-            if ($instructionsId) {
-                $query->where('instructions_id', 'LIKE', "%$instructionsId%");
+            if ($orderId) {
+                $query->whereHas('container', function ($q) use ($orderId) {
+                    $q->where('id_order', 'LIKE', "%$orderId%"); // Filter berdasarkan order_id
+                });
             }
 
             $query->where('status', 'Requested');

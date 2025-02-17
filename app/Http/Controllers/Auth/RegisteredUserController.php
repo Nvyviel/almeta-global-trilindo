@@ -142,8 +142,4 @@ class RegisteredUserController extends Controller
                 ->withInput();
         }
     }
-
-    public function approvalList() {
-        return view('admin.approval');
-    }
 }

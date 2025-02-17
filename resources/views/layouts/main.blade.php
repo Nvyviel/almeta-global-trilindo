@@ -103,11 +103,11 @@
                             </a>
                             <a href="{{ route('approval-ro') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('approval-ro') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                                <i class="fa-solid fa-file-contract mr-2"></i> Approval Release Order
+                                <i class="fa-solid fa-file-contract mr-2"></i> Approval RO
                             </a>
                             <a href="{{ route('approval-si') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('approval-si') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                                <i class="fa-solid fa-ship mr-2"></i> Shipping Instruction
+                                <i class="fa-solid fa-ship mr-2"></i> Approval SI
                             </a>
                             <a href="{{ route('activity-seal') }}" wire:navigate
                                 class="{{ $mobileLinkClass }} {{ request()->routeIs('activity-seal') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
@@ -169,11 +169,11 @@
                                 </a>
                                 <a href="{{ route('approval-ro') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('approval-ro') ? $activeLinkClass : $inactiveLinkClass }}">
-                                    <i class="fa-solid fa-file-contract mr-3"></i> Approval Release Order
+                                    <i class="fa-solid fa-file-contract mr-3"></i> Approval RO
                                 </a>
                                 <a href="{{ route('approval-si') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('approval-si') ? $activeLinkClass : $inactiveLinkClass }}">
-                                    <i class="fa-solid fa-ship mr-3"></i> Shipping Instruction
+                                    <i class="fa-solid fa-ship mr-3"></i> Approval SI
                                 </a>
                                 <a href="{{ route('activity-seal') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('activity-seal') ? $activeLinkClass : $inactiveLinkClass }}">

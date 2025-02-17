@@ -107,7 +107,6 @@
                                         </div>
                                     </div>
 
-                                    <!-- Action Button -->
                                     <a href="{{ route('show-detail', ['id' => $container->id, 'source' => 'release-order']) }}"
                                         wire:navigate
                                         class="inline-flex items-center px-3 py-3 sm:px-4 sm:py-4 bg-indigo-50 text-indigo-700 rounded-full hover:bg-indigo-100">

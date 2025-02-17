@@ -1,5 +1,6 @@
 @extends('layouts.fullscreen')
 
+@section('title','Detail')
 @section('component')
     <div class="min-h-screen bg-gray-50 py-8">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -118,7 +119,7 @@
 
             <!-- Back Button -->
             <div class="flex items-center">
-                <a href="{{ route(request('source', 'approval')) }}" wire:navigate
+                <a href="{{ route(request('source', 'release-order')) }}" wire:navigate
                     class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-blue-600 hover:text-blue-800 hover:bg-blue-50 transition-colors duration-150">
                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
                     Back to List

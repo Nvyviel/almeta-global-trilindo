@@ -90,41 +90,46 @@ class ShipmentController extends Controller
     }
 
     public function approvalRo(Request $request)
-    {
-        // Ambil filter dari request
-        $selectedVessel = $request->query('selectedVessel');
-        $search = $request->query('search');
+{
+    // Ambil filter dari request
+    $selectedVessel = $request->query('selectedVessel');
+    $search = $request->query('search');
+    $orderId = $request->query('order_id'); // Tambahkan filter untuk order_id
 
-        // Query awal
-        $name_ship = Container::with([
-            'shipment_container',
-            'user:id,company_name',
-        ]);
+    // Query awal
+    $name_ship = Container::with([
+        'shipment_container',
+        'user:id,company_name',
+    ]);
 
-        // Filter berdasarkan kapal yang dipilih
-        if ($selectedVessel) {
-            $name_ship->whereHas('shipment_container', function ($query) use ($selectedVessel) {
-                $query->where('vessel_name', $selectedVessel);
-            });
-        }
+    // Filter berdasarkan kapal yang dipilih
+    if ($selectedVessel) {
+        $name_ship->whereHas('shipment_container', function ($query) use ($selectedVessel) {
+            $query->where('vessel_name', $selectedVessel);
+        });
+    }
 
-        // Filter berdasarkan pencarian (commodity atau company_name)
-        if ($search) {
-            $name_ship->where(function ($query) use ($search) {
-                $query->where('commodity', 'LIKE', "%$search%")
+    // Filter berdasarkan pencarian (commodity atau company_name)
+    if ($search) {
+        $name_ship->where(function ($query) use ($search) {
+            $query->where('commodity', 'LIKE', "%$search%")
                 ->orWhereHas('user', function ($query) use ($search) {
                     $query->where('company_name', 'LIKE', "%$search%");
                 });
-            });
-        }
-
-        // Eksekusi query
-        $name_ship = $name_ship->get();
-
-        $availableVessel = Shipment::pluck('vessel_name');
-
-        return view('admin.approval-ro', compact('name_ship', 'availableVessel'));
+        });
     }
+
+    if ($orderId) {
+        $name_ship->where('id_order', 'LIKE', "%$orderId%");
+    }
+
+    // Eksekusi query
+    $name_ship = $name_ship->get();
+
+    $availableVessel = Shipment::pluck('vessel_name');
+
+    return view('admin.approval-ro', compact('name_ship', 'availableVessel'));
+}
 
     public function uploadRoPdf(Request $request, $id)
     {
