@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('industry');
             $table->string('name_consignee');
-            $table->string('city');
+            $table->enum('city', ['surabaya', 'pontianak', 'semarang', 'banjarmasin', 'sampit', 'jakarta', 'kumai', 'samarinda', 'balikpapan', 'berau', 'palu', 'bitung', 'gorontalo', 'ambon']);
             $table->string('email')->unique();
             $table->bigInteger('phone_number');
             $table->text('consignee_address');

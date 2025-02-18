@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('company_location');
             $table->text('company_address');
             $table->boolean('is_admin')->default(false);
+            $table->enum('status', ['Pending','Approved','Warned'])->default('Pending');
             $table->string('ktp');
             $table->string('npwp');
             $table->string('nib');
@@ -45,9 +46,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');

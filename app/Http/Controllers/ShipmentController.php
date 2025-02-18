@@ -148,7 +148,7 @@ class ShipmentController extends Controller
 
             // Update container record
             $container->update([
-                'pdf-ro' => $path
+                'pdf_ro' => $path
             ]);
 
             return redirect()->back()->with('success', 'Release Order PDF has been uploaded successfully');
@@ -174,7 +174,7 @@ class ShipmentController extends Controller
 
             // Update container with file path and status
             $container->update([
-                'pdf-ro' => $path,
+                'pdf_ro' => $path,
                 'status' => 'Approved'
             ]);
 

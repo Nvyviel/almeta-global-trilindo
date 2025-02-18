@@ -133,7 +133,7 @@
             <form method="post" action="{{ route('profile-update') }}" class="p-6 space-y-6"
                 enctype="multipart/form-data">
                 @csrf
-                @method('patch')
+                @method('post')
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Personal Information -->

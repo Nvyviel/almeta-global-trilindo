@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\PaymentController;
 
@@ -65,9 +66,15 @@ class AuthenticatedSessionController extends Controller
 
         session()->flash('success', 'Login successful. Welcome back, ' . Auth::user()->name . '!');
 
+        // Check user status and role
         if (Auth::user()->is_admin) {
             return redirect()->route('dashboard-admin');
         }
+
+        if (Auth::user()->status === 'Pending') {
+            return redirect()->route('pending-view');
+        }
+
         return redirect()->route('dashboard');
     }
 
@@ -120,6 +127,23 @@ class AuthenticatedSessionController extends Controller
     {
         $user = User::findOrFail($id);
         return view('admin.detail-user', compact('user'));
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = $request->status;
+        $user->save();
+
+        $messages = [
+            'Approved' => 'User has been approved successfully!',
+            'Warned' => 'User has been set to warned!',
+            'Pending' => 'User has been set to pending!'
+        ];
+
+        $message = $messages[$request->status] ?? 'Status has been updated!';
+
+        return redirect()->back()->with('success', $message);
     }
 
     public function handleCallback(Request $request)
@@ -220,6 +244,57 @@ class AuthenticatedSessionController extends Controller
         } catch (\Exception $e) {
             Log::error('Midtrans callback error: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Controller Method
+    public function updateDocument(Request $request): RedirectResponse
+    {
+        Log::info('Update document request received', $request->all());
+        
+        try {
+            $request->validate([
+                'document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+                'document_type' => 'required|in:ktp,npwp,nib'
+            ]);
+
+            $user = Auth::user();
+            if (!$user) {
+                throw new \Exception('User not authenticated');
+            }
+
+            $document = $request->file('document');
+            $documentType = $request->document_type;
+
+            // Generate a more unique filename with user ID
+            $filename = $documentType . '_' . $user->id . '_' . time() . '.' . $document->getClientOriginalExtension();
+            $path = 'documents/' . $filename;
+
+            // Store the new file first to ensure storage succeeds
+            if (!$document->storeAs('documents', $filename, 'public')) {
+                throw new \Exception('Failed to store document');
+            }
+
+            // Get the old path before updating
+            $oldPath = $user->{$documentType};
+
+            // Update user record
+            $user->{$documentType} = $path;
+            if (!$user->save()) {
+                // If user update fails, delete the newly stored file
+                Storage::delete('public/' . $path);
+                throw new \Exception('Failed to update user record');
+            }
+
+            // Delete old file if it exists
+            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+
+            return redirect()->back()->with('status', 'document-updated')
+            ->with('message', ucfirst($documentType) . ' has been successfully updated');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Failed to update document: ' . $e->getMessage()]);
         }
     }
 }

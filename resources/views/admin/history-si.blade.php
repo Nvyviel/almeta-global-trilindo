@@ -1,6 +1,6 @@
 @extends('layouts.fullscreen')
 
-@section('title','History Shipping Instruction')
+@section('title', 'History Shipping Instruction')
 @section('component')
     <div class="min-h-screen bg-gray-50 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto mb-6 pt-6">
@@ -67,16 +67,16 @@
                             </div>
                         @endif
 
-                        {{-- @if ($instruction->upload_file_si)
+                        @if ($instruction->status === 'Approved' && $instruction->upload_file_si)
                             <div class="mt-4">
-                                <a href="{{ asset('storage/' . $instruction->upload_file_si) }}"
-                                    class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors duration-200"
-                                    target="_blank">
+                                <a href="{{ Storage::url('shipping-instructions/' . $instruction->upload_file_si) }}"
+                                    target="_blank"
+                                    class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors duration-200">
                                     <i class="fa-solid fa-file-pdf mr-2"></i>
                                     View SI Document
                                 </a>
                             </div>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
             @empty

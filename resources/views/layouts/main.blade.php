@@ -78,6 +78,10 @@
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('release-order') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-shipping-fast mr-2"></i> Release Order
                         </a>
+                        <a href="{{ route('seal') }}" wire:navigate
+                            class="{{ $mobileLinkClass }} {{ request()->routeIs('seal') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
+                            <i class="fas fa-lock mr-2"></i> Seal
+                        </a>
                         <a href="{{ route('shipping-instruction') }}" wire:navigate
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('shipping-instruction') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-file-alt mr-2"></i> Shipping Instruction
@@ -85,10 +89,6 @@
                         <a href="{{ route('list-bill') }}" wire:navigate
                             class="{{ $mobileLinkClass }} {{ request()->routeIs('list-bill') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
                             <i class="fas fa-scroll mr-2"></i> Bills
-                        </a>
-                        <a href="{{ route('seal') }}" wire:navigate
-                            class="{{ $mobileLinkClass }} {{ request()->routeIs('seal') ? $mobileActiveLinkClass : $mobileInactiveLinkClass }}">
-                            <i class="fas fa-lock mr-2"></i> Seal
                         </a>
 
                         @if (Auth::user() && Auth::user()->is_admin)
@@ -141,6 +141,10 @@
                                 class="{{ $linkClass }} {{ request()->routeIs('release-order') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-shipping-fast mr-3"></i> Release Order
                             </a>
+                            <a href="{{ route('seal') }}" wire:navigate
+                                class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
+                                <i class="fas fa-lock mr-3"></i> Seal
+                            </a>
                             <a href="{{ route('shipping-instruction') }}" wire:navigate
                                 class="{{ $linkClass }} {{ request()->routeIs('shipping-instruction') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-file-alt mr-3"></i> Shipping Instruction
@@ -148,10 +152,6 @@
                             <a href="{{ route('list-bill') }}" wire:navigate
                                 class="{{ $linkClass }} {{ request()->routeIs('list-bill') ? $activeLinkClass : $inactiveLinkClass }}">
                                 <i class="fas fa-scroll mr-3"></i> Bill
-                            </a>
-                            <a href="{{ route('seal') }}" wire:navigate
-                                class="{{ $linkClass }} {{ request()->routeIs('seal') ? $activeLinkClass : $inactiveLinkClass }}">
-                                <i class="fas fa-lock mr-3"></i> Seal
                             </a>
 
 

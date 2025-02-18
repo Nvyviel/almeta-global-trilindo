@@ -17,10 +17,15 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 require __DIR__ . '/auth.php';
 
 Route::middleware('accessable')->group(function () {
-    // Route::get('/', function () {
-    // return view('user.index');
-    // })->name('landing-page');
     Route::get('/', [ShipmentController::class, 'guestFiltering'])->name('landing-page');
+});
+
+Route::middleware('status')->group(function () {
+    Route::prefix('/status')->group(function () {
+        Route::get('/pending', [RegisteredUserController::class, 'pendingUser'])->name('pending-view');
+        Route::post('/user/{id}/update-status', [AuthenticatedSessionController::class, 'updateStatus'])->name('update-status');
+        Route::post('/update-document', [AuthenticatedSessionController::class, 'updateDocument'])->name('update-document');
+    });
 });
 
 Route::post('/midtrans/callback', [AuthenticatedSessionController::class, 'handleCallback']);

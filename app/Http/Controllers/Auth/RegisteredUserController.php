@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
                 'npwp' => ['required', 'image', 'max:2048'],
                 'nib' => ['required', 'image', 'max:2048'],
             ], [
-                // Custom error messages
+                // Custom error messages remain the same
                 'email.unique' => 'Email ini sudah terdaftar.',
                 'email.required' => 'Email wajib diisi.',
                 'email.email' => 'Format email tidak valid.',
@@ -73,7 +73,6 @@ class RegisteredUserController extends Controller
                     ->withInput();
             }
 
-            // Periksa apakah file tersedia
             if (!$request->hasFile('ktp') || !$request->hasFile('npwp') || !$request->hasFile('nib')) {
                 Log::error('One or more required files are missing.');
                 return back()
@@ -85,13 +84,10 @@ class RegisteredUserController extends Controller
             Log::info('Uploading files...');
             try {
                 $ktpPath = $request->file('ktp')->store('uploads/ktp', 'public');
-                Log::info('KTP uploaded: ' . $ktpPath);
-
                 $npwpPath = $request->file('npwp')->store('uploads/npwp', 'public');
-                Log::info('NPWP uploaded: ' . $npwpPath);
-
                 $nibPath = $request->file('nib')->store('uploads/nib', 'public');
-                Log::info('NIB uploaded: ' . $nibPath);
+
+                Log::info('All files uploaded successfully');
             } catch (\Exception $e) {
                 Log::error('File upload failed: ' . $e->getMessage());
                 return back()
@@ -99,11 +95,12 @@ class RegisteredUserController extends Controller
                     ->withInput();
             }
 
-            // Check if this will be the first user in the database
             $isAdmin = User::count() === 0;
-            Log::info('Checking if user will be admin: ' . ($isAdmin ? 'Yes' : 'No'));
 
-            Log::info('Creating user...');
+            $status = $isAdmin ? 'Approved' : 'Pending';
+
+            Log::info('Creating user with status: ' . $status);
+
             $users = User::create([
                 'email' => $request->email,
                 'name' => $request->name,
@@ -116,30 +113,39 @@ class RegisteredUserController extends Controller
                 'npwp' => $npwpPath,
                 'nib' => $nibPath,
                 'is_admin' => $isAdmin,
+                'status' => $status,
             ]);
+
             Log::info('User created: ' . $users->id);
 
             event(new Registered($users));
             Log::info('Event Registered triggered.');
 
-            // Login user
             Auth::login($users);
             Log::info('User logged in.');
 
-            // Redirect berdasarkan peran user
-            if (Auth::user()->is_admin) {
+            if ($users->is_admin) {
                 Log::info('Redirecting to admin dashboard.');
                 return redirect()->route('dashboard-admin');
+            }
+
+            if ($users->status === 'Pending') {
+                Log::info('Redirecting to pending view.');
+                return redirect()->route('pending-view');
             }
 
             Log::info('Redirecting to user dashboard.');
             return redirect()->route('dashboard');
         } catch (\Exception $e) {
-            // Log error jika terjadi masalah
             Log::error('Error in store function: ' . $e->getMessage());
             return back()
                 ->withErrors(['error' => 'Terjadi kesalahan. Silakan coba lagi.'])
                 ->withInput();
         }
+    }
+
+    public function pendingUser()
+    {
+        return view('user.pending-view');
     }
 }

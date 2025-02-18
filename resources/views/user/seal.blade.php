@@ -47,6 +47,30 @@
                                     <span class="bg-blue-50 text-blue-800 border-blue-200 px-3 py-1 text-xs font-semibold">
                                         {{ $seal->id_seal }}
                                     </span>
+                                    <button type="button"
+                                        class="text-gray-600 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                                        onclick="copyIdSeal(this, '{{ $seal->id_seal }}')">
+                                        <i class="fa-solid fa-clipboard"></i>
+                                    </button>
+                                    <div
+                                        class="copy-notification hidden absolute bg-green-500 text-white px-4 py-2 rounded shadow-lg top-5 right-5">
+                                        Copied to clipboard!
+                                    </div>
+
+                                    <script>
+                                        function copyIdSeal(button, idSeal) {
+                                            navigator.clipboard.writeText(idSeal).then(function() {
+                                                let notification = button.nextElementSibling;
+                                                notification.classList.remove('hidden');
+                                                setTimeout(() => {
+                                                    notification.classList.add('hidden');
+                                                }, 2000);
+                                            }, function(err) {
+                                                console.error('Async: Could not copy text: ', err);
+                                            });
+                                        }
+                                    </script>
+
                                     <span class="text-sm text-gray-500">
                                         {{ \Carbon\Carbon::parse($seal->created_at)->format('d M Y') }}
                                     </span>

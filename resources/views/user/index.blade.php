@@ -373,7 +373,7 @@
 
                     <!-- Email Information -->
                     <div class="space-y-4">
-                        <h3 class="text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6">Email Us</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-black mb-4 sm:mb-6">Email us</h3>
                         <div class="space-y-3">
                             <div class="flex items-center">
                                 <i class="fas fa-envelope mr-3 text-red-500"></i>
@@ -388,7 +388,7 @@
 
                     <!-- About Us -->
                     <div class="space-y-4">
-                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">About Us</h3>
+                        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">About us</h3>
                         <p class="text-sm sm:text-base text-gray-800">Your trusted partner in domestic logistics
                             solutions. We provide fast, safe, and reliable shipping services in Indonesia.</p>
                     </div>

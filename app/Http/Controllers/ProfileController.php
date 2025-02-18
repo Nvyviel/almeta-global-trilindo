@@ -40,10 +40,8 @@ class ProfileController extends Controller
             $validated['nib'] = $request->file('nib')->store('documents', 'public');
         }
 
-        // Update user information
         $user->fill($validated);
 
-        // Handle email verification if email is changed
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }

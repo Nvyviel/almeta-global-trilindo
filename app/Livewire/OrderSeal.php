@@ -6,6 +6,8 @@ use App\Models\Seal;
 use Livewire\Component;
 use App\Models\StockSeal;
 use Livewire\Attributes\On;
+use Illuminate\Support\Facades\DB;
+
 
 class OrderSeal extends Component
 {
@@ -57,6 +59,8 @@ class OrderSeal extends Component
     {
         $this->validate();
 
+        DB::beginTransaction();
+
         try {
             if ($this->quantity > $this->availableStock) {
                 session()->flash('error', 'Requested quantity exceeds available stock!');
@@ -74,20 +78,28 @@ class OrderSeal extends Component
             ]);
 
             $this->reduceStock($this->quantity);
+            
             $this->dispatch('order-success');
             session()->flash('success', 'Order created successfully!');
-
+            
             $this->reset(['pickup_point', 'quantity']);
             $this->quantity = 1;
             $this->totalPrice = $this->price;
             $this->calculateAvailableStock();
+            
+            DB::commit();
 
             return redirect()->route('seal');
         } catch (\Exception $e) {
+            DB::rollBack();
+
             $this->dispatch('purchaseError', $e->getMessage());
             session()->flash('error', 'Failed to create order: ' . $e->getMessage());
+
+            return redirect()->route('seal');
         }
     }
+
 
     private function reduceStock($quantity)
     {

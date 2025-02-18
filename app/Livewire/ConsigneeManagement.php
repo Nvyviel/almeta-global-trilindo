@@ -19,16 +19,37 @@ class ConsigneeManagement extends Component
     public $ktp_consignee;
     public $npwp_consignee;
 
-    protected $rules = [
-        'industry' => 'required|string',
-        'name_consignee' => 'required|string',
-        'email' => 'required|email|unique:consignees,email',
-        'city' => 'required|string',
-        'phone_number' => 'required|numeric',
-        'consignee_address' => 'required|string',
-        // 'ktp_consignee' => 'required|string',
-        // 'npwp_consignee' => 'required|string'
+    protected $cities = [
+        'surabaya',
+        'pontianak',
+        'semarang',
+        'banjarmasin',
+        'sampit',
+        'jakarta',
+        'kumai',
+        'samarinda',
+        'balikpapan',
+        'berau',
+        'palu',
+        'bitung',
+        'gorontalo',
+        'ambon'
     ];
+
+    // Aturan validasi
+    protected function rules()
+    {
+        return [
+            'industry' => 'required|string',
+            'name_consignee' => 'required|string',
+            'email' => 'required|email|unique:consignees,email',
+            'city' => 'required|string|in:' . implode(',', $this->cities),
+            'phone_number' => 'required|numeric',
+            'consignee_address' => 'required|string',
+            // 'ktp_consignee' => 'required|string',
+            // 'npwp_consignee' => 'required|string'
+        ];
+    }
 
     public function store()
     {

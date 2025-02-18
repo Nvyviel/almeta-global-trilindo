@@ -66,6 +66,16 @@
                                 <p class="text-gray-900 text-lg">{{ $container->shipment_container->vessel_name }}</p>
                             </div>
                         </div>
+                        @if ($container->pdf_ro)
+                                <div class="mt-4">
+                                    <a href="{{ asset('storage/' . $container->pdf_ro) }}"
+                                        class="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors duration-200"
+                                        target="_blank">
+                                        <i class="fa-solid fa-file-pdf mr-2"></i>
+                                        View RO Document
+                                    </a>
+                                </div>
+                        @endif
                     </div>
                 </div>
             @empty

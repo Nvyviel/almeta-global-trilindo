@@ -59,7 +59,7 @@
                                 <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->industry }}</td>
                                 <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->name_consignee }}</td>
                                 <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->email }}</td>
-                                <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->city }}</td>
+                                <td class="px-4 py-4 whitespace-nowrap">{{ strtoupper($consignee->city) }}</td>
                                 <td class="px-4 py-4 whitespace-nowrap">{{ $consignee->phone_number }}</td>
                                 <td class="px-4 py-4 whitespace-nowrap">
                                     <div class="flex space-x-2">

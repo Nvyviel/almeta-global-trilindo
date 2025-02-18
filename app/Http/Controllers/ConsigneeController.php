@@ -17,10 +17,8 @@ class ConsigneeController extends Controller
 
     public function edit(string $id)
     {
-        // Mengambil data consignee berdasarkan ID
         $consignee = Consignee::findOrFail($id);
 
-        // Return view dengan data consignee
         return view('user.edit-consignee', compact('consignee'));
     }
 
@@ -30,7 +28,7 @@ class ConsigneeController extends Controller
             'industry' => 'required|string|max:255',
             'name_consignee' => 'required|string|max:255',
             'email' => 'required|email|unique:consignees,email,' . $id,
-            'city' => 'required|string|max:255',
+            'city' => 'required|string|max:255|in:surabaya,pontianak,semarang,banjarmasin,sampit,jakarta,kumai,samarinda,balikpapan,berau,palu,bitung,gorontalo,ambon',
             'phone_number' => 'required|numeric',
             'consignee_address' => 'required|string',
             'ktp_consignee' => 'nullable|digits_between:1,20',
@@ -48,10 +46,8 @@ class ConsigneeController extends Controller
 
     public function destroy(string $id)
     {
-        // Ambil data consignee
         $consignee = Consignee::findOrFail($id);
 
-        // Hapus file KTP dan NPWP jika ada
         if ($consignee->ktp_consignee) {
             Storage::delete('public/' . $consignee->ktp_consignee);
         }
@@ -59,10 +55,8 @@ class ConsigneeController extends Controller
             Storage::delete('public/' . $consignee->npwp_consignee);
         }
 
-        // Hapus data consignee
         $consignee->delete();
 
-        // Redirect dengan pesan sukses
         return redirect()->route('consignee')
             ->with('success', 'Data consignee berhasil dihapus');
     }

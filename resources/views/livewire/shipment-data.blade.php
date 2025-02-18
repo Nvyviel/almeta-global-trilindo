@@ -49,24 +49,22 @@
                                 placeholder="Enter vessel name" style="text-transform: uppercase;">
                         </div>
 
-                        <!-- Rates Section - Responsive grid -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                            <!-- Rate -->
                             <div>
                                 <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Rate
                                     (IDR)</label>
                                 <input type="text" wire:model.defer="rate"
                                     class="format-number w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]"
-                                    placeholder="Enter rate">
+                                    placeholder="Enter rate" oninput="formatNumber(this)" onblur="formatNumber(this)">
                             </div>
 
-                            <!-- Rate Per Container -->
                             <div>
                                 <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Rate Per
                                     Container (IDR)</label>
                                 <input type="text" wire:model.defer="rate_per_container"
                                     class="format-number w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]"
-                                    placeholder="Enter rate per container">
+                                    placeholder="Enter rate per container" oninput="formatNumber(this)"
+                                    onblur="formatNumber(this)">
                             </div>
                         </div>
 
@@ -277,35 +275,31 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        function formatNumber(input) {
-            let rawValue = input.value.replace(/\D/g, '');
-            if (rawValue.length > 9) rawValue = rawValue.substring(0, 9);
+        window.formatNumber = function(input) {
+            let cursorPos = input.selectionStart;
 
-            let oldLength = input.value.length;
-            let oldCursorPosition = input.selectionStart;
+            let value = input.value.replace(/\D/g, '');
 
-            let formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            let originalLength = input.value.length;
+
+            let formattedValue = '';
+            while (value.length > 3) {
+                formattedValue = '.' + value.substr(value.length - 3) + formattedValue;
+                value = value.substr(0, value.length - 3);
+            }
+            formattedValue = value + formattedValue;
 
             let newLength = formattedValue.length;
-            let lengthDiff = newLength - oldLength;
+            let lengthDiff = newLength - originalLength;
+            let newCursorPos = cursorPos + lengthDiff;
 
             input.value = formattedValue;
 
-            let newCursorPosition = oldCursorPosition + lengthDiff;
-            input.setSelectionRange(newCursorPosition, newCursorPosition);
-        }
+            if (cursorPos <= originalLength) {
+                input.setSelectionRange(newCursorPos, newCursorPos);
+            }
+        };
 
-        // Auto-hide notifications after 5 seconds with responsive timing
-        const notifications = document.querySelectorAll('[class*="fixed top-4"]');
-        notifications.forEach(notification => {
-            setTimeout(() => {
-                notification.style.transition = 'opacity 0.5s ease-out';
-                notification.style.opacity = '0';
-                setTimeout(() => notification.remove(), 500);
-            }, 5000);
-        });
-
-        // Number formatting for inputs
         document.querySelectorAll('.format-number').forEach(input => {
             input.addEventListener('input', function() {
                 formatNumber(this);
@@ -314,6 +308,19 @@
             input.addEventListener('blur', function() {
                 formatNumber(this);
             });
+
+            if (input.value) {
+                formatNumber(input);
+            }
+        });
+
+        const notifications = document.querySelectorAll('[class*="fixed top-4"]');
+        notifications.forEach(notification => {
+            setTimeout(() => {
+                notification.style.transition = 'opacity 0.5s ease-out';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
         });
     });
 </script>
