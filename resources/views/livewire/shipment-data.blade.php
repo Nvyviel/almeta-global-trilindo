@@ -1,137 +1,327 @@
-<div class="min-h-screen py-4 sm:py-8">
-    <!-- Notifications - Made more responsive -->
+<div class="min-h-screen bg-gray-50 py-6 sm:py-12">
+    <!-- Notifications - Improved with animation -->
     @if (session()->has('success'))
-        <div class="fixed top-4 left-4 right-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 sm:w-full sm:max-w-md">
+        <div
+            class="fixed top-4 left-4 right-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 sm:w-full sm:max-w-md animate-fade-in-down">
             <div
-                class="bg-green-100 border border-green-200 text-green-700 px-3 py-2 sm:px-4 sm:py-3 rounded-lg shadow-lg">
-                <div class="flex items-center justify-between">
-                    <p class="text-sm sm:text-base">{{ session('success') }}</p>
-                    <button onclick="this.parentElement.parentElement.remove()"
-                        class="text-green-700 hover:text-green-900 ml-2">
-                        <span class="text-xl sm:text-2xl">&times;</span>
-                    </button>
+                class="bg-green-50 border-l-4 border-green-400 text-green-800 px-4 py-3 rounded-lg shadow-lg flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd" />
+                    </svg>
                 </div>
+                <div class="ml-3 flex-1">
+                    <p class="text-sm sm:text-base font-medium">{{ session('success') }}</p>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()"
+                    class="ml-auto text-green-700 hover:text-green-900 transition-colors">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         </div>
     @endif
 
     @if (session()->has('error'))
-        <div class="fixed top-4 left-4 right-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 sm:w-full sm:max-w-md">
-            <div class="bg-red-100 border border-red-200 text-red-700 px-3 py-2 sm:px-4 sm:py-3 rounded-lg shadow-lg">
-                <div class="flex items-center justify-between">
-                    <p class="text-sm sm:text-base">{{ session('error') }}</p>
-                    <button onclick="this.parentElement.parentElement.remove()"
-                        class="text-red-700 hover:text-red-900 ml-2">
-                        <span class="text-xl sm:text-2xl">&times;</span>
-                    </button>
+        <div
+            class="fixed top-4 left-4 right-4 sm:left-1/2 sm:transform sm:-translate-x-1/2 z-50 sm:w-full sm:max-w-md animate-fade-in-down">
+            <div
+                class="bg-red-50 border-l-4 border-red-400 text-red-800 px-4 py-3 rounded-lg shadow-lg flex items-center">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                        fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
                 </div>
+                <div class="ml-3 flex-1">
+                    <p class="text-sm sm:text-base font-medium">{{ session('error') }}</p>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()"
+                    class="ml-auto text-red-700 hover:text-red-900 transition-colors">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
         </div>
     @endif
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Create Shipment Form Section -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div class="bg-[#2563EB] p-4 sm:p-6">
-                <h1 class="text-xl sm:text-2xl font-semibold text-white text-center">Create Shipment Schedule</h1>
+        <!-- Create Shipment Form Section - Improved card design -->
+        <div
+            class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-xl">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-700 p-6">
+                <h1 class="text-2xl font-bold text-white text-center">Create Shipment Schedule</h1>
+                <div class="h-1 w-32 bg-blue-300 rounded-full mx-auto mt-2"></div>
             </div>
 
-            <div class="p-4 sm:p-6">
-                <form wire:submit.prevent="addSchedule" class="space-y-4 sm:space-y-6">
+            <div class="p-6">
+                <form wire:submit.prevent="addSchedule" class="space-y-6">
                     <!-- Form Groups -->
-                    <div class="space-y-4 sm:space-y-6">
-                        <!-- Vessel Name -->
+                    <div class="space-y-6">
+                        <!-- Vessel Name with icon -->
                         <div class="w-full">
-                            <label for="vessel_name"
-                                class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Vessel Name</label>
-                            <input type="text" wire:model.defer="vessel_name" id="vessel_name"
-                                class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]"
-                                placeholder="Enter vessel name" style="text-transform: uppercase;">
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Rate
-                                    (IDR)</label>
-                                <input type="text" wire:model.defer="rate"
-                                    class="format-number w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]"
-                                    placeholder="Enter rate" oninput="formatNumber(this)" onblur="formatNumber(this)">
-                            </div>
-
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Rate Per
-                                    Container (IDR)</label>
-                                <input type="text" wire:model.defer="rate_per_container"
-                                    class="format-number w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]"
-                                    placeholder="Enter rate per container" oninput="formatNumber(this)"
-                                    onblur="formatNumber(this)">
+                            <label for="vessel_name" class="flex items-center text-gray-700 font-medium mb-2">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2" />
+                                </svg>
+                                Vessel Name
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-ship text-gray-400"></i>
+                                </div>
+                                <input type="text" wire:model.defer="vessel_name" id="vessel_name"
+                                    class="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                    placeholder="Enter vessel name" style="text-transform: uppercase;">
                             </div>
                         </div>
 
-                        <!-- Dates Section - Responsive grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                            <!-- Date inputs with consistent styling -->
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Closing
-                                    Cargo</label>
-                                <input type="datetime-local" wire:model.defer="closing_cargo"
-                                    class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]">
+                        <!-- Rates with better spacing and separation -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="group">
+                                <label class="flex items-center text-gray-700 font-medium mb-2">
+                                    <svg class="w-5 h-5 mr-2 text-blue-500" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Rate (IDR)
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">Rp</span>
+                                    </div>
+                                    <input type="text" wire:model.defer="rate"
+                                        class="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200"
+                                        placeholder="Enter rate" oninput="formatNumber(this)"
+                                        onblur="formatNumber(this)">
+                                </div>
                             </div>
 
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">ETB</label>
-                                <input type="datetime-local" wire:model.defer="etb"
-                                    class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]">
-                            </div>
-
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">ETD</label>
-                                <input type="datetime-local" wire:model.defer="etd"
-                                    class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]">
-                            </div>
-
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">ETA</label>
-                                <input type="datetime-local" wire:model.defer="eta"
-                                    class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]">
-                            </div>
-                        </div>
-
-                        <!-- Ports Section - Responsive grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                            <!-- POL -->
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Port of Loading
-                                    (POL)</label>
-                                <select wire:model.defer="from_city"
-                                    class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]">
-                                    <option value="">Select Port of Loading</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <!-- POD -->
-                            <div>
-                                <label class="block text-gray-600 text-sm sm:text-base font-medium mb-2">Port of
-                                    Discharge (POD)</label>
-                                <select wire:model.defer="to_city"
-                                    class="w-full px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#2563EB] focus:border-[#2563EB]">
-                                    <option value="">Select Port of Discharge</option>
-                                    @foreach ($cities as $city)
-                                        <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="group">
+                                <label class="flex items-center text-gray-700 font-medium mb-2">
+                                    <svg class="w-5 h-5 mr-2 text-blue-500" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                    </svg>
+                                    Rate Per Container (IDR)
+                                </label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500">Rp</span>
+                                    </div>
+                                    <input type="text" wire:model.defer="rate_per_container"
+                                        class="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200"
+                                        placeholder="Enter rate per container" oninput="formatNumber(this)"
+                                        onblur="formatNumber(this)">
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Submit Button -->
-                        <div class="flex justify-center mt-6 sm:mt-8">
+                        <!-- Dates Section - Enhanced with icons -->
+                        <div>
+                            <h4 class="text-gray-700 font-medium mb-4 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Schedule Information
+                                <span class="h-px flex-1 bg-gray-200 ml-3"></span>
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <!-- Date inputs with consistent styling and visual indicators -->
+                                <div class="group">
+                                    <label class="block text-gray-700 font-medium mb-2">Closing Cargo</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <input type="datetime-local" wire:model.defer="closing_cargo"
+                                            class="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200">
+                                    </div>
+                                </div>
+
+                                <div class="group">
+                                    <label class="block text-gray-700 font-medium mb-2">ETB</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <input type="datetime-local" wire:model.defer="etb"
+                                            class="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200">
+                                    </div>
+                                </div>
+
+                                <div class="group">
+                                    <label class="block text-gray-700 font-medium mb-2">ETD</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <input type="datetime-local" wire:model.defer="etd"
+                                            class="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200">
+                                    </div>
+                                </div>
+
+                                <div class="group">
+                                    <label class="block text-gray-700 font-medium mb-2">ETA</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                        </div>
+                                        <input type="datetime-local" wire:model.defer="eta"
+                                            class="w-full pl-10 pr-4 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ports Section - Enhanced with visual indicators -->
+                        <div>
+                            <h4 class="text-gray-700 font-medium mb-4 flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Port Information
+                                <span class="h-px flex-1 bg-gray-200 ml-3"></span>
+                            </h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <!-- POL with improved select styling -->
+                                <div class="group">
+                                    <label class="block text-gray-700 font-medium mb-2">Port of Loading (POL)</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                            </svg>
+                                        </div>
+                                        <select wire:model.defer="from_city"
+                                            class="w-full pl-10 pr-10 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200 appearance-none">
+                                            <option value="">Select Port of Loading</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div
+                                            class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- POD with improved select styling -->
+                                <div class="group">
+                                    <label class="block text-gray-700 font-medium mb-2">Port of Discharge (POD)</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400 group-hover:text-blue-500 transition-colors duration-200"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                                            </svg>
+                                        </div>
+                                        <select wire:model.defer="to_city"
+                                            class="w-full pl-10 pr-10 py-3 text-base border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 group-hover:border-blue-300 transition-all duration-200 appearance-none">
+                                            <option value="">Select Port of Discharge</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ strtoupper($city) }}">{{ strtoupper($city) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div
+                                            class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button - Improved with animation -->
+                        <div class="flex justify-center mt-8">
                             <button type="submit"
-                                class="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 bg-[#2563EB] text-white text-sm sm:text-base font-medium rounded-lg shadow-sm hover:bg-[#1d4ed8] focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2 transition-all duration-200">
-                                <span wire:loading.remove>Create Shipment</span>
-                                <span wire:loading>Processing...</span>
+                                class="group relative w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg overflow-hidden">
+                                <span
+                                    class="absolute right-0 top-0 h-full w-12 translate-x-12 bg-white opacity-10 transform -skew-x-12 transition-transform duration-700 ease-out group-hover:translate-x-full"></span>
+                                <span class="flex items-center justify-center">
+                                    <span wire:loading.remove class="flex items-center">
+                                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        </svg>
+                                        Create Shipment
+                                    </span>
+                                    <span wire:loading class="flex items-center">
+                                        <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10"
+                                                stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                            </path>
+                                        </svg>
+                                        Processing...
+                                    </span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -140,100 +330,163 @@
         </div>
 
         <!-- Shipments List Section -->
-        <div class="mt-6 sm:mt-8">
-            <div class="bg-[#2563EB] p-4 sm:p-6 rounded-lg mb-4 sm:mb-6">
-                <h2 class="text-lg sm:text-xl font-semibold text-white text-center">Shipments List</h2>
+        <div class="mt-6 sm:mt-10">
+            <!-- Header dengan gradient background dan animasi hover -->
+            <div
+                class="bg-gradient-to-r from-blue-600 to-blue-800 p-5 sm:p-6 rounded-xl mb-6 sm:mb-8 shadow-lg transform transition-all hover:scale-[1.01] duration-300">
+                <h2 class="text-xl sm:text-2xl font-bold text-white text-center flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                    </svg>
+                    Shipments List
+                </h2>
             </div>
 
             @if ($shipments->count() > 0)
-                <div class="space-y-4 sm:space-y-6">
+                <div class="space-y-6 sm:space-y-8">
                     @foreach ($shipments as $shipment)
                         <div
-                            class="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden">
-                            <div class="p-4 sm:p-6">
-                                <!-- Header with Closing Date -->
-                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
-                                    <div>
-                                        <div class="flex flex-col sm:flex-row sm:items-center text-gray-600 mt-2">
-                                            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-1">
+                            class="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+                            <div class="p-5 sm:p-6">
+                                <!-- Header with Closing Date - Improved layout -->
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-5">
+                                    <div class="flex-1">
+                                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                            <h3
+                                                class="text-lg sm:text-2xl font-bold text-gray-900 group-hover:text-blue-700 transition-colors duration-200">
                                                 {{ $shipment->vessel_name }}
                                             </h3>
-                                            <div class="flex items-center mt-2 sm:mt-0">
+                                            <div
+                                                class="flex items-center mt-1 sm:mt-0 bg-gray-100 rounded-full px-3 py-1">
                                                 <span
-                                                    class="font-medium text-sm sm:ml-3">{{ strtoupper($shipment->from_city) }}</span>
-                                                <i class="fa-solid fa-arrow-right-long text-xs text-gray-500 p-2"></i>
+                                                    class="font-semibold text-sm text-gray-700">{{ strtoupper($shipment->from_city) }}</span>
+                                                <div class="mx-2 flex items-center">
+                                                    <span class="h-0.5 w-2 bg-blue-500 rounded-full"></span>
+                                                    <span class="h-0.5 w-2 bg-blue-500 rounded-full mx-0.5"></span>
+                                                    <span class="h-0.5 w-2 bg-blue-500 rounded-full"></span>
+                                                </div>
                                                 <span
-                                                    class="font-medium text-sm">{{ strtoupper($shipment->to_city) }}</span>
+                                                    class="font-semibold text-sm text-gray-700">{{ strtoupper($shipment->to_city) }}</span>
                                             </div>
                                         </div>
-                                        <p class="text-xs text-gray-500">
+                                        <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-red-500"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
                                             Closing:
                                             {{ \Carbon\Carbon::parse($shipment->closing_cargo)->format('d M Y - H:i') }}
                                         </p>
                                     </div>
                                     <span
-                                        class="px-3 py-1 bg-gray-100 text-gray-800 text-sm font-medium mt-2 sm:mt-0">Available</span>
+                                        class="px-4 py-1.5 bg-green-100 text-green-800 text-sm font-medium rounded-full mt-3 sm:mt-0 inline-flex items-center">
+                                        <span class="w-2 h-2 bg-green-500 rounded-full mr-1.5"></span>
+                                        Available
+                                    </span>
                                 </div>
 
-                                <!-- Timeline Grid -->
+                                <!-- Timeline Grid - Improved with better visual separation -->
                                 <div
-                                    class="border-2 bg-blue-50 border-dashed border-blue-400 rounded-lg p-3 sm:p-4 mb-4">
-                                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 items-center">
-                                        <!-- Ship Icon -->
-                                        <div class="col-span-2 sm:col-span-1 flex justify-center">
-                                            <i class="fa-solid fa-ship text-blue-600 text-3xl sm:text-4xl"></i>
+                                    class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-5 mb-5 border border-blue-200 shadow-inner">
+                                    <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 sm:gap-6 items-center">
+                                        <!-- Ship Icon with animation -->
+                                        <div class="col-span-1 flex justify-center group-hover:animate-pulse">
+                                            <div
+                                                class="w-16 h-16 rounded-full bg-blue-100 border-2 border-blue-300 flex items-center justify-center shadow-md">
+                                                <i
+                                                    class="fa-solid fa-ship text-blue-600 text-2xl sm:text-3xl transform transition-transform group-hover:scale-110 duration-300"></i>
+                                            </div>
                                         </div>
 
-                                        <!-- Timeline Items -->
-                                        <div class="space-y-1 text-center">
-                                            <p class="text-xs sm:text-sm font-medium text-gray-500">ETB</p>
-                                            <p class="text-sm sm:text-base font-semibold text-gray-800">
-                                                {{ \Carbon\Carbon::parse($shipment->etb)->format('d M Y') }}
-                                            </p>
-                                            <p class="text-xs text-gray-500">
-                                                {{ \Carbon\Carbon::parse($shipment->etb)->format('H:i') }}
-                                            </p>
+                                        <!-- Timeline Items with improved styling -->
+                                        <div
+                                            class="bg-white rounded-lg p-3 shadow-sm border border-blue-100 transform transition hover:translate-y-[-3px] duration-200 hover:shadow">
+                                            <div class="text-center space-y-1">
+                                                <p
+                                                    class="text-xs font-semibold text-blue-500 uppercase tracking-wider">
+                                                    ETB</p>
+                                                <p class="text-base sm:text-lg font-bold text-gray-800">
+                                                    {{ \Carbon\Carbon::parse($shipment->etb)->format('d M Y') }}
+                                                </p>
+                                                <p
+                                                    class="text-xs text-gray-500 bg-gray-100 rounded-full py-0.5 px-2 inline-block">
+                                                    {{ \Carbon\Carbon::parse($shipment->etb)->format('H:i') }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="space-y-1 text-center">
-                                            <p class="text-xs sm:text-sm font-medium text-gray-500">ETD</p>
-                                            <p class="text-sm sm:text-base font-semibold text-gray-800">
-                                                {{ \Carbon\Carbon::parse($shipment->etd)->format('d M Y') }}
-                                            </p>
-                                            <p class="text-xs text-gray-500">
-                                                {{ \Carbon\Carbon::parse($shipment->etd)->format('H:i') }}
-                                            </p>
+                                        <div
+                                            class="bg-white rounded-lg p-3 shadow-sm border border-blue-100 transform transition hover:translate-y-[-3px] duration-200 hover:shadow">
+                                            <div class="text-center space-y-1">
+                                                <p
+                                                    class="text-xs font-semibold text-blue-500 uppercase tracking-wider">
+                                                    ETD</p>
+                                                <p class="text-base sm:text-lg font-bold text-gray-800">
+                                                    {{ \Carbon\Carbon::parse($shipment->etd)->format('d M Y') }}
+                                                </p>
+                                                <p
+                                                    class="text-xs text-gray-500 bg-gray-100 rounded-full py-0.5 px-2 inline-block">
+                                                    {{ \Carbon\Carbon::parse($shipment->etd)->format('H:i') }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="space-y-1 text-center">
-                                            <p class="text-xs sm:text-sm font-medium text-gray-500">ETA</p>
-                                            <p class="text-sm sm:text-base font-semibold text-gray-800">
-                                                {{ \Carbon\Carbon::parse($shipment->eta)->format('d M Y') }}
-                                            </p>
-                                            <p class="text-xs text-gray-500">
-                                                {{ \Carbon\Carbon::parse($shipment->eta)->format('H:i') }}
-                                            </p>
+                                        <div
+                                            class="bg-white rounded-lg p-3 shadow-sm border border-blue-100 transform transition hover:translate-y-[-3px] duration-200 hover:shadow">
+                                            <div class="text-center space-y-1">
+                                                <p
+                                                    class="text-xs font-semibold text-blue-500 uppercase tracking-wider">
+                                                    ETA</p>
+                                                <p class="text-base sm:text-lg font-bold text-gray-800">
+                                                    {{ \Carbon\Carbon::parse($shipment->eta)->format('d M Y') }}
+                                                </p>
+                                                <p
+                                                    class="text-xs text-gray-500 bg-gray-100 rounded-full py-0.5 px-2 inline-block">
+                                                    {{ \Carbon\Carbon::parse($shipment->eta)->format('H:i') }}
+                                                </p>
+                                            </div>
                                         </div>
-                                        <div class="col-span-2 sm:col-span-1 flex justify-center mt-3 sm:mt-0">
+                                        <div class="col-span-1 flex justify-center">
                                             <div
-                                                class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                                                <i class="fa-solid fa-anchor text-blue-600 text-lg sm:text-xl"></i>
+                                                class="w-16 h-16 rounded-full bg-indigo-100 border-2 border-indigo-300 flex items-center justify-center shadow-md group-hover:animate-bounce">
+                                                <i
+                                                    class="fa-solid fa-anchor text-indigo-600 text-2xl transform transition-transform group-hover:rotate-12 duration-300"></i>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Progress bar indication -->
+                                    <div class="mt-4 pt-2 px-2 hidden sm:block">
+                                        <div class="h-2 w-full bg-gray-200 rounded-full overflow-hidden">
+                                            <div
+                                                class="h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full w-1/2">
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-gray-500 mt-1 px-1">
+                                            <span>Departed</span>
+                                            <span>In Transit</span>
+                                            <span>Arrived</span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <!-- Price and Action Buttons -->
+                                <!-- Price and Action Buttons - Improved with better visual hierarchy -->
                                 <div
-                                    class="flex flex-col sm:flex-row items-center justify-between mt-4 gap-4 sm:gap-0">
+                                    class="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0 pt-2 border-t border-gray-100">
                                     <div class="text-center sm:text-left">
-                                        <p class="text-2xl sm:text-3xl font-bold text-gray-900">
+                                        <p class="text-sm text-gray-500 mb-1">Container Price</p>
+                                        <p class="text-2xl sm:text-3xl font-extrabold text-indigo-900 tracking-tight">
                                             Rp {{ number_format($shipment->rate_per_container, 0, ',', '.') }}
                                         </p>
-                                        <p class="text-xs sm:text-sm text-gray-500">/ Container</p>
+                                        <p class="text-xs text-gray-500">per container unit</p>
                                     </div>
-                                    <div class="hidden sm:block w-px h-12 bg-gray-200 mx-6"></div>
+
                                     <div class="flex gap-3 w-full sm:w-auto">
                                         <a href="{{ route('edit-shipment', $shipment->id) }}" wire:navigate
-                                            class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-2 bg-blue-600 text-white font-medium text-sm rounded-full hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-colors duration-200 shadow-sm hover:shadow-md">
+                                            class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-2.5 bg-blue-600 text-white font-medium text-sm rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                 class="w-4 h-4 mr-2">
@@ -244,7 +497,7 @@
                                         </a>
                                         <button wire:click="deleteShipment({{ $shipment->id }})"
                                             wire:confirm="Are you sure you want to delete this shipment?"
-                                            class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-2 bg-red-500 text-white font-medium text-sm rounded-full hover:bg-red-600 focus:ring-4 focus:ring-red-200 transition-colors duration-200 shadow-sm hover:shadow-md">
+                                            class="flex-1 sm:flex-none inline-flex items-center justify-center px-6 py-2.5 bg-white text-red-600 border border-red-200 font-medium text-sm rounded-lg hover:bg-red-50 focus:ring-4 focus:ring-red-100 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
                                             <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24"
                                                 stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -259,14 +512,30 @@
                     @endforeach
                 </div>
             @else
-                <!-- Empty State - Made responsive -->
-                <div class="bg-white rounded-lg shadow-md p-6 sm:p-8 text-center">
-                    <svg class="h-12 w-12 sm:h-16 sm:w-16 mx-auto text-gray-400 mb-3 sm:mb-4" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                    </svg>
-                    <p class="text-base sm:text-lg font-medium text-gray-500">No shipments available!</p>
+                <!-- Empty State - Improved with animation and better visual cues -->
+                <div
+                    class="bg-white rounded-xl shadow-md p-8 sm:p-10 text-center border border-gray-100 hover:border-blue-200 transition-all duration-300">
+                    <div class="animate-pulse">
+                        <div class="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                            <svg class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-xl font-semibold text-gray-700 mb-2">No shipments available!</p>
+                    <p class="text-gray-500 max-w-md mx-auto">There are no active shipments at the moment. Create a new
+                        shipment to get started.</p>
+                    <button
+                        class="mt-6 px-6 py-2.5 bg-blue-600 text-white font-medium text-sm rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 shadow-sm hover:shadow-md transform hover:-translate-y-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4v16m8-8H4" />
+                        </svg>
+                        Create New Shipment
+                    </button>
                 </div>
             @endif
         </div>
