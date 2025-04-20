@@ -409,7 +409,6 @@
     </script>
 
     <style>
-        /* Add fade-in animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -421,7 +420,6 @@
                 transform: translateY(0);
             }
         }
-
         .animate-fadeIn {
             animation: fadeIn 0.3s ease-out forwards;
         }

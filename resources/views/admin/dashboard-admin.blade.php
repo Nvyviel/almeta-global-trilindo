@@ -163,6 +163,34 @@
             <div class="bg-white p-4 sm:p-5 border-b border-gray-100">
                 <h2 class="text-lg font-bold text-gray-800 mb-4">User Management</h2>
 
+                <!-- Status Filter Buttons -->
+                <div class="flex flex-wrap gap-3 mb-4">
+                    <a href="{{ route('dashboard-admin', ['status' => 'Pending']) }}" wire:navigate
+                        class="inline-flex items-center px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg hover:bg-yellow-200 transition duration-200">
+                        Pending Users
+                        <span
+                            class="inline-flex items-center justify-center ml-2 w-5 h-5 text-xs font-bold bg-yellow-200 text-yellow-800 rounded-full">
+                            {{ $pendingUsersCount ?? App\Models\User::where('status', 'Pending')->count() }}
+                        </span>
+                    </a>
+
+                    <a href="{{ route('dashboard-admin', ['status' => 'Warned']) }}" wire:navigate
+                        class="inline-flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition duration-200">
+                        Warned Users
+                        <span
+                            class="inline-flex items-center justify-center ml-2 w-5 h-5 text-xs font-bold bg-red-200 text-red-800 rounded-full">
+                            {{ $warnedUsersCount ?? App\Models\User::where('status', 'Warned')->count() }}
+                        </span>
+                    </a>
+
+                    @if (request('status'))
+                        <a href="{{ route('dashboard-admin') }}" wire:navigate
+                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200">
+                            All Users
+                        </a>
+                    @endif
+                </div>
+
                 <form action="{{ route('dashboard-admin') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
                     <div class="flex-grow">
                         <input type="text" name="search" placeholder="Search users by email, name, or company"
@@ -231,6 +259,18 @@
                                 <span class="text-xs text-gray-500 font-medium">Location</span>
                                 <span class="text-sm font-medium text-gray-800">{{ $user->company_location }}</span>
                             </div>
+                            <div class="flex flex-col">
+                                <span class="text-xs text-gray-500 font-medium">Status</span>
+                                <span
+                                    class="text-sm font-medium 
+                                    {{ $user->status == 'Pending'
+                                        ? 'text-yellow-600'
+                                        : ($user->status == 'Warned'
+                                            ? 'text-red-600'
+                                            : 'text-green-600') }}">
+                                    {{ $user->status }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 @empty
@@ -248,6 +288,7 @@
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -260,6 +301,17 @@
                                 <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_name }}</td>
                                 <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_location }}</td>
                                 <td class="px-4 py-3 text-sm">
+                                    <span
+                                        class="px-2.5 py-1 text-xs font-medium rounded-full
+                                        {{ $user->status == 'Pending'
+                                            ? 'bg-yellow-100 text-yellow-800'
+                                            : ($user->status == 'Warned'
+                                                ? 'bg-red-100 text-red-800'
+                                                : 'bg-green-100 text-green-800') }}">
+                                        {{ $user->status }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
                                     <a href="{{ route('detail-user', $user->id) }}" wire:navigate
                                         class="text-red-600 hover:text-red-800 font-medium transition duration-200">
                                         View Details
@@ -268,7 +320,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="px-4 py-4 text-center text-gray-500">No users found</td>
+                                <td colspan="7" class="px-4 py-4 text-center text-gray-500">No users found</td>
                             </tr>
                         @endforelse
                     </tbody>

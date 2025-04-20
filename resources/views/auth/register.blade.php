@@ -356,144 +356,130 @@
                         </div>
                     </div>
 
-                    {{-- Document Upload Section - Improved design --}}
+                    {{-- Document Upload Section - IMPROVED DESIGN WITH FILE INDICATORS --}}
                     <div id="documents-section" class="section-content hidden">
                         <div class="space-y-6">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                <!-- KTP Upload - Enhanced -->
-                                <div
-                                    class="bg-white/10 rounded-xl p-5 hover:bg-white/15 transition-all duration-300 border border-white/10 shadow-lg">
-                                    <label class="block text-sm font-medium text-white mb-3 flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-300"
+                                <!-- KTP Upload - Simplified -->
+                                <div class="bg-white/5 rounded-lg p-4 border border-gray-200/20 shadow-sm">
+                                    <label class="block text-sm font-medium text-white mb-2 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
                                         </svg>
-                                        Upload KTP:
+                                        Upload KTP
                                     </label>
                                     <div class="flex items-center justify-center w-full">
                                         <label for="ktp"
-                                            class="flex flex-col items-center justify-center w-full h-36 border-2 border-white/20 border-dashed rounded-lg cursor-pointer hover:bg-white/10 transition-all duration-300 group">
-                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-10 h-10 mb-3 text-white/70 group-hover:text-blue-300 transition-colors"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 20 16">
+                                            class="flex flex-col items-center justify-center w-full h-28 border border-gray-300/30 border-dashed rounded-md cursor-pointer bg-gray-700/30 hover:bg-gray-700/50">
+                                            <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                                                <svg class="w-8 h-8 mb-2 text-gray-300" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 20 16">
                                                     <path stroke="currentColor" stroke-linecap="round"
                                                         stroke-linejoin="round" stroke-width="2"
                                                         d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                                 </svg>
-                                                <p class="mb-2 text-sm text-white"><span
-                                                        class="font-semibold group-hover:text-blue-300 transition-colors">Click
-                                                        to upload</span> or drag and drop</p>
-                                                <p class="text-xs text-white/70">PNG, JPG, JPEG (MAX. 2MB)</p>
-                                                <p id="ktp_name"
-                                                    class="text-sm text-blue-300 font-medium mt-2 hidden"></p>
+                                                <p class="mb-1 text-sm text-white"><span
+                                                        class="font-medium text-blue-400">Click to upload</span></p>
+                                                <p class="text-xs text-gray-400">PNG, JPG (Max. 2MB)</p>
                                             </div>
                                             <input id="ktp" type="file" name="ktp" accept="image/*"
                                                 class="hidden" />
                                         </label>
                                     </div>
                                     @error('ktp')
-                                        <p class="text-red-300 text-sm mt-2 ml-1">{{ $message }}</p>
+                                        <p class="text-red-300 text-xs mt-1 ml-1">{{ $message }}</p>
                                     @enderror
                                 </div>
 
-                                <!-- NPWP Upload - Enhanced -->
-                                <div
-                                    class="bg-white/10 rounded-xl p-5 hover:bg-white/15 transition-all duration-300 border border-white/10 shadow-lg">
-                                    <label class="block text-sm font-medium text-white mb-3 flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-300"
+                                <!-- NPWP Upload - Simplified -->
+                                <div class="bg-white/5 rounded-lg p-4 border border-gray-200/20 shadow-sm">
+                                    <label class="block text-sm font-medium text-white mb-2 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                         </svg>
-                                        Upload NPWP:
+                                        Upload NPWP
                                     </label>
                                     <div class="flex items-center justify-center w-full">
                                         <label for="npwp"
-                                            class="flex flex-col items-center justify-center w-full h-36 border-2 border-white/20 border-dashed rounded-lg cursor-pointer hover:bg-white/10 transition-all duration-300 group">
-                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-10 h-10 mb-3 text-white/70 group-hover:text-blue-300 transition-colors"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 20 16">
+                                            class="flex flex-col items-center justify-center w-full h-28 border border-gray-300/30 border-dashed rounded-md cursor-pointer bg-gray-700/30 hover:bg-gray-700/50">
+                                            <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                                                <svg class="w-8 h-8 mb-2 text-gray-300" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 20 16">
                                                     <path stroke="currentColor" stroke-linecap="round"
                                                         stroke-linejoin="round" stroke-width="2"
                                                         d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                                 </svg>
-                                                <p class="mb-2 text-sm text-white"><span
-                                                        class="font-semibold group-hover:text-blue-300 transition-colors">Click
-                                                        to upload</span> or drag and drop</p>
-                                                <p class="text-xs text-white/70">PNG, JPG, JPEG (MAX. 2MB)</p>
-                                                <p id="npwp_name"
-                                                    class="text-sm text-blue-300 font-medium mt-2 hidden"></p>
+                                                <p class="mb-1 text-sm text-white"><span
+                                                        class="font-medium text-blue-400">Click to upload</span></p>
+                                                <p class="text-xs text-gray-400">PNG, JPG (Max. 2MB)</p>
                                             </div>
                                             <input id="npwp" type="file" name="npwp" accept="image/*"
                                                 class="hidden" />
                                         </label>
                                     </div>
                                     @error('npwp')
-                                        <p class="text-red-300 text-sm mt-2 ml-1">{{ $message }}</p>
+                                        <p class="text-red-300 text-xs mt-1 ml-1">{{ $message }}</p>
                                     @enderror
                                 </div>
 
-                                <!-- NIB Upload - Enhanced -->
-                                <div
-                                    class="bg-white/10 rounded-xl p-5 hover:bg-white/15 transition-all duration-300 border border-white/10 shadow-lg">
-                                    <label class="block text-sm font-medium text-white mb-3 flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-300"
+                                <!-- NIB Upload - Simplified -->
+                                <div class="bg-white/5 rounded-lg p-4 border border-gray-200/20 shadow-sm">
+                                    <label class="block text-sm font-medium text-white mb-2 flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-400"
                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
                                         </svg>
-                                        Upload NIB:
+                                        Upload NIB
                                     </label>
                                     <div class="flex items-center justify-center w-full">
                                         <label for="nib"
-                                            class="flex flex-col items-center justify-center w-full h-36 border-2 border-white/20 border-dashed rounded-lg cursor-pointer hover:bg-white/10 transition-all duration-300 group">
-                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-10 h-10 mb-3 text-white/70 group-hover:text-blue-300 transition-colors"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 20 16">
+                                            class="flex flex-col items-center justify-center w-full h-28 border border-gray-300/30 border-dashed rounded-md cursor-pointer bg-gray-700/30 hover:bg-gray-700/50">
+                                            <div class="flex flex-col items-center justify-center pt-4 pb-4">
+                                                <svg class="w-8 h-8 mb-2 text-gray-300" aria-hidden="true"
+                                                    xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 20 16">
                                                     <path stroke="currentColor" stroke-linecap="round"
                                                         stroke-linejoin="round" stroke-width="2"
                                                         d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                                 </svg>
-                                                <p class="mb-2 text-sm text-white"><span
-                                                        class="font-semibold group-hover:text-blue-300 transition-colors">Click
-                                                        to upload</span> or drag and drop</p>
-                                                <p class="text-xs text-white/70">PNG, JPG, JPEG (MAX. 2MB)</p>
-                                                <p id="nib_name"
-                                                    class="text-sm text-blue-300 font-medium mt-2 hidden"></p>
+                                                <p class="mb-1 text-sm text-white"><span
+                                                        class="font-medium text-blue-400">Click to upload</span></p>
+                                                <p class="text-xs text-gray-400">PNG, JPG (Max. 2MB)</p>
                                             </div>
                                             <input id="nib" type="file" name="nib" accept="image/*"
                                                 class="hidden" />
                                         </label>
                                     </div>
                                     @error('nib')
-                                        <p class="text-red-300 text-sm mt-2 ml-1">{{ $message }}</p>
+                                        <p class="text-red-300 text-xs mt-1 ml-1">{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="flex justify-between mt-8">
                                 <button type="button"
-                                    class="px-8 py-3.5 bg-gray-700/80 text-white text-sm font-medium rounded-xl shadow-lg
-                                    hover:bg-gray-600/80 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 
-                                    transition-all duration-300 flex items-center"
+                                    class="px-6 py-2.5 bg-gray-700 text-white text-sm font-medium rounded-lg
+                hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 flex items-center"
                                     onclick="showSection('business')">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M15 19l-7-7 7-7" />
                                     </svg>
-                                    <span>Back: Business Details</span>
+                                    Back
                                 </button>
                                 <button type="submit"
-                                    class="px-8 py-3.5 bg-gradient-to-r from-green-600 to-green-700 text-white text-sm font-medium rounded-xl shadow-lg
-                                    hover:from-green-500 hover:to-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 
-                                    transition-all duration-300 flex items-center">
-                                    <span>Complete Registration</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none"
+                                    class="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-sm font-medium rounded-lg
+                hover:from-blue-400 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center">
+                                    Complete
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M5 13l4 4L19 7" />
@@ -526,7 +512,7 @@
         </div>
     </div>
 
-    <!-- JavaScript for Multi-step Form -->
+    <!-- JavaScript for Multi-step Form with Enhanced File Upload Indicators -->
     <script>
         function showSection(sectionId) {
             // Hide all sections
@@ -549,45 +535,99 @@
             });
         }
 
-        function displayFileName(inputId) {
-            const input = document.getElementById(inputId);
-            const fileNameDisplay = document.getElementById(inputId + '_name');
+        // Simple file upload feedback script
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInputs = ['ktp', 'npwp', 'nib'];
 
-            input.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    fileNameDisplay.textContent = this.files[0].name;
-                    fileNameDisplay.classList.remove('hidden');
-                } else {
-                    fileNameDisplay.textContent = '';
-                    fileNameDisplay.classList.add('hidden');
+            fileInputs.forEach(inputId => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    input.addEventListener('change', function() {
+                        const label = this.previousElementSibling;
+                        const fileName = this.files[0]?.name;
+
+                        if (fileName) {
+                            // Add file name display if needed
+                            const fileNameElement = document.createElement('p');
+                            fileNameElement.classList.add('text-xs', 'text-blue-300', 'mt-1',
+                                'max-w-full', 'overflow-hidden', 'text-center');
+                            fileNameElement.textContent = fileName;
+
+                            // Remove any existing file name elements
+                            const existingFileName = label.querySelector('.file-name');
+                            if (existingFileName) {
+                                existingFileName.remove();
+                            }
+
+                            // Add new file name
+                            fileNameElement.classList.add('file-name');
+                            label.appendChild(fileNameElement);
+                        }
+                    });
                 }
             });
-        }
-
-        // Initialize file name display for all document inputs
-        document.addEventListener('DOMContentLoaded', function() {
-            displayFileName('ktp');
-            displayFileName('npwp');
-            displayFileName('nib');
         });
     </script>
 
-    <!-- Improved transitions without animations -->
+    <!-- Improved transitions and animations -->
     <style>
         /* Smooth transitions */
         .section-content {
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .section-content.hidden {
+            opacity: 0;
+            transform: translateY(10px);
+            position: absolute;
+        }
+
+        .section-content:not(.hidden) {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
         }
 
         /* Input focus effects */
         input:focus,
         textarea:focus {
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
         }
 
-        /* Button hover effects */
-        button {
-            transition: all 0.2s ease;
+        /* File upload hover effects */
+        label[for="ktp"],
+        label[for="npwp"],
+        label[for="nib"] {
+            transition: all 0.3s ease;
+        }
+
+        /* Remove number input arrows */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Improved animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fadeIn {
+            animation: fadeIn 0.5s ease forwards;
         }
     </style>
 </x-guest-layout>
