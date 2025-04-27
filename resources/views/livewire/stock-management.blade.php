@@ -10,7 +10,6 @@
                 <span class="text-sm sm:text-base">Back to Dashboard</span>
             </a>
             <h2 class="text-xl sm:text-2xl font-bold text-blue-900 text-center flex-grow">Stock Management</h2>
-            <div></div>
         </div>
 
         {{-- Total Stock Display --}}

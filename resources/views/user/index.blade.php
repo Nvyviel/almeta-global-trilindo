@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @section('title-guest', 'Almeta Global Trilindo')
+    @section('title-guest', 'Almeta Global Logistics')
 
     @php
         $fromCities = [
@@ -23,7 +23,7 @@
     <div class="min-h-screen bg-white relative overflow-hidden">
         <!-- Navigation -->
         <nav class="border-b border-gray-100 bg-white fixed w-full top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="w-full mx-auto">
                 <div class="flex justify-between items-center h-16 md:h-20">
                     <div class="flex items-center">
                         <a href="#" class="text-xl md:text-2xl font-extrabold text-red-600 flex items-center">
@@ -31,55 +31,76 @@
                         </a>
                     </div>
 
-                    <!-- Desktop Navigation Links -->
-                    <div class="hidden md:flex items-center space-x-8">
-                        <a href="#" class="text-gray-600 hover:text-red-600 font-medium transition-colors">Home</a>
-                        <a href="#filtering" class="text-gray-600 hover:text-red-600 font-medium transition-colors">Find
-                            Routes</a>
-                        <a href="#features" class="text-gray-600 hover:text-red-600 font-medium transition-colors">Why
-                            Us</a>
-                        <a href="#contact"
-                            class="text-gray-600 hover:text-red-600 font-medium transition-colors">Contact</a>
-                    </div>
+                    <!-- Perbaikan untuk navigasi mobile -->
+                    <nav
+                        class="border-b border-gray-100 bg-white fixed w-full top-0 z-50 shadow-sm backdrop-blur-md bg-white/95">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <div class="flex justify-between items-center h-16 md:h-20">
+                                <div class="flex items-center">
+                                    <a href="#"
+                                        class="text-xl md:text-2xl font-extrabold text-red-600 flex items-center">
+                                        ALMETA
+                                    </a>
+                                </div>
 
-                    <!-- Mobile Menu Button -->
-                    <div class="md:hidden flex items-center">
-                        <button type="button" onclick="toggleMobileMenu()"
-                            class="text-gray-600 hover:text-red-600 focus:outline-none">
-                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
+                                <!-- Desktop Navigation Links -->
+                                <div class="hidden md:flex items-center space-x-8">
+                                    <a href="#"
+                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Home</a>
+                                    <a href="#filtering"
+                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Find
+                                        Routes</a>
+                                    <a href="#features"
+                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Why
+                                        Us</a>
+                                    <a href="#contact"
+                                        class="text-gray-600 hover:text-red-600 font-medium transition-colors">Contact</a>
+                                </div>
 
-                    <div class="hidden md:flex items-center space-x-4">
-                        <a href="{{ route('login') }}" wire:navigate
-                            class="inline-flex items-center px-4 md:px-6 py-2 md:py-2.5 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-blue-200">
-                            <i class="fas fa-user mr-2"></i>
-                            <span>Login</span>
-                        </a>
-                    </div>
-                </div>
+                                <!-- Mobile Menu Button -->
+                                <div class="md:hidden flex items-center">
+                                    <button type="button" id="mobile-menu-button"
+                                        class="text-gray-600 hover:text-red-600 focus:outline-none p-2">
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 6h16M4 12h16M4 18h16" />
+                                        </svg>
+                                    </button>
+                                </div>
 
-                <!-- Mobile Navigation Menu (Hidden by default) -->
-                <div id="mobile-menu" class="hidden md:hidden px-2 pt-2 pb-4 space-y-1 border-t border-gray-100">
-                    <a href="#"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Home</a>
-                    <a href="#filtering"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Find
-                        Routes</a>
-                    <a href="#features"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Why
-                        Us</a>
-                    <a href="#contact"
-                        class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Contact</a>
-                    <div class="pt-2 pb-1">
-                        <a href="{{ route('login') }}" wire:navigate
-                            class="inline-flex w-full items-center justify-center px-4 py-2 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300">
-                            <i class="fas fa-user mr-2"></i>
-                            <span>Login</span>
-                        </a>
+                                <div class="hidden md:flex items-center space-x-4">
+                                    <a href="{{ route('login') }}" wire:navigate
+                                        class="inline-flex items-center px-4 md:px-6 py-2 md:py-2.5 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-sm hover:shadow-blue-200">
+                                        <i class="fas fa-user mr-2"></i>
+                                        <span>Login</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <!-- Mobile Navigation Menu (Separate from nav element) -->
+                    <div id="mobile-menu"
+                        class="hidden fixed top-16 left-0 right-0 z-40 bg-white border-b border-gray-200 shadow-lg animate-fade-in">
+                        <div class="px-4 py-3 space-y-2">
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Home</a>
+                            <a href="#filtering"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Find
+                                Routes</a>
+                            <a href="#features"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Why
+                                Us</a>
+                            <a href="#contact"
+                                class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-red-600 hover:bg-gray-50">Contact</a>
+                            <div class="pt-2 pb-1">
+                                <a href="{{ route('login') }}" wire:navigate
+                                    class="inline-flex w-full items-center justify-center px-4 py-2 border-2 border-blue-600 text-sm font-semibold rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300">
+                                    <i class="fas fa-user mr-2"></i>
+                                    <span>Login</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,11 +116,11 @@
                         <div class="text-left">
                             <h1
                                 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100 drop-shadow-sm mb-2 animate-fade-in">
-                                ALMETA
+                                Almeta Logistics
                             </h1>
                             <p
                                 class="text-xl sm:text-2xl font-bold text-white mb-4 md:mb-6 animate-fade-in animation-delay-300">
-                                Logistics
+                                Management
                             </p>
                             <div class="animate-fade-in animation-delay-600">
                                 <p class="text-lg sm:text-xl text-white leading-relaxed font-light mb-3 md:mb-4">
@@ -118,12 +139,12 @@
                             <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 animate-fade-up">
                                 <a href="#filtering"
                                     class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-white bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 shadow-lg hover:shadow-red-200/50 transition-all duration-300 w-full sm:w-auto">
-                                    <span>Search Route</span>
+                                    Search Route
                                     <i class="fas fa-search ml-2"></i>
                                 </a>
-                                <a href="{{ route('register') }}" wire:navigate
+                                <a href="{{ route('register') }}"
                                     class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-blue-600 bg-white hover:bg-blue-50 shadow-lg hover:shadow-blue-200/50 transition-all duration-300 w-full sm:w-auto">
-                                    <span>Get Started</span>
+                                    Get Started
                                     <i class="fas fa-arrow-right ml-2"></i>
                                 </a>
                             </div>
@@ -142,7 +163,7 @@
             </div>
 
             <!-- Wave separator -->
-            <div class="absolute bottom-0 left-0 right-0">
+            <div class="absolute bottom-[-2px] left-0 right-0">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120">
                     <path fill="#ffffff" fill-opacity="1"
                         d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z">
@@ -169,6 +190,7 @@
                 <form action="{{ route('landing-page') }}" method="GET"
                     class="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 lg:p-10 mb-10 sm:mb-16 border border-gray-100 transform hover:translate-y-[-5px] transition-all duration-300"
                     onsubmit="handleFormSubmit(event)">
+                    @csrf
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-end">
                         <!-- POL Selection -->
                         <div class="lg:col-span-5">
@@ -453,82 +475,127 @@
             </div>
         </div>
 
-        <!-- Features Section with improved styling -->
-        <div class="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-white to-gray-50" id="features">
+        <!-- Features Section with improved styling and color scheme -->
+        <div class="py-16 sm:py-20 lg:py-28" id="features">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-10 sm:mb-12 lg:mb-20">
-                    <span
-                        class="inline-block px-3 py-1 sm:px-4 sm:py-1.5 bg-red-100 text-red-700 text-xs sm:text-sm font-medium rounded-full mb-2 sm:mb-3">Our
-                        Promise</span>
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 mb-2 sm:mb-3 lg:mb-4">Why
-                        Choose Almeta?</h2>
-                    <p class="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto">Experience superior
-                        logistics
-                        services tailored for businesses across Indonesia</p>
+                <div class="text-center mb-12 sm:mb-16 lg:mb-24">
+                    <div class="relative inline-block">
+                        <span
+                            class="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-sm sm:text-base font-medium rounded-full mb-3 sm:mb-4 shadow-md">Our
+                            Promise</span>
+                        <div
+                            class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-red-500 to-orange-400 rounded-full">
+                        </div>
+                    </div>
+                    <h2
+                        class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-blue-600 mb-4 sm:mb-6">
+                        Why Choose Almeta?</h2>
+                    <p class="text-base sm:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">Experience superior
+                        logistics services tailored for businesses across Indonesia</p>
                 </div>
 
-                <!-- Stats with improved cards -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-10 sm:mb-16">
+                <!-- Stats with improved gradient cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 mb-16 sm:mb-20">
                     <div
-                        class="p-4 sm:p-6 text-center bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
                         <div
-                            class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full mb-3 sm:mb-4">
-                            <i class="fas fa-anchor text-xl sm:text-2xl text-red-600"></i>
+                            class="absolute inset-0 bg-gradient-to-br from-red-600/5 to-red-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         </div>
-                        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-red-600 mb-1 sm:mb-2">10+</div>
-                        <div class="text-xs sm:text-sm text-gray-500">Major Ports</div>
+                        <div class="relative z-10">
+                            <div
+                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-red-600 to-red-400 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-red-200/50 transform group-hover:scale-110 transition-all duration-500">
+                                <i class="fas fa-anchor text-2xl sm:text-3xl text-white"></i>
+                            </div>
+                            <div
+                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400 mb-2 sm:mb-3">
+                                10+</div>
+                            <div class="text-sm sm:text-base text-gray-700 font-medium">Major Ports</div>
+                        </div>
                     </div>
+
                     <div
-                        class="p-4 sm:p-6 text-center bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
                         <div
-                            class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full mb-3 sm:mb-4">
-                            <i class="fas fa-shipping-fast text-xl sm:text-2xl text-blue-600"></i>
+                            class="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         </div>
-                        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue-600 mb-1 sm:mb-2">98%</div>
-                        <div class="text-xs sm:text-sm text-gray-500">On-Time Delivery</div>
+                        <div class="relative z-10">
+                            <div
+                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-blue-600 to-blue-400 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-blue-200/50 transform group-hover:scale-110 transition-all duration-500">
+                                <i class="fas fa-stopwatch text-2xl sm:text-3xl text-white"></i>
+                            </div>
+                            <div
+                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 mb-2 sm:mb-3">
+                                98%</div>
+                            <div class="text-sm sm:text-base text-gray-700 font-medium">On-Time Delivery</div>
+                        </div>
                     </div>
+
                     <div
-                        class="p-4 sm:p-6 text-center bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
                         <div
-                            class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full mb-3 sm:mb-4">
-                            <i class="fas fa-star text-xl sm:text-2xl text-green-600"></i>
+                            class="absolute inset-0 bg-gradient-to-br from-green-600/5 to-green-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         </div>
-                        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-600 mb-1 sm:mb-2">4.9<span
-                                class="text-sm sm:text-xl">/5</span></div>
-                        <div class="text-xs sm:text-sm text-gray-500">Client Rating</div>
+                        <div class="relative z-10">
+                            <div
+                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-green-600 to-green-400 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-green-200/50 transform group-hover:scale-110 transition-all duration-500">
+                                <i class="fas fa-star text-2xl sm:text-3xl text-white"></i>
+                            </div>
+                            <div
+                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400 mb-2 sm:mb-3">
+                                4.9<span class="text-xl sm:text-2xl">/5</span></div>
+                            <div class="text-sm sm:text-base text-gray-700 font-medium">Client Rating</div>
+                        </div>
                     </div>
+
                     <div
-                        class="p-4 sm:p-6 text-center bg-white rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]">
+                        class="p-5 sm:p-6 lg:p-8 text-center bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl transition-all duration-500 transform hover:scale-[1.03] relative overflow-hidden group">
                         <div
-                            class="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-full mb-3 sm:mb-4">
-                            <i class="fas fa-headset text-xl sm:text-2xl text-yellow-600"></i>
+                            class="absolute inset-0 bg-gradient-to-br from-yellow-600/5 to-yellow-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                         </div>
-                        <div class="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-600 mb-1 sm:mb-2">24/7</div>
-                        <div class="text-xs sm:text-sm text-gray-500">Support</div>
+                        <div class="relative z-10">
+                            <div
+                                class="inline-flex items-center justify-center w-14 h-14 sm:w-18 sm:h-18 bg-gradient-to-br from-yellow-500 to-yellow-300 rounded-2xl mb-4 sm:mb-5 shadow-lg group-hover:shadow-yellow-200/50 transform group-hover:scale-110 transition-all duration-500">
+                                <i class="fas fa-headset text-2xl sm:text-3xl text-white"></i>
+                            </div>
+                            <div
+                                class="text-3xl sm:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-600 to-yellow-400 mb-2 sm:mb-3">
+                                24/7</div>
+                            <div class="text-sm sm:text-base text-gray-700 font-medium">Support</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+                <!-- Feature cards with improved design -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 relative">
+                    <!-- Decorative elements -->
+                    <div
+                        class="absolute hidden lg:block top-1/2 left-0 w-32 h-32 bg-blue-100 rounded-full -translate-x-1/2 -translate-y-1/2 filter blur-3xl opacity-30">
+                    </div>
+                    <div
+                        class="absolute hidden lg:block bottom-0 right-0 w-48 h-48 bg-red-100 rounded-full translate-x-1/3 translate-y-1/3 filter blur-3xl opacity-30">
+                    </div>
+
                     <!-- Feature 1 -->
                     <div
-                        class="p-5 sm:p-6 lg:p-8 rounded-xl bg-white shadow-md lg:shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                        class="relative p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br from-white to-red-50 shadow-xl border border-red-100 hover:shadow-2xl hover:shadow-red-200/30 transition-all duration-500 transform hover:-translate-y-2 z-10">
                         <div
-                            class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-red-100 to-red-50 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-sm">
-                            <svg class="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-red-600" fill="none"
-                                stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-red-600 to-red-400 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-lg shadow-red-200/50">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 10V3L4 14h7v7l9-11h-7z" />
                             </svg>
                         </div>
-                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 lg:mb-4">Fast
-                            Delivery</h3>
-                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">Quick and
-                            efficient logistics solutions to meet your business needs with guaranteed timely
-                            delivery.</p>
+                        <h3
+                            class="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400 mb-4 sm:mb-5">
+                            Fast Delivery</h3>
+                        <p class="text-base text-gray-600 leading-relaxed mb-6 sm:mb-8">Quick and efficient logistics
+                            solutions to meet your business needs with guaranteed timely delivery across Indonesia's
+                            most challenging routes.</p>
                         <div
                             class="flex items-center text-red-600 font-medium cursor-pointer hover:text-red-700 transition-colors group">
                             <span>Learn more</span>
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -538,23 +605,25 @@
 
                     <!-- Feature 2 -->
                     <div
-                        class="p-5 sm:p-6 lg:p-8 rounded-xl bg-white shadow-md lg:shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                        class="relative p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br from-white to-blue-50 shadow-xl border border-blue-100 hover:shadow-2xl hover:shadow-blue-200/30 transition-all duration-500 transform hover:-translate-y-2 z-10">
                         <div
-                            class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-blue-100 to-blue-50 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-sm">
-                            <svg class="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-blue-600" fill="none"
-                                stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-600 to-blue-400 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-lg shadow-blue-200/50">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
                         </div>
-                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 lg:mb-4">Safe &
-                            Secure</h3>
-                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">Your cargo's
-                            safety is our top priority with comprehensive end-to-end security measures.</p>
+                        <h3
+                            class="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 mb-4 sm:mb-5">
+                            Safe & Secure</h3>
+                        <p class="text-base text-gray-600 leading-relaxed mb-6 sm:mb-8">Your cargo's safety is our top
+                            priority with comprehensive end-to-end security measures and real-time tracking throughout
+                            the journey.</p>
                         <div
                             class="flex items-center text-blue-600 font-medium cursor-pointer hover:text-blue-700 transition-colors group">
                             <span>Learn more</span>
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -564,23 +633,25 @@
 
                     <!-- Feature 3 -->
                     <div
-                        class="p-5 sm:p-6 lg:p-8 rounded-xl bg-white shadow-md lg:shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1">
+                        class="relative p-6 sm:p-8 lg:p-10 rounded-2xl bg-gradient-to-br from-white to-green-50 shadow-xl border border-green-100 hover:shadow-2xl hover:shadow-green-200/30 transition-all duration-500 transform hover:-translate-y-2 z-10">
                         <div
-                            class="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-green-100 to-green-50 rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-sm">
-                            <svg class="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-green-600" fill="none"
-                                stroke="currentColor" viewBox="0 0 24 24">
+                            class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-green-600 to-green-400 rounded-2xl flex items-center justify-center mb-6 sm:mb-8 shadow-lg shadow-green-200/50">
+                            <svg class="w-10 h-10 sm:w-12 sm:h-12 text-white" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
-                        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 lg:mb-4">
+                        <h3
+                            class="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-green-400 mb-4 sm:mb-5">
                             Reliable Service</h3>
-                        <p class="text-sm sm:text-base text-gray-600 leading-relaxed mb-4 sm:mb-6">Consistent and
-                            dependable logistics solutions you can count on, backed by years of experience.</p>
+                        <p class="text-base text-gray-600 leading-relaxed mb-6 sm:mb-8">Consistent and dependable
+                            logistics solutions you can count on, backed by years of experience and deep knowledge of
+                            local markets.</p>
                         <div
                             class="flex items-center text-green-600 font-medium cursor-pointer hover:text-green-700 transition-colors group">
                             <span>Learn more</span>
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
+                            <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-2 transition-transform duration-300"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -589,44 +660,49 @@
                     </div>
                 </div>
 
-                <!-- Testimonial with improved styling -->
-                <div
-                    class="mt-12 sm:mt-16 lg:mt-24 bg-white p-6 sm:p-8 lg:p-12 rounded-xl shadow-lg border border-gray-100 relative overflow-hidden">
-                    <!-- Background pattern -->
+                <!-- Testimonial with modern design -->
+                <div class="mt-16 sm:mt-20 lg:mt-28">
                     <div
-                        class="absolute top-0 right-0 w-48 h-48 sm:w-64 sm:h-64 bg-blue-50 rounded-full -mr-24 -mt-24 opacity-50">
-                    </div>
-                    <div
-                        class="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 bg-red-50 rounded-full -ml-24 -mb-24 opacity-50">
-                    </div>
-
-                    <div class="flex flex-col items-center relative z-10">
+                        class="relative p-8 sm:p-10 lg:p-14 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-xl overflow-hidden">
+                        <!-- Decorative elements -->
                         <div
-                            class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full flex items-center justify-center mb-4 sm:mb-6">
-                            <i class="fas fa-quote-right text-2xl sm:text-3xl text-blue-400"></i>
+                            class="absolute top-0 left-0 w-72 h-72 bg-blue-500 rounded-full opacity-20 -translate-x-1/2 -translate-y-1/2 blur-3xl">
                         </div>
-                        <div class="flex space-x-1 mb-3 sm:mb-4">
-                            {!! str_repeat(
-                                '<svg class="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>',
-                                5,
-                            ) !!}
+                        <div
+                            class="absolute bottom-0 right-0 w-72 h-72 bg-blue-400 rounded-full opacity-20 translate-x-1/2 translate-y-1/2 blur-3xl">
                         </div>
-                        <p
-                            class="text-base sm:text-lg lg:text-2xl text-center text-gray-700 font-medium mb-6 sm:mb-8 italic relative">
-                            <span
-                                class="hidden sm:block absolute -top-6 left-0 text-5xl sm:text-7xl text-gray-200">"</span>
-                            Almeta has transformed how we manage our supply chain. Their reliable service and
-                            professional team make shipping easy.
-                            <span
-                                class="hidden sm:block absolute -bottom-6 right-0 text-5xl sm:text-7xl text-gray-200">"</span>
-                        </p>
-                        <div class="flex items-center">
-                            <div
-                                class="w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 flex items-center justify-center text-white font-bold text-base sm:text-lg mr-3 sm:mr-4 shadow-md">
-                                P</div>
-                            <div>
-                                <div class="font-bold text-gray-900 text-sm sm:text-base">PT. Pacific Industries</div>
-                                <div class="text-xs sm:text-sm text-gray-500">Satisfied Customer</div>
+
+                        <div class="relative z-10">
+                            <div class="flex flex-col items-center">
+                                <div
+                                    class="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6 shadow-lg transform hover:scale-110 transition-transform duration-500">
+                                    <i class="fas fa-quote-right text-3xl text-blue-600"></i>
+                                </div>
+
+                                <div class="flex space-x-1 mb-4">
+                                    {!! str_repeat(
+                                        '<svg class="w-6 h-6 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>',
+                                        5,
+                                    ) !!}
+                                </div>
+
+                                <p
+                                    class="text-xl sm:text-2xl lg:text-3xl text-center font-medium mb-8 italic max-w-3xl mx-auto">
+                                    "Almeta has transformed how we manage our supply chain. Their reliable service and
+                                    professional team make shipping easy, even to remote islands across Indonesia."
+                                </p>
+
+                                <div
+                                    class="flex items-center bg-white/20 backdrop-blur-md rounded-full p-1.5 pl-2 pr-4">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-gradient-to-r from-red-500 to-red-600 flex items-center justify-center text-white font-bold text-lg mr-3 shadow-md">
+                                        P</div>
+                                    <div>
+                                        <div class="font-bold text-white text-base sm:text-lg">PT. Pacific Industries
+                                        </div>
+                                        <div class="text-sm text-blue-100">Jakarta, Indonesia</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -807,56 +883,111 @@
                 </div>
             </div>
         </footer>
-        function handleFormSubmit(event) {
-        event.preventDefault();
 
-        const submitButton = document.getElementById('submitButton');
-        const buttonText = document.getElementById('buttonText');
-        const loadingSpinner = document.getElementById('loadingSpinner');
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Mobile Menu Toggle Function
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
 
-        submitButton.disabled = true;
-        buttonText.classList.add('hidden');
-        loadingSpinner.classList.remove('hidden');
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', function() {
+                        // Toggle menu visibility
+                        if (mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.remove('hidden');
+                        } else {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    });
 
-        setTimeout(() => {
-        event.target.submit();
-        }, 300); // Small delay for button animation
-        }
+                    // Close menu when clicking links
+                    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                    mobileMenuLinks.forEach(link => {
+                        link.addEventListener('click', function() {
+                            mobileMenu.classList.add('hidden');
+                        });
+                    });
 
-        // Mobile Menu Toggle Function
-        function toggleMobileMenu() {
-        const mobileMenu = document.getElementById('mobile-menu');
+                    // Close menu when resizing to desktop
+                    window.addEventListener('resize', function() {
+                        if (window.innerWidth >= 768) { // md breakpoint in Tailwind
+                            mobileMenu.classList.add('hidden');
+                        }
+                    });
+                }
 
-        if (mobileMenu.classList.contains('hidden')) {
-        // Open menu
-        mobileMenu.classList.remove('hidden');
-        mobileMenu.classList.add('animate-fade-in');
-        } else {
-        // Close menu
-        mobileMenu.classList.add('hidden');
-        }
-        }
+                // Form submission handling
+                function handleFormSubmit(event) {
+                    event.preventDefault();
 
-        // Close mobile menu when clicking a link
-        document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+                    const submitButton = document.getElementById('submitButton');
+                    const buttonText = document.getElementById('buttonText');
+                    const loadingSpinner = document.getElementById('loadingSpinner');
 
-        mobileMenuLinks.forEach(link => {
-        link.addEventListener('click', function() {
-        document.getElementById('mobile-menu').classList.add('hidden');
-        });
-        });
+                    if (submitButton && buttonText && loadingSpinner) {
+                        submitButton.disabled = true;
+                        buttonText.classList.add('hidden');
+                        loadingSpinner.classList.remove('hidden');
 
-        // Close mobile menu when screen size increases to desktop
-        window.addEventListener('resize', function() {
-        if (window.innerWidth >= 768) { // md breakpoint in Tailwind
-        document.getElementById('mobile-menu').classList.add('hidden');
-        }
-        });
-        });
+                        setTimeout(() => {
+                            event.target.submit();
+                        }, 300);
+                    }
+                }
+
+                // Add form submit handler to any search forms
+                const searchForm = document.querySelector('form[action="{{ route('landing-page') }}"]');
+                if (searchForm) {
+                    searchForm.addEventListener('submit', handleFormSubmit);
+                }
+            });
+
+            // Form submission handling
+            window.handleFormSubmit = function(event) {
+                event.preventDefault();
+
+                const submitButton = document.getElementById('submitButton');
+                const buttonText = document.getElementById('buttonText');
+                const loadingSpinner = document.getElementById('loadingSpinner');
+
+                if (submitButton && buttonText && loadingSpinner) {
+                    submitButton.disabled = true;
+                    buttonText.classList.add('hidden');
+                    loadingSpinner.classList.remove('hidden');
+
+                    setTimeout(() => {
+                        event.target.submit();
+                    }, 300);
+                }
+            };
+
+            // Add form submit handler to any search forms
+            const searchForm = document.querySelector('form[action="{{ route('landing-page') }}"]');
+            if (searchForm) {
+                searchForm.addEventListener('submit', handleFormSubmit);
+            }
+
+            // Fix for smooth scrolling to anchors
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Adjust for header height
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
         </script>
 
         <!-- Additional styles for mobile responsiveness -->
+
         <style>
             /* Animation for mobile menu */
             @keyframes fadeIn {
@@ -869,6 +1000,29 @@
                     opacity: 1;
                     transform: translateY(0);
                 }
+            }
+
+            .animate-fade-in {
+                animation: fadeIn 0.3s ease-out forwards;
+            }
+
+            /* Improved mobile menu positioning */
+            #mobile-menu {
+                transition: all 0.3s ease-in-out;
+            }
+
+            /* Fix for z-index hierarchy */
+            .z-40 {
+                z-index: 40;
+            }
+
+            /* Ensure menu button has proper hit area */
+            #mobile-menu-button {
+                min-height: 44px;
+                min-width: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .animate-fade-in {
