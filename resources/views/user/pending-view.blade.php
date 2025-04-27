@@ -1,5 +1,5 @@
 <x-guest-layout>
-    @section('title-guest', 'Account Pending Approval')
+    @section('title-guest', 'Pending Page')
     <div class="min-h-screen bg-gray-100 py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Header with Account Status -->

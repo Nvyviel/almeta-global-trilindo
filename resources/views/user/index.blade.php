@@ -115,7 +115,7 @@
                         <!-- Left side - Text content -->
                         <div class="text-left">
                             <h1
-                                class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100 drop-shadow-sm mb-2 animate-fade-in">
+                                class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-100 drop-shadow-sm pb-2 mb-2 animate-fade-in">
                                 Almeta Logistics
                             </h1>
                             <p
@@ -138,12 +138,14 @@
                             </div>
                             <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 animate-fade-up">
                                 <a href="#filtering"
-                                    class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-white bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 shadow-lg hover:shadow-red-200/50 transition-all duration-300 w-full sm:w-auto">
+                                    class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-white bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-600 shadow-lg hover:shadow-red-200/50 transition-all duration-300 w-full sm:w-auto"
+                                    style="position: relative; z-index: 10;">
                                     Search Route
                                     <i class="fas fa-search ml-2"></i>
                                 </a>
                                 <a href="{{ route('register') }}"
-                                    class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-blue-600 bg-white hover:bg-blue-50 shadow-lg hover:shadow-blue-200/50 transition-all duration-300 w-full sm:w-auto">
+                                    class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-blue-600 bg-white hover:bg-blue-50 shadow-lg hover:shadow-blue-200/50 transition-all duration-300 w-full sm:w-auto"
+                                    style="position: relative; z-index: 10;">
                                     Get Started
                                     <i class="fas fa-arrow-right ml-2"></i>
                                 </a>
@@ -710,8 +712,10 @@
             </div>
         </div>
 
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f9fafb" fill-opacity="1" d="M0,320L1440,192L1440,320L0,320Z"></path></svg>
+
         <!-- Footer with improved styling -->
-        <footer class="bg-gray-50 text-black py-12 sm:py-16 lg:py-20" id="contact">
+        <footer class="bg-gray-50 text-black" id="contact">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Logo and Description -->
                 <div class="flex flex-col items-center text-center mb-8 sm:mb-10 lg:mb-16">

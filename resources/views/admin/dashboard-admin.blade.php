@@ -182,13 +182,6 @@
                             {{ $warnedUsersCount ?? App\Models\User::where('status', 'Warned')->count() }}
                         </span>
                     </a>
-
-                    @if (request('status'))
-                        <a href="{{ route('dashboard-admin') }}" wire:navigate
-                            class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition duration-200">
-                            All Users
-                        </a>
-                    @endif
                 </div>
 
                 <form action="{{ route('dashboard-admin') }}" method="GET" class="flex flex-col sm:flex-row gap-3">
@@ -293,36 +286,41 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
+                        @php $iteration = 0; @endphp
                         @forelse ($users as $user)
-                            <tr class="hover:bg-gray-50 transition duration-200">
-                                <td class="px-4 py-3 text-sm font-medium text-gray-500">{{ $loop->iteration }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->email }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->name }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_name }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_location }}</td>
-                                <td class="px-4 py-3 text-sm">
-                                    <span
-                                        class="px-2.5 py-1 text-xs font-medium rounded-full
-                                        {{ $user->status == 'Pending'
-                                            ? 'bg-yellow-100 text-yellow-800'
-                                            : ($user->status == 'Warned'
-                                                ? 'bg-red-100 text-red-800'
-                                                : 'bg-green-100 text-green-800') }}">
-                                        {{ $user->status }}
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <a href="{{ route('detail-user', $user->id) }}" wire:navigate
-                                        class="text-red-600 hover:text-red-800 font-medium transition duration-200">
-                                        View Details
-                                    </a>
-                                </td>
-                            </tr>
+                            @if ($user->status != 'Warned' && $user->status != 'Pending')
+                                @php $iteration++; @endphp
+                                <tr class="hover:bg-gray-50 transition duration-200">
+                                    <td class="px-4 py-3 text-sm font-medium text-gray-500">{{ $iteration }}</td>
+                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->email }}</td>
+                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->name }}</td>
+                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_name }}</td>
+                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_location }}</td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <span
+                                            class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">
+                                            {{ $user->status }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <a href="{{ route('detail-user', $user->id) }}" wire:navigate
+                                            class="text-red-600 hover:text-red-800 font-medium transition duration-200">
+                                            View Details
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endif
                         @empty
                             <tr>
-                                <td colspan="7" class="px-4 py-4 text-center text-gray-500">No users found</td>
+                                <td colspan="7" class="px-4 py-3 text-center text-gray-500">No users found</td>
                             </tr>
                         @endforelse
+
+                        @if ($iteration == 0 && count($users) > 0)
+                            <tr>
+                                <td colspan="7" class="px-4 py-3 text-center text-gray-500">No active users found</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
