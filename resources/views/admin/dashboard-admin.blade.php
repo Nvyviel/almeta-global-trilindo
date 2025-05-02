@@ -252,7 +252,7 @@
                                 <span class="text-xs text-gray-500 font-medium">Location</span>
                                 <span class="text-sm font-medium text-gray-800">{{ $user->company_location }}</span>
                             </div>
-                            <div class="flex flex-col">
+                            {{-- <div class="flex flex-col">
                                 <span class="text-xs text-gray-500 font-medium">Status</span>
                                 <span
                                     class="text-sm font-medium 
@@ -263,7 +263,7 @@
                                             : 'text-green-600') }}">
                                     {{ $user->status }}
                                 </span>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 @empty
@@ -281,7 +281,7 @@
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            {{-- <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th> --}}
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>

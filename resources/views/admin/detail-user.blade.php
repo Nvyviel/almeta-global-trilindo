@@ -17,6 +17,15 @@
                     </svg>
                 </div>
                 <div class="flex flex-col md:flex-row justify-between items-center relative z-10">
+                    <a href="{{ route('dashboard-admin') }}" wire:navigate
+                        class="inline-flex items-center px-5 py-2.5 bg-white text-blue-600 rounded-lg shadow-md hover:bg-blue-50 transform hover:scale-105 transition-all duration-200 font-medium">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Dashboard
+                    </a>
                     <h1 class="text-3xl font-bold text-white mb-4 md:mb-0 flex items-center gap-3">
                         <div class="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
@@ -27,15 +36,6 @@
                         </div>
                         <span>User Detail</span>
                     </h1>
-                    <a href="{{ route('dashboard-admin') }}" wire:navigate
-                        class="inline-flex items-center px-5 py-2.5 bg-white text-blue-600 rounded-lg shadow-md hover:bg-blue-50 transform hover:scale-105 transition-all duration-200 font-medium">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                        Back to Dashboard
-                    </a>
                 </div>
             </div>
 

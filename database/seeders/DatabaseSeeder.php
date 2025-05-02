@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Aldivo Ishen',
             'email' => 'aldivo.ishen@gmail.com',
-            'password' => Hash::make('Trilindo#08'),
+            'password' => Hash::make('aldivo99'),
             'company_name' => 'PT. ALMETA GLOBAL TRILINDO',
             'company_phone_number' => '081216996352',
             'company_location' => 'Surabaya',
