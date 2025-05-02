@@ -254,7 +254,7 @@
                                         </div>
 
                                         <!-- Additional shipment details with improved cards -->
-                                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+                                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
                                             <div
                                                 class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
                                                 <p class="text-xs text-gray-500 mb-1">Vessel Type</p>
@@ -274,18 +274,10 @@
                                             </div>
                                             <div
                                                 class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                <p class="text-xs text-gray-500 mb-1">Container Type</p>
+                                                <p class="text-xs text-gray-500 mb-1">Freetime</p>
                                                 <p class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                    <i class="fas fa-box text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                    Standard 20ft
-                                                </p>
-                                            </div>
-                                            <div
-                                                class="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg shadow-sm border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:shadow-md">
-                                                <p class="text-xs text-gray-500 mb-1">Distance</p>
-                                                <p class="font-medium text-gray-800 flex items-center text-xs sm:text-sm">
-                                                    <i class="fas fa-route text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
-                                                    {{ rand(500, 2000) }} nm
+                                                    <i class="fas fa-stopwatch text-blue-500 mr-1.5 sm:mr-2 opacity-75"></i>
+                                                    5-7 Days
                                                 </p>
                                             </div>
                                         </div>
