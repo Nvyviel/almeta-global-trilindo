@@ -27,7 +27,7 @@ Route::middleware('status')->group(function () {
     });
 });
 
-Route::post('/midtrans/callback', [AuthenticatedSessionController::class, 'handleCallback']);
+// Route::post('/midtrans/callback', [AuthenticatedSessionController::class, 'handleCallback']);
 
 Route::middleware('session')->group(function () {
     Route::get('/dashboard', function () {
@@ -85,9 +85,13 @@ Route::middleware('session')->group(function () {
     });
 
     // MIDTRANS PAYMENT GATEWAY
-    Route::prefix('/get-snap-token')->group(function () {
-        Route::post('/bill/{id}', [BillController::class, 'getSnapToken'])->name('bill-snap-token');
-        Route::post('/seal/{id}', [SealController::class, 'getSnapToken'])->name('seal-snap-token');
+    // Route::prefix('/get-snap-token')->group(function () {
+    //     Route::post('/bill/{id}', [BillController::class, 'getSnapToken'])->name('bill-snap-token');
+    //     Route::post('/seal/{id}', [SealController::class, 'getSnapToken'])->name('seal-snap-token');
+    // });
+
+    Route::prefix('/test')->group(function () {
+        Route::get('/confirmation-seal/{id}', [SealController::class, 'confirmationSeal'])->name('confirmation-seal');
     });
 
     Route::prefix('/admin')->group(function () {

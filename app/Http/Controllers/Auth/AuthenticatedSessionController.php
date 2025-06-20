@@ -48,18 +48,10 @@ class AuthenticatedSessionController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        $user = \App\Models\User::where('email', $credentials['email'])->first();
-
-        if (!$user) {
-            return redirect()->back()
-                ->withErrors(['email' => 'Email not registered.'])
-                ->withInput();
-        }
-
         if (!Auth::attempt($credentials, $request->boolean('remember'))) {
             return redirect()->back()
-                ->withErrors(['password' => 'Password wrong.'])
-                ->withInput();
+                ->withErrors(['login' => 'Email or Password is wrong.'])
+                ->withInput($request->except('password'));
         }
 
         $request->session()->regenerate();
@@ -77,7 +69,6 @@ class AuthenticatedSessionController extends Controller
 
         return redirect()->route('dashboard');
     }
-
 
     public function destroy(Request $request): RedirectResponse
     {
@@ -98,9 +89,9 @@ class AuthenticatedSessionController extends Controller
             $searchTerm = $request->input('search');
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('name', 'like', "%{$searchTerm}%")
-                ->orWhere('email', 'like', "%{$searchTerm}%")
-                ->orWhere('company_name', 'like', "%{$searchTerm}%")
-                ->orWhere('company_location', 'like', "%{$searchTerm}%");
+                    ->orWhere('email', 'like', "%{$searchTerm}%")
+                    ->orWhere('company_name', 'like', "%{$searchTerm}%")
+                    ->orWhere('company_location', 'like', "%{$searchTerm}%");
             });
         }
 
@@ -170,8 +161,8 @@ class AuthenticatedSessionController extends Controller
             $type = explode(" - ", $orderId);
 
 
-        
-            if($type[0] == "BL"){
+
+            if ($type[0] == "BL") {
                 // Cek apakah order ditemukan
                 $bill = Bill::where('bill_id', $orderId)->first();
                 if (!$bill) {
@@ -251,7 +242,7 @@ class AuthenticatedSessionController extends Controller
     public function updateDocument(Request $request): RedirectResponse
     {
         Log::info('Update document request received', $request->all());
-        
+
         try {
             $request->validate([
                 'document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -292,7 +283,7 @@ class AuthenticatedSessionController extends Controller
             }
 
             return redirect()->back()->with('status', 'document-updated')
-            ->with('message', ucfirst($documentType) . ' has been successfully updated');
+                ->with('message', ucfirst($documentType) . ' has been successfully updated');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => 'Failed to update document: ' . $e->getMessage()]);
         }

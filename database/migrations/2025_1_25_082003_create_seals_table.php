@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('total_price');
             $table->bigInteger('price');
-            $table->enum('status', ['Payment Proccess', 'Success', 'Canceled']);
+            $table->enum('status', ['Payment Proccess', 'Success', 'Expired'])->default('Payment Proccess');
             $table->timestamps();
         });
     }

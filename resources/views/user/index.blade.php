@@ -143,7 +143,7 @@
                                     Search Route
                                     <i class="fas fa-search ml-2"></i>
                                 </a>
-                                <a href="{{ route('register') }}"
+                                <a href="{{ route('register') }}" wire:navigate
                                     class="inline-flex items-center justify-center px-5 py-2.5 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold rounded-lg text-blue-600 bg-white hover:bg-blue-50 shadow-lg hover:shadow-blue-200/50 transition-all duration-300 w-full sm:w-auto"
                                     style="position: relative; z-index: 10;">
                                     Get Started

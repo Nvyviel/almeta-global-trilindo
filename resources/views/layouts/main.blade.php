@@ -157,7 +157,6 @@
 
                             @if (Auth::user() && Auth::user()->is_admin)
                                 <div class="border-t border-gray-200 my-4"></div>
-                                <div class="text-xs text-gray-400 px-4 mb-2">ADMIN SECTION</div>
 
                                 <a href="{{ route('dashboard-admin') }}" wire:navigate
                                     class="{{ $linkClass }} {{ request()->routeIs('dashboard-admin') ? $activeLinkClass : $inactiveLinkClass }}">

@@ -48,35 +48,44 @@ class SealController extends Controller
         return view('admin.stock-seal');
     }
 
-    public function getSnapToken(Request $request, $id)
+    public function confirmationSeal($id)
     {
-        if (!auth()->check()) {
-            return response()->json(['error' => 'Silakan login untuk melakukan transaksi.'], 401);
+        $seal = Seal::where('id_seal', $id)->first();
+        if (!$seal) {
+            return redirect()->route('seal')->with('error', 'Seal tidak ditemukan');
         }
-
-        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
-        Config::$isSanitized = true;
-        Config::$is3ds = true;
-
-        $seal = Seal::find($id);
-
-        $params = [
-            'transaction_details' => [
-                'order_id' => $seal->id_seal,
-                'gross_amount' => $seal->total_price,
-            ],
-            'customer_details' => [
-                'first_name' => auth()->user()->name,
-                'email' => auth()->user()->email,
-            ],
-        ];
-
-        try {
-            $snapToken = Snap::getSnapToken($params);
-            return response()->json(['snapToken' => $snapToken]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Gagal membuat transaksi: ' . $e->getMessage()], 500);
-        }
+        return view('user.confirmation-seal', compact('seal'));
     }
+
+    // public function getSnapToken(Request $request, $id)
+    // {
+    //     if (!auth()->check()) {
+    //         return response()->json(['error' => 'Silakan login untuk melakukan transaksi.'], 401);
+    //     }
+
+    //     Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+    //     Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
+    //     Config::$isSanitized = true;
+    //     Config::$is3ds = true;
+
+    //     $seal = Seal::find($id);
+
+    //     $params = [
+    //         'transaction_details' => [
+    //             'order_id' => $seal->id_seal,
+    //             'gross_amount' => $seal->total_price,
+    //         ],
+    //         'customer_details' => [
+    //             'first_name' => auth()->user()->name,
+    //             'email' => auth()->user()->email,
+    //         ],
+    //     ];
+
+    //     try {
+    //         $snapToken = Snap::getSnapToken($params);
+    //         return response()->json(['snapToken' => $snapToken]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => 'Gagal membuat transaksi: ' . $e->getMessage()], 500);
+    //     }
+    // }
 }
