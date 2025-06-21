@@ -15,7 +15,7 @@ class BillController extends Controller
 {
     public function createBill()
     {
-        return view('user.bills');
+        return view('user.bills.bills');
     }
 
     public function listBill(Request $request) // Tambahkan parameter Request
@@ -36,7 +36,7 @@ class BillController extends Controller
         // Append query parameters to pagination links
         $bills->appends($request->query());
 
-        return view('user.list-bill', compact('bills'));
+        return view('user.bills.list-bill', compact('bills'));
     }
 
     public function detailBill(Bill $bill)
@@ -49,7 +49,7 @@ class BillController extends Controller
 
         $totalPrice = $bill->shipment->rate + $containerTotalRate + $weightRate + 250000;
 
-        return view('user.bill-detail', compact('bill', 'weightRate', 'containerTotalRate', 'totalPrice'));
+        return view('user.bills.bill-detail', compact('bill', 'weightRate', 'containerTotalRate', 'totalPrice'));
     }
 
     // public function getSnapToken($id)

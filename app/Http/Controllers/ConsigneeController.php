@@ -12,14 +12,14 @@ class ConsigneeController extends Controller
     public function index()
     {
         $consignees = Consignee::where('user_id', auth()->id())->paginate(10);
-        return view('user.consignee', compact('consignees'));
+        return view('user.consignees.consignee', compact('consignees'));
     }
 
     public function edit(string $id)
     {
         $consignee = Consignee::findOrFail($id);
 
-        return view('user.edit-consignee', compact('consignee'));
+        return view('user.consignees.edit-consignee', compact('consignee'));
     }
 
     public function update(Request $request, string $id)
@@ -63,6 +63,6 @@ class ConsigneeController extends Controller
 
     public function createConsignee()
     {
-        return view('user.create-consignee');
+        return view('user.consignees.create-consignee');
     }
 }

@@ -16,15 +16,13 @@ class SessionMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        // Cek apakah user memiliki session yang aktif
         if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        // Cek apakah session sudah expired
         if (session()->has('last_activity')) {
             $lastActivity = session()->get('last_activity');
-            $sessionTimeout = config('session.lifetime') * 60; // Konversi menit ke detik
+            $sessionTimeout = config('session.lifetime') * 120;
 
             if (time() - $lastActivity > $sessionTimeout) {
                 Auth::logout();

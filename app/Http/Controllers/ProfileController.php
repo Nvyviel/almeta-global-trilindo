@@ -74,7 +74,7 @@ class ProfileController extends Controller
 
     public function index()
     {
-        return view('user.index');
+        return view('user.landings.index');
     }
 
     public function service()
@@ -84,7 +84,7 @@ class ProfileController extends Controller
 
     public function booking()
     {
-        return view('booking.booking');
+        return view('user.shipments.booking');
     }
 
 }

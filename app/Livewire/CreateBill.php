@@ -67,7 +67,7 @@ class CreateBill extends Component
     {
         do {
             $randomPart = strtoupper(Str::random(7));
-            $billId = "BL - {$randomPart}";
+            $billId = "B{$randomPart}";
         } while (Bill::where('bill_id', $billId)->exists());
 
         return $billId;

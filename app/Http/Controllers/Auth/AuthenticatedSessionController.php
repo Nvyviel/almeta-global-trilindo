@@ -63,7 +63,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('dashboard-admin');
         }
 
-        if (Auth::user()->status === 'Pending') {
+        if (Auth::user()->status === 'Under Verification') {
             return redirect()->route('pending-view');
         }
 
@@ -104,7 +104,7 @@ class AuthenticatedSessionController extends Controller
         $totalShipments = Shipment::count();
         $totalSeals = StockSeal::sum('stock');
 
-        return view('admin.dashboard-admin', compact(
+        return view('admin.landings.dashboard-admin', compact(
             'users',
             'totalUsers',
             'totalAdmins',
@@ -117,7 +117,7 @@ class AuthenticatedSessionController extends Controller
     public function detail($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.detail-user', compact('user'));
+        return view('admin.details.detail-user', compact('user'));
     }
 
     public function updateStatus(Request $request, $id)
@@ -129,7 +129,7 @@ class AuthenticatedSessionController extends Controller
         $messages = [
             'Approved' => 'User has been approved successfully!',
             'Warned' => 'User has been set to warned!',
-            'Pending' => 'User has been set to pending!'
+            'Under Verification' => 'You are under verification, please wait for a while.'
         ];
 
         $message = $messages[$request->status] ?? 'Status has been updated!';

@@ -35,7 +35,7 @@ class StatusMiddleware
             return $next($request);
         }
 
-        if ($user->status === 'Pending' || $user->status === 'Warned') {
+        if ($user->status === 'Under Verification' || $user->status === 'Warned') {
             if ($request->routeIs('pending-view') || $request->routeIs('update-document')) {
                 return $next($request);
             }

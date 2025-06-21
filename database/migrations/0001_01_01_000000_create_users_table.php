@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id(); 
+            $table->integer('user_id')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('name');
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->string('company_location');
             $table->text('company_address');
             $table->boolean('is_admin')->default(false);
-            $table->enum('status', ['Pending','Approved','Warned'])->default('Pending');
+            $table->enum('status', ['Under Verification', 'Approved', 'Warned'])->default('Under Verification');
             $table->string('ktp');
             $table->string('npwp');
             $table->string('nib');

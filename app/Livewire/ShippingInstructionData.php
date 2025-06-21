@@ -35,7 +35,7 @@ class ShippingInstructionData extends Component
         do {
             // Generate 7 random alphanumeric characters
             $randomPart = strtoupper(Str::random(7));
-            $instructionId = "SI - " . $randomPart;
+            $instructionId = "SI" . $randomPart;
         
             $exists = ShippingInstruction::where('instructions_id', $instructionId)->exists();
         } while ($exists);

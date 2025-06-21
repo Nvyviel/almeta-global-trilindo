@@ -28,7 +28,7 @@ class ShippingInstructionController extends Controller
         }
 
         $containers = $query->paginate(10);
-        return view('user.shipping-instruction', compact('containers'));
+        return view('user.shipments.shipping-instruction', compact('containers'));
     }
 
     public function showDetail($container)
@@ -36,12 +36,12 @@ class ShippingInstructionController extends Controller
         $container = Container::with(['shipment_container', 'shippingInstructions'])
             ->findOrFail($container);
 
-        return view('user.shipping-instruction-detail', compact('container'));
+        return view('user.shipments.shipping-instruction-detail', compact('container'));
     }
 
     public function requestSi()
     {
-        return view('user.request-si');
+        return view('user.shipments.request-si');
     }
 
     public function approvalSi(Request $request)
@@ -50,7 +50,7 @@ class ShippingInstructionController extends Controller
             // Get filters from request
             $selectedVessel = $request->query('selectedVessel');
             $search = $request->query('search');
-            $orderId = $request->query('order_id'); // Ubah dari instructions_id ke order_id
+            $orderId = $request->query('order_id');
 
             // Initial query with explicit select
             $query = ShippingInstruction::select('shipping_instructions.*')
@@ -89,7 +89,7 @@ class ShippingInstructionController extends Controller
             $availableVessel = Shipment::pluck('vessel_name');
             $shippingInstructions = $query->paginate(10);
 
-            return view('admin.approval-si', compact('shippingInstructions', 'availableVessel'));
+            return view('admin.approvals.approval-si', compact('shippingInstructions', 'availableVessel'));
         } catch (\Exception $e) {
             Log::error('Error in approvalSi:', [
                 'message' => $e->getMessage(),
@@ -104,7 +104,7 @@ class ShippingInstructionController extends Controller
     {
         $dataSi = ShippingInstruction::with('user', 'container.shipment_container', 'shipment', 'consignee')
             ->findOrFail($id);
-        return view('admin.approval-si-detail', compact('dataSi'));
+        return view('admin.details.approval-si-detail', compact('dataSi'));
     }
 
     public function uploadSiFile(Request $request, $id)
@@ -235,7 +235,7 @@ class ShippingInstructionController extends Controller
     public function historySi()
     {
         $instructions = ShippingInstruction::with('consignee')->get();
-        return view('admin.history-si', compact('instructions'));
+        return view('admin.histories.history-si', compact('instructions'));
     }
 
     // public function updateStatus(Request $request, $id)

@@ -165,7 +165,7 @@
 
                 <!-- Status Filter Buttons -->
                 <div class="flex flex-wrap gap-3 mb-4">
-                    <a href="{{ route('dashboard-admin', ['status' => 'Pending']) }}" wire:navigate
+                    <a href="{{ route('dashboard-admin', ['status' => 'Under Verification']) }}" wire:navigate
                         class="inline-flex items-center px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg hover:bg-yellow-200 transition duration-200">
                         Pending Users
                         <span
@@ -288,7 +288,7 @@
                     <tbody class="divide-y divide-gray-100">
                         @php $iteration = 0; @endphp
                         @forelse ($users as $user)
-                            @if ($user->status != 'Warned' && $user->status != 'Pending')
+                            @if ($user->status != 'Warned' && $user->status != 'Under Verification')
                                 @php $iteration++; @endphp
                                 <tr class="hover:bg-gray-50 transition duration-200">
                                     <td class="px-4 py-3 text-sm font-medium text-gray-500">{{ $iteration }}</td>

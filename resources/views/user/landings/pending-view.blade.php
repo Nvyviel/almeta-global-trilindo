@@ -75,7 +75,7 @@
                                     </svg>
                                 </div>
                                 <div class="ml-3">
-                                    <h3 class="text-sm font-medium text-yellow-800">Pending Approval</h3>
+                                    <h3 class="text-sm font-medium text-yellow-800">Under Verification</h3>
                                     <div class="mt-2 text-sm text-yellow-700">
                                         <p>Your account is awaiting admin verification. Please ensure all documents are
                                             up to date and properly submitted.</p>

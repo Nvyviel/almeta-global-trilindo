@@ -96,8 +96,7 @@ class RegisteredUserController extends Controller
             }
 
             $isAdmin = User::count() === 0;
-
-            $status = $isAdmin ? 'Approved' : 'Pending';
+            $status = $isAdmin ? 'Approved' : 'Under Verification';
 
             Log::info('Creating user with status: ' . $status);
 
@@ -113,10 +112,10 @@ class RegisteredUserController extends Controller
                 'npwp' => $npwpPath,
                 'nib' => $nibPath,
                 'is_admin' => $isAdmin,
-                'status' => $status,
+                'status' => $status
             ]);
 
-            Log::info('User created: ' . $users->id);
+            Log::info('User created with ID: ' . $users->id . ' and user_id: ' . $users->user_id);
 
             event(new Registered($users));
             Log::info('Event Registered triggered.');
@@ -129,7 +128,7 @@ class RegisteredUserController extends Controller
                 return redirect()->route('dashboard-admin');
             }
 
-            if ($users->status === 'Pending') {
+            if ($users->status === 'Under Verification') {
                 Log::info('Redirecting to pending view.');
                 return redirect()->route('pending-view');
             }
@@ -146,6 +145,6 @@ class RegisteredUserController extends Controller
 
     public function pendingUser()
     {
-        return view('user.pending-view');
+        return view('user.landings.pending-view');
     }
 }

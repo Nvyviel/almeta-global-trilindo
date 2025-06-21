@@ -22,7 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('weight_rate');
             $table->unsignedBigInteger('document_price');
             $table->unsignedBigInteger('grand_total');
-            $table->enum('status', ['Paid','Unpaid','Error'])->default('Unpaid');
+            $table->enum('status', ['Under Verification','Paid','Unpaid','Error'])->default('Unpaid');
             $table->string('upload_file');
             $table->timestamps();
         });

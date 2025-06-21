@@ -15,7 +15,7 @@ class SealController extends Controller
 
     public function createSeal()
     {
-        return view('user.create-seal');
+        return view('user.seals.create-seal');
     }
 
     public function seal(Request $request)
@@ -34,18 +34,18 @@ class SealController extends Controller
         $seals = $query->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('user.seal', compact('seals'));
+        return view('user.seals.seal', compact('seals'));
     }
     
     public function activitySeal()
     {
         $seals = Seal::orderBy('created_at', 'desc')->paginate(10);
-        return view('admin.activity-seal', compact('seals'));
+        return view('admin.histories.activity-seal', compact('seals'));
     }
 
     public function addStock()
     {
-        return view('admin.stock-seal');
+        return view('admin.creators.stock-seal');
     }
 
     public function confirmationSeal($id)
@@ -54,7 +54,7 @@ class SealController extends Controller
         if (!$seal) {
             return redirect()->route('seal')->with('error', 'Seal tidak ditemukan');
         }
-        return view('user.confirmation-seal', compact('seal'));
+        return view('user.seals.confirmation-seal', compact('seal'));
     }
 
     // public function getSnapToken(Request $request, $id)

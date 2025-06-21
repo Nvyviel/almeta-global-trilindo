@@ -21,7 +21,7 @@ Route::middleware('accessable')->group(function () {
 
 Route::middleware('status')->group(function () {
     Route::prefix('/status')->group(function () {
-        Route::get('/pending', [RegisteredUserController::class, 'pendingUser'])->name('pending-view');
+        Route::get('/under-verification', [RegisteredUserController::class, 'pendingUser'])->name('pending-view');
         Route::post('/user/{id}/update-status', [AuthenticatedSessionController::class, 'updateStatus'])->name('update-status');
         Route::post('/update-document', [AuthenticatedSessionController::class, 'updateDocument'])->name('update-document');
     });
@@ -32,7 +32,7 @@ Route::middleware('status')->group(function () {
 Route::middleware('session')->group(function () {
     Route::get('/dashboard', function () {
         $shipments = Shipment::all();
-        return view('user.dashboard', compact('shipments'));
+        return view('user.landings.dashboard', compact('shipments'));
     })->middleware(['auth', 'verified'])->name('dashboard');
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile-edit');

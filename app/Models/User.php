@@ -30,6 +30,29 @@ class User extends Authenticatable
     ];
 
     /**
+     * Boot method to automatically generate user_id
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->user_id)) {
+                $user->user_id = self::generateRandomUserId();
+            }
+        });
+    }
+
+    public static function generateRandomUserId()
+    {
+        do {
+            $userId = mt_rand(10000000, 99999999);
+        } while (self::where('user_id', $userId)->exists());
+
+        return $userId;
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

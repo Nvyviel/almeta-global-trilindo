@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('shipment_id')->constrained();
             $table->foreignId('container_id')->constrained();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });

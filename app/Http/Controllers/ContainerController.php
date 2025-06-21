@@ -16,12 +16,12 @@ class ContainerController extends Controller
     public function booking(Request $request)
     {
         $shipmentId = $request->input('shipment_id');
-        return view('booking.booking', compact('shipmentId'));
+        return view('user.shipments.booking', compact('shipmentId'));
     }
 
     public function createNew(Request $request)
     {
-        return view('booking.booking');
+        return view('user.shipments.booking');
     }
 
 
@@ -35,7 +35,7 @@ class ContainerController extends Controller
             $container = $user->container()->where('id', $id)->firstOrFail();
         }
 
-        return view('user.show-release-order', compact('container'));
+        return view('user.shipments.show-release-order', compact('container'));
     }
 
 
@@ -48,7 +48,7 @@ class ContainerController extends Controller
         }
 
         $container = $query->get();
-        return view('user.release-order', compact('container'));
+        return view('user.shipments.release-order', compact('container'));
     }
 
 
@@ -57,6 +57,6 @@ class ContainerController extends Controller
     {
         $containers = Container::all();
 
-        return view('admin.history-ro', compact('containers'));
+        return view('admin.histories.history-ro', compact('containers'));
     }
 }

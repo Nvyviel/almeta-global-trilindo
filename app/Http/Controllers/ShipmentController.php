@@ -11,12 +11,12 @@ class ShipmentController extends Controller
 {
     public function create()
     {
-        return view('admin.create-shipment');
+        return view('admin.creators.create-shipment');
     }
 
     public function addschedule(Request $request)
     {
-        return view("admin.dashboard-admin");
+        return view("admin.landings.dashboard-admin");
     }
 
 
@@ -34,7 +34,7 @@ class ShipmentController extends Controller
             'jakarta' => 'Jakarta'
         ];
 
-        return view('admin.edit-shipment', compact('shipment', 'cities'));
+        return view('admin.edits.edit-shipment', compact('shipment', 'cities'));
     }
 
     public function update(Request $request, $id)
@@ -79,14 +79,14 @@ class ShipmentController extends Controller
         $pol = $request->input('pol');
 
         if (empty($pod) || empty($pol)) {
-            return view('user.index', ['shipments' => collect()]);
+            return view('user.landings.index', ['shipments' => collect()]);
         }
 
         $shipments = Shipment::where('to_city', $pod)
         ->where('from_city', $pol)
         ->get();
 
-        return view('user.index', compact('shipments'));
+        return view('user.landings.index', compact('shipments'));
     }
 
     public function approvalRo(Request $request)
@@ -128,7 +128,7 @@ class ShipmentController extends Controller
 
     $availableVessel = Shipment::pluck('vessel_name');
 
-    return view('admin.approval-ro', compact('name_ship', 'availableVessel'));
+    return view('admin.approvals.approval-ro', compact('name_ship', 'availableVessel'));
 }
 
     public function uploadRoPdf(Request $request, $id)
