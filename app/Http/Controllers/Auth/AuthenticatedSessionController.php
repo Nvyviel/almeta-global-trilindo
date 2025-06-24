@@ -116,7 +116,7 @@ class AuthenticatedSessionController extends Controller
 
     public function detail($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('user_id', $id)->firstOrFail();
         return view('admin.details.detail-user', compact('user'));
     }
 

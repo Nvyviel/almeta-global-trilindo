@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\GuestMiddleware;
+use App\Http\Middleware\HandleExpired;
 use App\Http\Middleware\HandleNotFound;
 use App\Http\Middleware\StatusMiddleware;
 use App\Http\Middleware\SessionMiddleware;
@@ -26,6 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'accessable' => GuestMiddleware::class,
             'status' => StatusMiddleware::class,
             '404' => HandleNotFound::class,
+            '419' => HandleExpired::class,
+            // '403' => HandleForbidden:class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {})->create();

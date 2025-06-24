@@ -170,7 +170,7 @@
                         Pending Users
                         <span
                             class="inline-flex items-center justify-center ml-2 w-5 h-5 text-xs font-bold bg-yellow-200 text-yellow-800 rounded-full">
-                            {{ $pendingUsersCount ?? App\Models\User::where('status', 'Pending')->count() }}
+                            {{ $pendingUsersCount ?? App\Models\User::where('status', 'Under Verification')->count() }}
                         </span>
                     </a>
 
@@ -228,8 +228,8 @@
                 @forelse ($users as $user)
                     <div class="p-4 border-b border-gray-100 hover:bg-gray-50 transition duration-200">
                         <div class="flex justify-between items-center mb-3">
-                            <span
-                                class="bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">#{{ $loop->iteration }}</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs font-medium px-2.5 py-1 rounded-full">ID:
+                                {{ $user->user_id }}</span>
                             <a href="{{ route('detail-user', $user->id) }}" wire:navigate
                                 class="text-sm text-red-600 hover:text-red-800 font-medium">
                                 View Details →
@@ -252,18 +252,18 @@
                                 <span class="text-xs text-gray-500 font-medium">Location</span>
                                 <span class="text-sm font-medium text-gray-800">{{ $user->company_location }}</span>
                             </div>
-                            {{-- <div class="flex flex-col">
+                            <div class="flex flex-col">
                                 <span class="text-xs text-gray-500 font-medium">Status</span>
                                 <span
                                     class="text-sm font-medium 
-                                    {{ $user->status == 'Pending'
+                                    {{ $user->status == 'Under Verification'
                                         ? 'text-yellow-600'
                                         : ($user->status == 'Warned'
                                             ? 'text-red-600'
                                             : 'text-green-600') }}">
                                     {{ $user->status }}
                                 </span>
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                 @empty
@@ -276,40 +276,49 @@
                 <table class="w-full">
                     <thead>
                         <tr class="bg-gray-50 text-left">
-                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
+                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                            {{-- <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th> --}}
+                            <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @php $iteration = 0; @endphp
                         @forelse ($users as $user)
-                            @if ($user->status != 'Warned' && $user->status != 'Under Verification')
-                                @php $iteration++; @endphp
-                                <tr class="hover:bg-gray-50 transition duration-200">
-                                    <td class="px-4 py-3 text-sm font-medium text-gray-500">{{ $iteration }}</td>
-                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->email }}</td>
-                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->name }}</td>
-                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_name }}</td>
-                                    <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_location }}</td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <span
-                                            class="px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800">
-                                            {{ $user->status }}
-                                        </span>
-                                    </td>
-                                    <td class="px-4 py-3 text-sm">
-                                        <a href="{{ route('detail-user', $user->id) }}" wire:navigate
+                            {{-- @if ($user->status != 'Warned' && $user->status != 'Under Verification') --}}
+                            @php $iteration++; @endphp
+                            <tr class="hover:bg-gray-50 transition duration-200">
+                                <td class="px-4 py-3 text-sm font-medium text-gray-500">{{ $user->user_id }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->email }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->name }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_name }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-800">{{ $user->company_location }}</td>
+                                <td class="px-4 py-3 text-sm">
+                                    <span
+                                        class="px-2.5 py-1 text-xs font-medium
+                                        {{ $user->status == 'Under Verification'
+                                            ? 'text-yellow-600'
+                                            : ($user->status == 'Warned'
+                                                ? 'text-red-600'
+                                                : 'text-green-600') }}">
+                                        {{ $user->status }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @if ($user->id !== 1)
+                                        <a href="{{ route('detail-user', $user->user_id) }}" wire:navigate
                                             class="text-red-600 hover:text-red-800 font-medium transition duration-200">
                                             View Details
                                         </a>
-                                    </td>
-                                </tr>
-                            @endif
+                                    @else
+                                        <span class="text-gray-400 text-sm">NaN</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            {{-- @endif --}}
                         @empty
                             <tr>
                                 <td colspan="7" class="px-4 py-3 text-center text-gray-500">No users found</td>

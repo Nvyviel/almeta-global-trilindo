@@ -35,14 +35,14 @@
 
         <!-- Content Container -->
         <div class="relative min-h-screen flex items-center justify-center p-4">
-            <div class="w-full max-w-6xl grid md:grid-cols-5 bg-white rounded-2xl shadow-xl overflow-hidden">
-                <!-- Left Column - Decorative Side -->
-                <div
-                    class="md:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 p-8 relative hidden md:block overflow-hidden">
-                    <!-- Decorative circles -->
-                    <div class="absolute top-10 right-10 w-40 h-40 bg-white/10 rounded-full"></div>
-                    <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-white/10 rounded-full"></div>
-                    <div class="absolute top-1/2 left-1/4 w-24 h-24 bg-white/10 rounded-full"></div>
+            <div class="w-full max-w-6xl grid md:grid-cols-5 bg-white rounded-lg shadow-xl overflow-hidden">
+
+                <!-- Left Column - Decorative Side with Background Image -->
+                <div class="md:col-span-2 bg-cover bg-center bg-blue-600 bg-no-repeat p-8 relative hidden md:block overflow-hidden"
+                    style="background-image: url('{{ asset('assets/img/Almeta-ship.png') }}');">
+
+                    <!-- Dark overlay for better text readability -->
+                    <div class="absolute inset-0 bg-black/40"></div>
 
                     <!-- Content -->
                     <div class="relative h-full flex flex-col justify-between text-white z-10">
@@ -274,34 +274,34 @@
                             {{-- Business Information Section --}}
                             <div id="business-section" class="section-content hidden">
                                 <div class="space-y-5">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                        {{-- Company Name --}}
-                                        <div class="group">
-                                            <label for="company_name"
-                                                class="block font-medium text-gray-700 text-sm mb-2 ml-1 group-focus-within:text-blue-600 transition-colors">
-                                                Company Name
-                                            </label>
-                                            <div class="relative">
-                                                <span
-                                                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 group-focus-within:text-blue-500 transition-colors">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                                    </svg>
-                                                </span>
-                                                <input id="company_name" type="text" name="company_name"
-                                                    value="{{ old('company_name') }}"
-                                                    class="uppercase block w-full pl-10 h-12 p-2 border border-gray-300 rounded-lg shadow-sm
+                                    {{-- Company Name --}}
+                                    <div class="group">
+                                        <label for="company_name"
+                                            class="block font-medium text-gray-700 text-sm mb-2 ml-1 group-focus-within:text-blue-600 transition-colors">
+                                            Company Name
+                                        </label>
+                                        <div class="relative">
+                                            <span
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400 group-focus-within:text-blue-500 transition-colors">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                                </svg>
+                                            </span>
+                                            <input id="company_name" type="text" name="company_name"
+                                                value="{{ old('company_name') }}"
+                                                class="uppercase block w-full pl-10 h-12 p-2 border border-gray-300 rounded-lg shadow-sm
                                                         @error('company_name') border-red-500 @enderror 
                                                         focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none transition-all duration-200"
-                                                    required placeholder="CV. EXAMPLE / PT. EXAMPLE">
-                                            </div>
-                                            @error('company_name')
-                                                <p class="text-red-600 text-sm mt-2 ml-1">{{ $message }}</p>
-                                            @enderror
+                                                required placeholder="CV. EXAMPLE / PT. EXAMPLE">
                                         </div>
+                                        @error('company_name')
+                                            <p class="text-red-600 text-sm mt-2 ml-1">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
                                         {{-- Company Phone Number --}}
                                         <div class="group">
@@ -379,7 +379,7 @@
                                                     </svg>
                                                 </span>
                                                 <textarea id="company_address" name="company_address"
-                                                    class="w-full resize-none pl-10 h-28 mt-1 p-2 block rounded-lg border border-gray-300 shadow-sm
+                                                    class="w-full resize-none pl-10 h-24 mt-1 p-2 block rounded-lg border border-gray-300 shadow-sm
                                                         @error('company_address') border-red-500 @enderror 
                                                         focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none transition-all duration-200"
                                                     required placeholder="Example Street No. 99, Surabaya, East Java">{{ old('company_address') }}</textarea>

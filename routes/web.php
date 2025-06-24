@@ -12,34 +12,38 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ShippingInstructionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-
 require __DIR__ . '/auth.php';
 
 Route::middleware('accessable')->group(function () {
     Route::get('/', [ShipmentController::class, 'guestFiltering'])->name('landing-page');
 });
 
-Route::middleware('status')->group(function () {
-    Route::prefix('/status')->group(function () {
-        Route::get('/under-verification', [RegisteredUserController::class, 'pendingUser'])->name('pending-view');
-        Route::post('/user/{id}/update-status', [AuthenticatedSessionController::class, 'updateStatus'])->name('update-status');
-        Route::post('/update-document', [AuthenticatedSessionController::class, 'updateDocument'])->name('update-document');
-    });
-});
-
+// Route::middleware('status')->group(function () {
+//     Route::prefix('/status')->group(function () {
+//         Route::get('/pending', [RegisteredUserController::class, 'pendingUser'])->name('pending-view');
+//         Route::post('/user/{id}/update-status', [AuthenticatedSessionController::class, 'updateStatus'])->name('update-status');
+//         Route::post('/update-document', [AuthenticatedSessionController::class, 'updateDocument'])->name('update-document');
+//     });
+// });
 // Route::post('/midtrans/callback', [AuthenticatedSessionController::class, 'handleCallback']);
 
-Route::middleware('session')->group(function () {
+Route::middleware(['session', 'status'])->group(function () {
     Route::get('/dashboard', function () {
         $shipments = Shipment::all();
         return view('user.landings.dashboard', compact('shipments'));
     })->middleware(['auth', 'verified'])->name('dashboard');
+
+    Route::prefix('/status')->group(function () {
+        Route::get('/pending', [RegisteredUserController::class, 'pendingUser'])->name('pending-view');
+        Route::post('/user/{id}/update-status', [AuthenticatedSessionController::class, 'updateStatus'])->name('update-status');
+        Route::post('/update-document', [AuthenticatedSessionController::class, 'updateDocument'])->name('update-document');
+    });
+
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile-edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile-update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile-destroy');
     });
-
 
     Route::prefix('/dashboard')->group(function () {
         Route::middleware('admin')->group(function () {

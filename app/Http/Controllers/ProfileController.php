@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -16,7 +18,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('profiles.profile', [
             'user' => $request->user(),
         ]);
     }
@@ -29,24 +31,49 @@ class ProfileController extends Controller
         $validated = $request->validated();
         $user = $request->user();
 
+        // Debug: Log what data is being received
+        Log::info('Profile Update Data:', $validated);
+        Log::info('User before update:', $user->toArray());
+
         // Handle file uploads
         if ($request->hasFile('ktp')) {
+            // Delete old file if exists
+            if ($user->ktp && Storage::disk('public')->exists($user->ktp)) {
+                Storage::disk('public')->delete($user->ktp);
+            }
             $validated['ktp'] = $request->file('ktp')->store('documents', 'public');
         }
+
         if ($request->hasFile('npwp')) {
+            // Delete old file if exists
+            if ($user->npwp && Storage::disk('public')->exists($user->npwp)) {
+                Storage::disk('public')->delete($user->npwp);
+            }
             $validated['npwp'] = $request->file('npwp')->store('documents', 'public');
         }
+
         if ($request->hasFile('nib')) {
+            // Delete old file if exists
+            if ($user->nib && Storage::disk('public')->exists($user->nib)) {
+                Storage::disk('public')->delete($user->nib);
+            }
             $validated['nib'] = $request->file('nib')->store('documents', 'public');
         }
 
+        // Fill user with validated data
         $user->fill($validated);
 
+        // Handle email verification
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
-        $user->save();
+        // Save user
+        $saved = $user->save();
+
+        // Debug: Log after save
+        Log::info('Save result:', ['saved' => $saved]);
+        Log::info('User after update:', $user->fresh()->toArray());
 
         return Redirect::route('profile-edit')->with('status', 'profile-updated');
     }
@@ -86,5 +113,4 @@ class ProfileController extends Controller
     {
         return view('user.shipments.booking');
     }
-
 }

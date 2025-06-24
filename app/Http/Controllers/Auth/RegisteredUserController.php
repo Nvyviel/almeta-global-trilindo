@@ -33,10 +33,8 @@ class RegisteredUserController extends Controller
         Log::info('Store function called.');
 
         try {
-            // Validasi input
             Log::info('Starting validation.');
 
-            // Separate validation to catch all errors
             $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
                 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
                 'name' => ['required', 'string', 'max:255'],
@@ -49,7 +47,6 @@ class RegisteredUserController extends Controller
                 'npwp' => ['required', 'image', 'max:2048'],
                 'nib' => ['required', 'image', 'max:2048'],
             ], [
-                // Custom error messages remain the same
                 'email.unique' => 'Email ini sudah terdaftar.',
                 'email.required' => 'Email wajib diisi.',
                 'email.email' => 'Format email tidak valid.',
