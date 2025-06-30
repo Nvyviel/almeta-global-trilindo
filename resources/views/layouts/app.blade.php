@@ -31,7 +31,6 @@
     </div>
     {{-- SWEETALERT CDN --}}
     @livewireScripts
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
     @stack('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.42.0/apexcharts.min.js"></script>
 </body>

@@ -189,7 +189,7 @@
                 </div>
 
                 <!-- Search Form with floating effect -->
-                <form action="{{ route('landing-page') }}" method="GET"
+                <form action="{{ route('landing-page') }}#filtering" method="GET"
                     class="bg-white rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 lg:p-10 mb-10 sm:mb-16 border border-gray-100 transform hover:translate-y-[-5px] transition-all duration-300"
                     onsubmit="handleFormSubmit(event)">
                     @csrf
@@ -257,7 +257,7 @@
                         </div>
 
                         <!-- Search Button -->
-                        <div class="lg:col-span-12 pt-2 sm:pt-4">
+                        <div class="lg:col-span-12 pt-2 sm:pt-4" id="filtering">
                             <button id="submitButton" type="submit"
                                 class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl hover:from-blue-500 hover:to-blue-800 transition-all duration-300 font-bold flex items-center justify-center text-base sm:text-lg shadow-lg hover:shadow-blue-200">
                                 <span id="buttonText" class="mr-2">Find Available Ships</span>

@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Midtrans\Snap;
 use App\Models\Bill;
 use App\Models\Seal;
-use Midtrans\Config;
 use Illuminate\Http\Request;
 use Illuminate\support\facades\Log;
 use App\Http\Controllers\Controller;
@@ -56,36 +54,4 @@ class SealController extends Controller
         }
         return view('user.seals.confirmation-seal', compact('seal'));
     }
-
-    // public function getSnapToken(Request $request, $id)
-    // {
-    //     if (!auth()->check()) {
-    //         return response()->json(['error' => 'Silakan login untuk melakukan transaksi.'], 401);
-    //     }
-
-    //     Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-    //     Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
-    //     Config::$isSanitized = true;
-    //     Config::$is3ds = true;
-
-    //     $seal = Seal::find($id);
-
-    //     $params = [
-    //         'transaction_details' => [
-    //             'order_id' => $seal->id_seal,
-    //             'gross_amount' => $seal->total_price,
-    //         ],
-    //         'customer_details' => [
-    //             'first_name' => auth()->user()->name,
-    //             'email' => auth()->user()->email,
-    //         ],
-    //     ];
-
-    //     try {
-    //         $snapToken = Snap::getSnapToken($params);
-    //         return response()->json(['snapToken' => $snapToken]);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => 'Gagal membuat transaksi: ' . $e->getMessage()], 500);
-    //     }
-    // }
 }
